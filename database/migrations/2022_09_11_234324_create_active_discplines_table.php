@@ -16,7 +16,7 @@ class CreateActiveDiscplinesTable extends Migration
         Schema::create('active_discplines', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('expiration_date');
+            $table->date('expiration_date');
             $table->timestamps();
         });
     }

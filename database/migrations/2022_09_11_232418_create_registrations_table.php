@@ -17,7 +17,7 @@ class CreateRegistrationsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('idstudent');
             $table->string('registration');
-            $table->string('expiration_date');
+            $table->date('expiration_date');
             $table->timestamps();
             $table->foreign('idstudent')->references('id')->on('students');
         });

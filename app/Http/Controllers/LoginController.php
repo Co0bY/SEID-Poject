@@ -16,27 +16,31 @@ class LoginController extends Controller
         if(isset($user)){
             if($user->type_of_user == 1){
                 session_start();
+                $_SESSION['id'] = $user->id;
                 $_SESSION['nome'] = $user->name;
                 $_SESSION['type_of_user'] = $user->type_of_user;
-                
+
                 return redirect()->route('principal.index');
             }elseif($user->type_of_user == 2){
                 session_start();
+                $_SESSION['id'] = $user->id;
                 $_SESSION['nome'] = $user->name;
                 $_SESSION['type_of_user'] = $user->type_of_user;
-                
+
                 return redirect()->route('secretary.index');
             }elseif($user->type_of_user == 3){
                 session_start();
+                $_SESSION['id'] = $user->id;
                 $_SESSION['nome'] = $user->name;
                 $_SESSION['type_of_user'] = $user->type_of_user;
-                
+
                 return redirect()->route('student.index');
             }elseif($user->type_of_user == 4){
                 session_start();
+                $_SESSION['id'] = $user->id;
                 $_SESSION['nome'] = $user->name;
                 $_SESSION['type_of_user'] = $user->type_of_user;
-                
+
                 return redirect()->route('teacher.index');
             }else{
                 return redirect()->route('home');
