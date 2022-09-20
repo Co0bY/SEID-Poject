@@ -13,22 +13,22 @@
         </div>
         <div class=" card-body d-flex">
             {{-- route('pesquisar') --}}
-            <form action="{{route('secretary.room-create')}}" method="post">
+            <form action="{{route('secretary.season-create')}}" method="post">
                 @csrf
                 <div class="mb-3"><label for="" class=" text-dark text-uppercase text-bold">Nome</label>
                     <input type="text" class=" form-control" id="discipline_name" name="name">
                 </div>
-                <div class="mb-3"><label for="" class=" text-dark text-uppercase text-bold">Detalhes</label>
-                    <input type="text" class=" form-control" id="details" name="details">
+                <div class="mb-3"><label for="" class=" text-dark text-uppercase text-bold">Data de Inicio</label>
+                    <input type="date" class=" form-control" id="start_date" name="start_date">
                 </div>
-                <div class="mb-3"><label for="" class=" text-dark text-uppercase text-bold">Equipamento</label>
-                    <input type="text" class=" form-control" id="equipment" name="equipment">
+                <div class="mb-3"><label for="" class=" text-dark text-uppercase text-bold">Data de Encerramento</label>
+                    <input type="date" class=" form-control" id="end_date" name="end_date">
                 </div>
-                <div class="mb-3"><label for="" class=" text-dark text-uppercase text-bold">Codigo da Sala</label>
+                <div class="mb-3"><label for="" class=" text-dark text-uppercase text-bold">Codigo do Período</label>
                     <input type="text" class=" form-control" id="code" name="code">
                 </div>
                 <div class="row">
-                    <a href="{{route('secretary.room-index')}}" class=" btn btn-primary text-uppercase">Voltar</a>
+                    <a href="{{route('secretary.season-index')}}" class=" btn btn-primary text-uppercase">Voltar</a>
                     <button type="submit" class=" btn btn-success text-uppercase">Criar</button>
                 </div>
               </form>

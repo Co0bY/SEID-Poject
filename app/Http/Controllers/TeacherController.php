@@ -32,7 +32,7 @@ class TeacherController extends Controller
             $registrations[$i] = Registration::where('id', $students[$i]->idregistration)->first();
         }
         dd($registrations);
-        return view(''. []);
+         return view(''. []);
     }
     public function listarAlunosChamada(Request $request, $id){
         $students = RegistrationsInActiveDiscipline::where('id_active_discpline', $id)->get();

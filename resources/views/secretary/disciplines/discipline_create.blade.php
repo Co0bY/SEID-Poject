@@ -21,9 +21,6 @@
                 <div class=" mb-3"><label for="" class=" text-dark text-uppercase text-bold">Código da Disciplina</label>
                     <input type="text" class=" form-control" id="code" name="code">
                 </div>
-                <div class=" mb-3"><label for="" class=" text-dark text-uppercase text-bold">Cpf do Professor</label>
-                    <input type="text" class=" form-control" id="cpf" name="cpf">
-                </div>
                 <div class="row">
                     <a href="{{route('secretary.discipline-index')}}" class=" btn btn-primary text-uppercase">Voltar</a>
                     <button type="submit" class=" btn btn-success text-uppercase">Criar</button>

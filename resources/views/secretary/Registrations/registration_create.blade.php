@@ -18,11 +18,11 @@
                 <div class=" mb-3"><label for="" class=" text-dark text-uppercase text-bold">Nome do Aluno</label>
                     <input type="text" class=" form-control" id="name" name="name">
                 </div>
-                <div class=" mb-3"><label for="" class=" text-dark text-uppercase text-bold">Data de Expiração</label>
-                    <input type="date" class=" form-control" id="expiration_date" name="expiration_date">
-                </div>
                 <div class=" mb-3"><label for="" class=" text-dark text-uppercase text-bold">Cpf do Aluno</label>
                     <input type="text" class=" form-control" id="cpf" name="cpf">
+                </div>
+                <div class=" mb-3"><label for="" class=" text-dark text-uppercase text-bold">Código do Periodo Válido</label>
+                    <input type="text" class=" form-control" id="code" name="cpde">
                 </div>
                 <div class="row">
                     <a href="{{route('secretary.registration-index')}}" class=" btn btn-primary text-uppercase">Voltar</a>

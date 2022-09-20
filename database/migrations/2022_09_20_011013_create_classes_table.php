@@ -16,14 +16,14 @@ class CreateClassesTable extends Migration
         Schema::create('classes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_season');
-            $table->unsignedBigInteger('id_disciplina');
+            $table->unsignedBigInteger('id_discipline');
             $table->unsignedBigInteger('id_room');
             $table->string('name');
-            $table->string('código');
+            $table->string('code');
             $table->boolean('active');
             $table->timestamps();
             $table->foreign('id_season')->references('id')->on('seasons');
-            $table->foreign('id_disciplina')->references('id')->on('disciplines');
+            $table->foreign('id_discipline')->references('id')->on('disciplines');
             $table->foreign('id_room')->references('id')->on('rooms');
         });
     }

@@ -15,13 +15,13 @@
                 <div class="mb-3"><label for="" class=" text-dark text-uppercase text-bold">Nome</label>
                     <input type="text" class=" form-control" id="discipline_name" name="name">
                 </div>
-                <div class="mb-3"><label for="" class=" text-dark text-uppercase text-bold">Detalhes</label>
-                    <input type="text" class=" form-control" id="details" name="details">
+                <div class="mb-3"><label for="" class=" text-dark text-uppercase text-bold">Data de Inicio</label>
+                    <input type="date" class=" form-control" id="start_date" name="start_date">
                 </div>
-                <div class="mb-3"><label for="" class=" text-dark text-uppercase text-bold">Equipamento</label>
-                    <input type="text" class=" form-control" id="equipment" name="equipment">
+                <div class="mb-3"><label for="" class=" text-dark text-uppercase text-bold">Data de Encerramento</label>
+                    <input type="date" class=" form-control" id="end_date" name="end_date">
                 </div>
-                <div class="mb-3"><label for="" class=" text-dark text-uppercase text-bold">Codigo da Sala</label>
+                <div class="mb-3"><label for="" class=" text-dark text-uppercase text-bold">Codigo do Período</label>
                     <input type="text" class=" form-control" id="code" name="code">
                 </div>
                 <div class="row btn-group">
@@ -38,19 +38,19 @@
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Nome da Sala</th>
-            <th scope="col">Detalhes</th>
-            <th scope="col">Equipamento</th>
-            <th scope="col">Código da Sala</th>
+            <th scope="col">Nome do Periodo</th>
+            <th scope="col">Data Inicial</th>
+            <th scope="col">Data de Encerraemnto</th>
+            <th scope="col">Código do Periodo</th>
           </tr>
         </thead>
-         @foreach ($rooms as $room)
+         @foreach ($seasons as $season)
         <tbody>
-            <td scope="col">{{$room->id}}</td>
-            <td scope="col">{{$room->name}}</td>
-            <td scope="col">{{$room->details}}</td>
-            <td scope="col">{{$room->equipament}}</td>
-            <td scope="col">{{$room->code}}</td>
+            <td scope="col">{{$season->id}}</td>
+            <td scope="col">{{$season->name}}</td>
+            <td scope="col">{{$season->start_date}}</td>
+            <td scope="col">{{$season->end_date}}</td>
+            <td scope="col">{{$season->code}}</td>
             <td scope="col"><div class=" btn-group">
                 <a href="" class=" btn btn-dark">Editar</a>
                 <a href="" class=" btn btn-danger">Deletar</a>

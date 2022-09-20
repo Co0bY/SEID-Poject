@@ -23,8 +23,8 @@ class RoomController extends Controller
         $room = new Room;
         $room->name = $request['name'];
         $room->details = $request['details'];
-        $room->number_of_tables = $request['number_of_tables'];
-        $room->additional_equipment = $request['additional_equipment'];
+        $room->equipment = $request['equipment'];
+        $room->code = $request['code'];
         $room->save();
 
         $rooms = Room::get();
@@ -39,11 +39,10 @@ class RoomController extends Controller
     }
 
     public function update(){
-        $registration = Room::where('id', $request['id'])->first();
+        $room = Room::where('id', $request['id'])->first();
         $room->name = $request['name'];
         $room->details = $request['details'];
-        $room->number_of_tables = $request['number_of_tables'];
-        $room->additional_equipment = $request['additional_equipment'];
+        $room->equipment = $request['equipment'];
         $room->code = $request['code'];
         $room->save();
 

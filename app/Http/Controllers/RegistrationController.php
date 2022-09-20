@@ -19,14 +19,15 @@ class RegistrationController extends Controller
     }
     public function create(Request $request){
         $student = Student::where('cpf',$request['cpf'])->first();
+        $season = Season::where('code', $request['code'])->first();
 
         $registration = new Registration;
 
         $matricula = substr($request['name'], 0, 4) . substr($request['cpf'], 0, 4) . substr($request['expiration_date'], 0, 4);
-        $expiration_date = $request['expiration_date'];
-        $registration->idstudent = $student->id;
+        $registration->student_id = $student->id;
+        $registration->season_id = $season->id;
         $registration->registration = $matricula;
-        $registration->expiration_date = $expiration_date;
+        $registration->active = true;
         $registration->save();
 
         $registrations = Registration::get();
@@ -43,10 +44,12 @@ class RegistrationController extends Controller
 
     public function update(){
         $registration = Registration::where('id', $request['id'])->first();
+        $season = Season::where('code', $request['code'])->first();
         $matricula = $request['registration'];
-        $expiration_date = $request['expiration_date'];
+        $registration->student_id = $student->id;
+        $registration->season_id = $season->id;
         $registration->registration = $matricula;
-        $registration->expiration_date = $expiration_date;
+        $registration->active = true;
         $registration->save();
 
     }

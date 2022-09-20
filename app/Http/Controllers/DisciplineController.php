@@ -20,12 +20,10 @@ class DisciplineController extends Controller
     }
 
     public function create(Request $request){
-        $teacher = Teacher::where('cpf', $request['cpf'])->first();
-
         $discipline = new Discipline;
-        $discipline->discipline_name = $request['discipline_name'];
-        $discipline->idteacher = $teacher->id;
+        $discipline->name = $request['discipline_name'];
         $discipline->code = $request['code'];
+        $discipline->active = true;
         $discipline->save();
         $disciplines = Discipline::get();
         return view('secretary.disciplines.index', ['disciplines' => $disciplines]);
@@ -33,22 +31,17 @@ class DisciplineController extends Controller
 
     public function show($id){
         $discipline = Discipline::where('id',$id)->first();
-        $teacher = Teacher::where('id', $discipline->idteacher)->first();
-
-        $discipline->tacher_name = $teacher->name;
-        $discipline->cpf = $teacher->cpf;
 
 
         return view('secretary.disciplines.discipline_update', ['discipline' => $discipline]);
     }
 
     public function update(Request $request){
-        $teacher = Teacher::where('cpf', $request['cpf'])->first();
 
         $discipline = Discipline::where('id', $request['id']);
-        $discipline->name = $request['name'];
-        $discipline->idteacher = $teacher->id;
+        $discipline->name = $request['discipline_name'];
         $discipline->code = $request['code'];
+        $discipline->active = true;
         $discipline->save();
 
         $disciplines = Discipline::get();

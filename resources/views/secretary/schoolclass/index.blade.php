@@ -10,6 +10,8 @@
             <div class=" card-body flex">
                 <h1 class=" text-uppercase mb-2">Filtro</h1>
                 {{-- route('pesquisar') --}}
+                <a href="">Adicionar Aluno</a>
+                <a href="">Adicionar Professor</a>
                 <form action=" " method="post">
                     @csrf
                     <div class=" row-cols-lg-3 mb-3"><label for="" class=" text-dark text-uppercase text-bold">Nome</label>
@@ -40,7 +42,7 @@
                 @foreach ($classes as $class)
                 <tbody>
                     <td scope="col">{{$class->id}}</td>
-                    <td scope="col">{{$class->Name}}</td>
+                    <td scope="col">{{$class->name}}</td>
                     <td scope="col">{{$class->code}}</td>
                     <td scope="col"><div class=" btn-group">
                         <a href="" class=" btn btn-dark">Editar</a>
