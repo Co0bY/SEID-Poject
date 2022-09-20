@@ -15,19 +15,19 @@
       <li>
         <a href="" class="nav-link link-dark">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-          Gerenciar Usuários;
+          Fazer Chamada;
         </a>
       </li>
       <li>
         <a href="" class="nav-link link-dark">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-          Gerenciar Disiciplinas;
+          Notas;
         </a>
       </li>
       <li>
         <a href="" class="nav-link link-dark">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-          Gerenciar Matrículas;
+          Atribuir Atividades;
         </a>
       </li>
       <li>

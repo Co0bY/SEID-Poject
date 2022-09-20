@@ -2,26 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classes;
+use App\Models\Teacher;
+use App\Models\TeacherInClasses;
 use Illuminate\Http\Request;
 
 class TeacherController extends Controller
 {
     public function index(){
         $teacher = Teacher::where('id', $_SESSION['id'])->first();
-        $discipline = Discipline::select('id')->where('idteacher', $teacher->id)->get();
-        $t = count($discipline);
-        $lig = [];
-        $active = [];
-        $disciplines = [];
-        for ($i = 0; $i <= $t; $i++) {
-            $today = date('Y-m-d');
-            $lig[$i] = DisciplinesInActiveDiscipline::where('id_discipline', $discipline[$i]->id)
-            ->where('expiration_date', '>', $today)->first();
-            $active[$i] = ActiveDiscpline::where('id', $lig[$i]->id)->get();
-            $disciplines[$i] = $active[$i];
-        }
+        $ligation = TeacherInClasses::where('id_teacher', $teacher->id)->first();
+        $classes = Classes::where('id', $ligation->id_class)->first();
 
-        return view('teachers.index', ['disciplines' => $disciplines]);
+        return view('teachers.index', ['classes' => $classes]);
     }
 
     public function listarAlunos($id){

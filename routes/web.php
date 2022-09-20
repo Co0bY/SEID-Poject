@@ -75,3 +75,7 @@ Route::prefix('/secreatry')->group(function(){
     Route::get('/season/createform',  [\App\Http\Controllers\SeasonController::class, 'createform'])->name('secretary.season-create-form');
     Route::post('/season/create', [\App\Http\Controllers\SeasonController::class, 'create'])->name('secretary.season-create');
 });
+
+Route::prefix('/teacher')->group(function(){
+    Route::get('/home', [\App\Http\Controllers\TeacherController::class, 'index'])->name('teacher.index');
+});
