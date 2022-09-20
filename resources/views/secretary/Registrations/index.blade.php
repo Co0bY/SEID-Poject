@@ -18,7 +18,7 @@
                 <div class=" row-cols-lg-3 mb-3"><label for="" class=" text-dark text-uppercase text-bold">Data de Expiração</label>
                     <input type="date" class=" form-control" id="expiration_date" name="expiration_date">
                 </div>
-                <div class=" mb-3"><label for="" class=" text-dark text-uppercase text-bold">Código do Periodo Válido</label>
+                <div class=" row-cols-lg-3 mb-3"><label for="" class=" text-dark text-uppercase text-bold">Código do Periodo Válido</label>
                     <input type="text" class=" form-control" id="code" name="cpde">
                 </div>
                 <div class="">

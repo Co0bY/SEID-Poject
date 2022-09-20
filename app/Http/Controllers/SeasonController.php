@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Season;
 use Illuminate\Http\Request;
 
 class SeasonController extends Controller
@@ -9,11 +9,11 @@ class SeasonController extends Controller
     public function index(){
         $seasons = Season::get();
 
-        return view('secretary.season.index', ['seasons' => $seasons]);
+        return view('secretary.seasons.index', ['seasons' => $seasons]);
     }
 
     public function createform(){
-        return view('secretary.season.season_create');
+        return view('secretary.seasons.season_create');
     }
 
     public function create(Request $request){
@@ -29,13 +29,13 @@ class SeasonController extends Controller
 
         $seasons = Season::get();
 
-        return view('secretary.season.index', ['seasons' => $seasons]);
+        return view('secretary.seasons.index', ['seasons' => $seasons]);
     }
 
     public function show(Request $request){
         $season = Season::where('id', $request['id'])->first();
 
-        return view('', ['season' => $season]);
+        return view('secretary.seasons.season_update', ['season' => $season]);
     }
 
     public function update(){

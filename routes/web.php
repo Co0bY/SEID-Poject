@@ -63,11 +63,15 @@ Route::prefix('/secreatry')->group(function(){
     Route::get('/class', [\App\Http\Controllers\ClassController::class, 'index'])->name('secretary.class-index');
     Route::get('/class/createform',  [\App\Http\Controllers\ClassController::class, 'createform'])->name('secretary.class-create-form');
     Route::post('/class/create', [\App\Http\Controllers\ClassController::class, 'create'])->name('secretary.class-create');
+    Route::post('/class/addStudent', [\App\Http\Controllers\RegistrationsInClassesController::class, 'addStudent'])->name('secretary.add-student');
+    Route::get('/class/StudentForm', [\App\Http\Controllers\RegistrationsInClassesController::class, 'addform'])->name('secretary.add-student-form');
+    Route::post('/class/addTeacher', [\App\Http\Controllers\TeacherInClassesController::class, 'addTeacher'])->name('secretary.add-teacher');
+    Route::get('/class/TeacherForm', [\App\Http\Controllers\TeacherInClassesController::class, 'addform'])->name('secretary.add-teacher-form');
 
     Route::get('/addregistrationform',  [\App\Http\Controllers\RegistrationsInClassesController::class, 'addform'])->name('secretary.active.assign-registration-form');
     Route::get('/addregistration',  [\App\Http\Controllers\RegistrationsInClassesController::class, 'addRegistration'])->name('secretary.active.assign-registration');
 
-    Route::get('/room', [\App\Http\Controllers\SeasonController::class, 'index'])->name('secretary.season-index');
-    Route::get('/room/createform',  [\App\Http\Controllers\SeasonController::class, 'createform'])->name('secretary.season-create-form');
-    Route::post('/room/create', [\App\Http\Controllers\SeasonController::class, 'create'])->name('secretary.season-create');
+    Route::get('/season', [\App\Http\Controllers\SeasonController::class, 'index'])->name('secretary.season-index');
+    Route::get('/season/createform',  [\App\Http\Controllers\SeasonController::class, 'createform'])->name('secretary.season-create-form');
+    Route::post('/season/create', [\App\Http\Controllers\SeasonController::class, 'create'])->name('secretary.season-create');
 });
