@@ -54,7 +54,7 @@ class PrincipalController extends Controller
             $perfil = new Teacher();
         }
         $data = $request['birth_date'];
-        $perfil->iduser = $id;
+        $perfil->user_id = $id;
         $perfil->cpf = $request['cpf'];
         $perfil->name = $request['name'];
         $perfil->email = $request['email'];
@@ -104,16 +104,16 @@ class PrincipalController extends Controller
         $user = User::where('id', $id)->first();
         // dd($user);
         if($user->type_of_user == '1'){
-            $perfil = Principal::where('iduser', $user->id)->first();
+            $perfil = Principal::where('user_id', $user->id)->first();
         }
         elseif($user->type_of_user == '2'){
-            $perfil = Secretary::where('iduser', $user->id)->first();
+            $perfil = Secretary::where('user_id', $user->id)->first();
         }
         elseif($user->type_of_user == '3'){
-            $perfil = Student::where('iduser', $user->id)->first();
+            $perfil = Student::where('user_id', $user->id)->first();
         }
         elseif($user->type_of_user == '4'){
-            $perfil = Teacher::where('iduser', $user->id)->first();
+            $perfil = Teacher::where('user_id', $user->id)->first();
         }
         return view('principal.user_update', ['user' => $user, 'perfil' => $perfil]);
     }
@@ -144,7 +144,7 @@ class PrincipalController extends Controller
             $perfil = new Teacher();
         }
         $data = $request['birth_date'];
-        $perfil->iduser = $request['id'];
+        $perfil->user_id = $request['id'];
         $perfil->cpf = $request['cpf'];
         $perfil->name = $request['name'];
         $perfil->email = $request['email'];
@@ -160,16 +160,16 @@ class PrincipalController extends Controller
     public function deleteform($id){
         $user = User::where('id', $id)->first();
         if($user->type_of_user == '1'){
-            $perfil = Principal::where('iduser', $user->id)->first();
+            $perfil = Principal::where('user_id', $user->id)->first();
         }
         elseif($user->type_of_user == '2'){
-            $perfil = Secretary::where('iduser', $user->id)->first();
+            $perfil = Secretary::where('user_id', $user->id)->first();
         }
         elseif($user->type_of_user == '3'){
-            $perfil = Student::where('iduser', $user->id)->first();
+            $perfil = Student::where('user_id', $user->id)->first();
         }
         elseif($user->type_of_user == '4'){
-            $perfil = Teacher::where('iduser', $user->id)->first();
+            $perfil = Teacher::where('user_id', $user->id)->first();
         }
         return view('principal.user_delete', ['user' => $user, 'perfil' => $perfil]);
     }
@@ -177,19 +177,19 @@ class PrincipalController extends Controller
     public function deleteUser(Request $request){
         $user = User::where('id', $request['id'])->first();
         if($user->type_of_user == '1'){
-            $perfil = Principal::where('iduser', $user->id)->first();
+            $perfil = Principal::where('user_id', $user->id)->first();
             $perfil->delete();
         }
         elseif($user->type_of_user == '2'){
-            $perfil = Secretary::where('iduser', $user->id)->first();
+            $perfil = Secretary::where('user_id', $user->id)->first();
             $perfil->delete();
         }
         elseif($user->type_of_user == '3'){
-            $perfil = Student::where('iduser', $user->id)->first();
+            $perfil = Student::where('user_id', $user->id)->first();
             $perfil->delete();
         }
         elseif($user->type_of_user == '4'){
-            $perfil = Teacher::where('iduser', $user->id)->first();
+            $perfil = Teacher::where('user_id', $user->id)->first();
             $perfil->delete();
         }
         $user->delete();

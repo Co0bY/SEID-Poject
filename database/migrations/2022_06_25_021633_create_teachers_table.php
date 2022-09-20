@@ -15,7 +15,7 @@ class CreateTeachersTable extends Migration
     {
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('iduser');
+            $table->unsignedBigInteger('user_id');
             $table->string('cpf');
             $table->string('name');
             $table->string('email');
@@ -24,7 +24,7 @@ class CreateTeachersTable extends Migration
             $table->string('picture');
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('iduser')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
