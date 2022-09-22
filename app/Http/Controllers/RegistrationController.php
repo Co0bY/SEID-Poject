@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use App\Models\Registration;
+use App\Models\Season;
 use Illuminate\Http\Request;
 
 class RegistrationController extends Controller
@@ -21,6 +22,7 @@ class RegistrationController extends Controller
         $student = Student::where('cpf',$request['cpf'])->first();
         $season = Season::where('code', $request['code'])->first();
 
+
         $registration = new Registration;
 
         $matricula = substr($request['name'], 0, 4) . substr($request['cpf'], 0, 4) . substr($request['expiration_date'], 0, 4);
@@ -32,7 +34,7 @@ class RegistrationController extends Controller
 
         $registrations = Registration::get();
 
-
+        return redirect()->route('secretary.registration-index');
         return view('secretary.Registrations.index', ['registrations' => $registrations]);
     }
 

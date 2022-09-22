@@ -7,19 +7,19 @@
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
-        <a href="{{route('secretary.index')}}" class="nav-link active" aria-current="page">
+        <a href="{{route('teacher.index')}}" class="nav-link active" aria-current="page">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
           Home
         </a>
       </li>
       <li>
-        <a href="" class="nav-link link-dark">
+        <a href="{{route('teacher.attendance')}}" class="nav-link link-dark">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
           Fazer Chamada;
         </a>
       </li>
       <li>
-        <a href="" class="nav-link link-dark">
+        <a href="{{route('teacher.score')}}" class="nav-link link-dark">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
           Notas;
         </a>

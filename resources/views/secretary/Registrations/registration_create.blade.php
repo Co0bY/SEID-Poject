@@ -16,13 +16,13 @@
             <form action="{{route('secretary.registration-create')}}" method="post">
                 @csrf
                 <div class=" mb-3"><label for="" class=" text-dark text-uppercase text-bold">Nome do Aluno</label>
-                    <input type="text" class=" form-control" id="name" name="name">
+                    <input type="text" class=" form-control" id="name" name="name" readonly>
                 </div>
                 <div class=" mb-3"><label for="" class=" text-dark text-uppercase text-bold">Cpf do Aluno</label>
                     <input type="text" class=" form-control" id="cpf" name="cpf">
                 </div>
                 <div class=" mb-3"><label for="" class=" text-dark text-uppercase text-bold">Código do Periodo Válido</label>
-                    <input type="text" class=" form-control" id="code" name="cpde">
+                    <input type="text" class=" form-control" id="code" name="code">
                 </div>
                 <div class="row">
                     <a href="{{route('secretary.registration-index')}}" class=" btn btn-primary text-uppercase">Voltar</a>

@@ -25,7 +25,7 @@
                     <input type="text" class=" form-control" id="code" name="code">
                 </div>
                 <div class="row btn-group">
-                    <a href="{{route('secretary.room-create-form')}}" class=" btn btn-primary text-uppercase"> Criar</a>
+                    <a href="{{route('secretary.season-create-form')}}" class=" btn btn-primary text-uppercase"> Criar</a>
                     <button type="submit" class=" btn btn-success text-uppercase">Pesquisar</button>
                 </div>
               </form>

@@ -77,5 +77,9 @@ Route::prefix('/secreatry')->group(function(){
 });
 
 Route::prefix('/teacher')->group(function(){
-    Route::get('/home', [\App\Http\Controllers\TeacherController::class, 'index'])->name('teacher.index');
+   Route::get('/home' , [\App\Http\Controllers\TeacherController::class, 'index'])->name('teacher.index');
+   Route::get('/attendance' , [\App\Http\Controllers\TeacherController::class, 'listClassesAttendance'])->name('teacher.attendance');
+   Route::get('/presence/form/{id?}' , [\App\Http\Controllers\TeacherController::class, 'listStudentsAttendance'])->name('teacher.attendance-form');
+   Route::get('/score' , [\App\Http\Controllers\TeacherController::class, 'listClassesScore'])->name('teacher.score');
+   Route::get('/score/form/{id?}' , [\App\Http\Controllers\TeacherController::class, 'listStudentsScore'])->name('teacher.score-form');
 });

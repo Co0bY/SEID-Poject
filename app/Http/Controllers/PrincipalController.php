@@ -64,7 +64,7 @@ class PrincipalController extends Controller
         // dd($user);
         $perfil->save();
 
-        return view('principal.user_create');
+        return redirect()->route('principal.users');
     }
 
     public function filtroUsuarios(Request $request){
@@ -153,8 +153,7 @@ class PrincipalController extends Controller
         $perfil->picture = "Ainda em produção";
         // dd($user);
         $perfil->save();
-        $users =  DB::table('user_filter')->get();
-        return view('principal.users', ['users' => $users]);
+        return redirect()->route('principal.users');
     }
 
     public function deleteform($id){

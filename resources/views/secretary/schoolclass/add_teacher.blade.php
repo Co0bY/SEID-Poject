@@ -15,15 +15,15 @@
             {{-- route('pesquisar') --}}
             <form action="{{route('secretary.add-teacher')}}" method="post">
                 @csrf
-                <div class=" mb-3"><label for="" class=" text-dark text-uppercase text-bold">Matriculá do Aluno</label>
-                    <input type="text" class=" form-control" id="registration" name="registration">
+                <div class=" mb-3"><label for="" class=" text-dark text-uppercase text-bold">CPF do Professor</label>
+                    <input type="text" class=" form-control" id="cpf" name="cpf">
                 </div>
                 <div class=" mb-3"><label for="" class=" text-dark text-uppercase text-bold">Código da Turma</label>
                     <input type="text" class=" form-control" id="code" name="code">
                 </div>
                 <div class="row">
                     <a href="{{route('secretary.class-index')}}" class=" btn btn-primary text-uppercase">Voltar</a>
-                    <button type="submit" class=" btn btn-success text-uppercase">Criar</button>
+                    <button type="submit" class=" btn btn-success text-uppercase">Adicionar</button>
                 </div>
               </form>
         </div>

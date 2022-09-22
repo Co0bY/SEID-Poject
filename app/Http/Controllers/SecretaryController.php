@@ -64,7 +64,8 @@ class SecretaryController extends Controller
         // dd($user);
         $perfil->save();
 
-        return view('secretary.user_create');
+        return redirect()->route('secretary.users');
+
     }
 
     public function filtroUsuarios(Request $request){
@@ -118,6 +119,7 @@ class SecretaryController extends Controller
         return view('secretary.user_update', ['user' => $user, 'perfil' => $perfil]);
     }
     public function updateuser(Request $request){
+
         $user = User::where('id', $request['id'])->first();
 
         $email = $request['email'];
@@ -129,6 +131,7 @@ class SecretaryController extends Controller
         $user->email = $email;
         $user->password = $password;
         $user->type_of_user = $usertype;
+
         $user->save();
 
         if($request['type_of_user'] == '1'){
@@ -154,8 +157,8 @@ class SecretaryController extends Controller
         // dd($user);
         $perfil->save();
 
-        $users =  DB::table('user_filter')->get();
-        return view('secretary.users', ['users' => $users]);
+
+        return redirect()->route('secretary.users');
     }
 
     public function deleteform($id){
@@ -194,7 +197,7 @@ class SecretaryController extends Controller
             $perfil->delete();
         }
         $user->delete();
-        $users =  DB::table('user_filter')->get();
-        return view('secretary.users', ['users' => $users]);
+
+        return redirect()->route('secretary.users');
     }
 }

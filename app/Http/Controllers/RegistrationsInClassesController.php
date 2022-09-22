@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Season;
+use App\Models\Classes;
 use App\Models\Registration;
+use App\Models\RegistrationsInClasses;
 use Illuminate\Http\Request;
 
 class RegistrationsInClassesController extends Controller

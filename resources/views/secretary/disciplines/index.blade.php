@@ -33,15 +33,14 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">Nome</th>
-            <th scope="col">Id Do Professor</th>
             <th scope="col">Codigo da Disciplina</th>
           </tr>
         </thead>
+
          @foreach ($disciplines as $discipline)
         <tbody>
             <td scope="col">{{$discipline->id}}</td>
-            <td scope="col">{{$discipline->discipline_name}}</td>
-            <td scope="col">{{$discipline->idteacher}}</td>
+            <td scope="col">{{$discipline->name}}</td>
             <td scope="col">{{$discipline->code}}</td>
             <td scope="col"><div class=" btn-group">
                 <a href="" class=" btn btn-dark">Editar</a>

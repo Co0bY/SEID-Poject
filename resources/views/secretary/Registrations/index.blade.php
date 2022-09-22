@@ -37,15 +37,15 @@
             <th scope="col">#</th>
             <th scope="col">Matrícula</th>
             <th scope="col">Id Do Aluno</th>
-            <th scope="col">Data de Expiração</th>
+            <th scope="col">Ativo</th>
           </tr>
         </thead>
          @foreach ($registrations as $registration)
         <tbody>
             <td scope="col">{{$registration->id}}</td>
             <td scope="col">{{$registration->registration}}</td>
-            <td scope="col">{{$registration->idstudent}}</td>
-            <td scope="col">{{$registration->expiration_date}}</td>
+            <td scope="col">{{$registration->student_id}}</td>
+            <td scope="col">{{$registration->active}}</td>
             <td scope="col"><div class=" btn-group">
                 <a href="" class=" btn btn-dark">Editar</a>
                 <a href="" class=" btn btn-danger">Deletar</a>

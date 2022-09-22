@@ -49,7 +49,7 @@
             <td scope="col">{{$room->id}}</td>
             <td scope="col">{{$room->name}}</td>
             <td scope="col">{{$room->details}}</td>
-            <td scope="col">{{$room->equipament}}</td>
+            <td scope="col">{{$room->equipment}}</td>
             <td scope="col">{{$room->code}}</td>
             <td scope="col"><div class=" btn-group">
                 <a href="" class=" btn btn-dark">Editar</a>

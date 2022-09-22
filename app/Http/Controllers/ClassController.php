@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 use App\Models\Classes;
+use App\Models\Season;
+use App\Models\Discipline;
+use App\Models\Room;
 use Illuminate\Http\Request;
 
 class ClassController extends Controller

@@ -52,7 +52,7 @@
             <td scope="col">{{$class->active}}</td>
             <td scope="col">
                 <div class=" btn-group">
-                    <a href="" class=" btn btn-dark">Detalhes</a>
+                    <a href="" class=" btn btn-confirm">Fazer Chamada</a>
                 </div>
             </td>
         </tbody>
