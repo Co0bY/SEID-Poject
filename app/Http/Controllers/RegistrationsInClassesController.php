@@ -18,7 +18,7 @@ class RegistrationsInClassesController extends Controller
         $matricula = Registration::where('registration', $request['registration'])->first();
         $class = Classes::where('code', $request['code'])->first();
         $registration = new RegistrationsInClasses;
-        $registration->id_student = $matricula->id;
+        $registration->id_registration = $matricula->id;
         $registration->id_class = $class->id;
         $registration->save();
 

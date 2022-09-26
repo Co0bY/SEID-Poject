@@ -26,8 +26,9 @@ class ForeigKeyUsersTypeUsers extends Migration
      */
     public function down()
     {
+
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign('type_of_user_foreign');
+            $table->dropForeign('users_type_of_user_foreign');
             $table->dropColumn('type_of_user');
         });
     }

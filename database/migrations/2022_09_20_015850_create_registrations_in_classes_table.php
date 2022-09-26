@@ -15,10 +15,10 @@ class CreateRegistrationsInClassesTable extends Migration
     {
         Schema::create('registrations_in_classes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_student');
+            $table->unsignedBigInteger('id_registration');
             $table->unsignedBigInteger('id_class');
             $table->timestamps();
-            $table->foreign('id_student')->references('id')->on('students');
+            $table->foreign('id_registration')->references('id')->on('registrations');
             $table->foreign('id_class')->references('id')->on('classes');
         });
     }
