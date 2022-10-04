@@ -52,7 +52,8 @@
             <td scope="col">{{$class->active}}</td>
             <td scope="col">
                 <div class=" btn-group">
-                    <a href="" class=" btn btn-confirm">Atribuir Nota</a>
+                    <a href="{{route('teacher.score-form', $class->id)}}" class=" btn btn-success">Atribuir Nota</a>
+                    <a href="{{route('teacher.score-list-form', $class->id)}}" class=" btn btn-primary">Editar Nota</a>
                 </div>
             </td>
         </tbody>

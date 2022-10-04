@@ -86,4 +86,8 @@ Route::prefix('/teacher')->group(function(){
 
    Route::get('/score' , [\App\Http\Controllers\TeacherController::class, 'listClassesScore'])->name('teacher.score');
    Route::get('/score/form/{id?}' , [\App\Http\Controllers\TeacherController::class, 'listStudentsScore'])->name('teacher.score-form');
+   Route::post('/score/makescore' , [\App\Http\Controllers\TeacherController::class, 'makeScore'])->name('teacher.attendance-score');
+   Route::get('/score/edit-form/{id?}' , [\App\Http\Controllers\TeacherController::class, 'listStudentsScoreEdit'])->name('teacher.score-list-form');
+   Route::get('/score/StudentScore/{id?}&{classid?}' , [\App\Http\Controllers\TeacherController::class, 'editStudentScore'])->name('teacher.score-edit-form');
+   Route::post('/score/StudentScore/Update' , [\App\Http\Controllers\TeacherController::class, 'updateStudentScore'])->name('teacher.score-update');
 });
