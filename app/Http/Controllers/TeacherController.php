@@ -10,6 +10,7 @@ use App\Models\Student;
 use App\Models\Registration;
 use App\Models\Attendance;
 use App\Models\Score;
+use App\Models\HomeWork;
 use Illuminate\Http\Request;
 
 class TeacherController extends Controller
@@ -159,4 +160,35 @@ class TeacherController extends Controller
         return redirect()->route('teacher.score');
     }
 
+    public function listClassesHomework(Request $request){
+        $userid = $request->session()->get('id');
+        $teacher = Teacher::where('user_id', $userid)->first();
+        $ligation = TeacherInClasses::where('id_teacher', $teacher->id)->first();
+        if(isset($ligation)){
+            $classes = Classes::where('id', $ligation->id_class)->get();
+        }
+        else{
+            $classes = [];
+        }
+
+        return view('teachers.homework_index', ['classes' => $classes]);
+    }
+    public function assignedHomeworkForm($id){
+
+        return view('teachers.homework_assignment_form',['classid' => $id]);
+    }
+
+    public function createHomework(Request $request){
+        // dd($request);
+        $homework = new Homework;
+        $homework->class_id = $request->classid;
+        $homework->title = $request->title;
+        $homework->content = $request->content;
+        $path = $request->file('additional_file')->store('public/additional_files');
+        $homework->additional_file = $path;
+        if($request->score){
+            $homework->score = $request->score;
+        }
+        $homework->save();
+    }
 }
