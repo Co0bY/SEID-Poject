@@ -87,13 +87,15 @@ Route::prefix('/teacher')->group(function(){
     //Score
    Route::get('/score' , [\App\Http\Controllers\TeacherController::class, 'listClassesScore'])->name('teacher.score');
    Route::get('/score/form/{id?}' , [\App\Http\Controllers\TeacherController::class, 'listStudentsScore'])->name('teacher.score-form');
-   Route::post('/score/makescore' , [\App\Http\Controllers\TeacherController::class, 'makeScore'])->name('teacher.attendance-score');
+   Route::post('/score/makescore' , [\App\Http\Controllers\TeacherController::class, 'makeScore'])->name('teacher.make-score');
    Route::get('/score/edit-form/{id?}' , [\App\Http\Controllers\TeacherController::class, 'listStudentsScoreEdit'])->name('teacher.score-list-form');
    Route::get('/score/StudentScore/{id?}&{classid?}' , [\App\Http\Controllers\TeacherController::class, 'editStudentScore'])->name('teacher.score-edit-form');
    Route::post('/score/StudentScore/Update' , [\App\Http\Controllers\TeacherController::class, 'updateStudentScore'])->name('teacher.score-update');
+   Route::get('/score/AddStudentScore/{registrationClass?}&{classid?}' , [\App\Http\Controllers\TeacherController::class, 'createScoreForm'])->name('teacher.score-create-form');
+   Route::post('/score/StudentScore/Create' , [\App\Http\Controllers\TeacherController::class, 'addStudentScore'])->name('teacher.score-create');
 
    //Homework
    Route::get('/homework' , [\App\Http\Controllers\TeacherController::class, 'listClassesHomework'])->name('teacher.homework');
    Route::get('/homework/assigned/{id?}' , [\App\Http\Controllers\TeacherController::class, 'assignedHomeworkForm'])->name('teacher.homework-assigned');
-   Route::get('/homework/create' , [\App\Http\Controllers\TeacherController::class, 'createHomework'])->name('teacher.homework-create');
+   Route::post('/homework/create' , [\App\Http\Controllers\TeacherController::class, 'createHomework'])->name('teacher.homework-create');
 });

@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Homework extends Model
 {
     use HasFactory;
+
+    protected $attributes = [
+        'score' => null,
+        'revised' => null,
+    ];
 }

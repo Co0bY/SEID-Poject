@@ -31,7 +31,7 @@
             </td>
             <td scope="col">
                 <div class=" input-group">
-                  <a href="{{route('teacher.score-edit-form', [$student->id, $classid])}}" class=" btn btn-primary">Editar Nota</a>
+                  <a href="{{route('teacher.score-edit-form', [$student->id, $classid])}}" class=" btn btn-primary">Notas do Aluno</a>
                 </div>
             </td>
         </tbody>

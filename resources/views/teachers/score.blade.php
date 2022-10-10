@@ -50,10 +50,10 @@
             <td scope="col">{{$class->name}}</td>
             <td scope="col">{{$class->code}}</td>
             <td scope="col">{{$class->active}}</td>
-            <td scope="col">
+            <td scope="col" colspan="2">
                 <div class=" btn-group">
-                    <a href="{{route('teacher.score-form', $class->id)}}" class=" btn btn-success">Atribuir Nota</a>
-                    <a href="{{route('teacher.score-list-form', $class->id)}}" class=" btn btn-primary">Editar Nota</a>
+                    <a href="{{route('teacher.score-form', $class->id)}}" class=" btn btn-success">Atribuir Nota em Massa</a>
+                    <a href="{{route('teacher.score-list-form', $class->id)}}" class=" btn btn-primary">Notas</a>
                 </div>
             </td>
         </tbody>

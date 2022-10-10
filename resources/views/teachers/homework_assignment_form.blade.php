@@ -8,7 +8,7 @@
 
         <div class=" card col-9">
             <div class=" card-body">
-                <form action="{{route('teacher.homework-create')}}" POST>
+                <form action="{{route('teacher.homework-create')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="classid" id="classid" value="{{$classid}}">
                 <div class=" col-12 text-center uppercase mt-3">
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div class="row-12">
-                        <input class="form-control form-control-sm" type="file" id="assigned_archive" name="assigned_archive">
+                        <input class="form-control form-control-sm" type="file" id="additional_file" name="additional_file">
                     </div>
                 </div>
                 <div class=" col-12 text-center uppercase mt-3">

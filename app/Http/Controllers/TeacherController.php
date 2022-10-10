@@ -114,7 +114,7 @@ class TeacherController extends Controller
             $attendance = new Score;
             $attendance->registration_in_class_id = $registrationInClass->id;
             $attendance->score = $request['score'][$i];
-            // dd($attendance);
+            $attendance->description = $request['description'];
             $attendance->save();
         }
         return redirect()->route('teacher.score');
@@ -145,8 +145,9 @@ class TeacherController extends Controller
         $scores = Score::where('registration_in_class_id', $classregistration->id)->get();
         $student = $registration;
         $student->name = $studentfocus->name;
+        $registrationClass = $classregistration->id;
 
-        return view('teachers.score_edit_form', ['student' => $student, 'scores' => $scores, 'classid' => $classid]);
+        return view('teachers.score_edit_form', ['student' => $student, 'scores' => $scores, 'classid' => $classid, 'registrationClass' => $registrationClass]);
     }
 
     public function updateStudentScore(Request $request){
@@ -155,8 +156,29 @@ class TeacherController extends Controller
         for($i = 0; $i < $t; $i++){
             $newscore = Score::where('id', $request['id'][$i])->first();
             $newscore->score = $request['score'][$i];
+            $newscore->description = $request['description'];
             $newscore->save();
         }
+        return redirect()->route('teacher.score');
+    }
+
+    public function createScoreForm($registrationClass, $classid){
+        $classregistration =  $classregistration = RegistrationsInClasses::where('id_class', $classid)->where('id_registration', $registrationClass)->first();
+        $registration = Registration::where('id', $classregistration->id_registration)->first();
+        $studentfocus = Student::where('id', $registration->student_id)->first();
+        $student = $registration;
+        $student->name = $studentfocus->name;
+
+        return view('teachers.score_new', ['student' => $student, 'classid' => $classid, 'registrationClass' => $registrationClass]);
+    }
+
+    public function addStudentScore(Request $request){
+        $score = new Score;
+        $score->registration_in_class_id = $request->registrationClass;
+        $score->score = $request->score;
+        $score->description = $request->description;
+        $score->save();
+
         return redirect()->route('teacher.score');
     }
 
@@ -173,13 +195,17 @@ class TeacherController extends Controller
 
         return view('teachers.homework_index', ['classes' => $classes]);
     }
+
+
+
     public function assignedHomeworkForm($id){
 
         return view('teachers.homework_assignment_form',['classid' => $id]);
     }
 
     public function createHomework(Request $request){
-        // dd($request);
+
+        // dd($request->all());
         $homework = new Homework;
         $homework->class_id = $request->classid;
         $homework->title = $request->title;

@@ -19,8 +19,8 @@ class CreateHomeworkAnswersTable extends Migration
             $table->string('title',255);
             $table->string('content', 255);
             $table->string('additional_file');
-            $table->float('score');
-            $table->boolean('revised');
+            $table->float('score')->default(null);
+            $table->boolean('revised')->default(null);
             $table->string('answer');
             $table->string('answer_file');
             $table->timestamps();
