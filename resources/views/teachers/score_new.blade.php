@@ -7,12 +7,13 @@
     @endcomponent
 <div class="col-9">
     <div class=" card">
+        <form action="{{route('teacher.score-create')}}" method="POST">
+            @csrf
         <div class=" card-body">
             <div class=" col-12 text-center uppercase">
                 <p> <span class="">Matricula: {{$student->registration}}</span>  Nome: {{$student->name}}</p>
             </div>
-            <form action="{{route('teacher.score-create')}}" method="POST">
-                @csrf
+
                 <input type="hidden" name="classid" id="classid" value="{{$classid}}">
             <hr>
             <table class="table">
@@ -21,12 +22,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Matricula</th>
                     <th scope="col">Nome</th>
-                    <th scope="col">
-                        <div class=" btn-group">
-                            <button type="submit" class=" btn btn-success">Adicionar Nota</button>
-                            {{-- {{route('', $scores[0]->registration_in_class_id)}} --}}
-                        </div>
-                    </th>
+                    <th scope="col">Notas</th>
                     <th scope="col">Descrição</th>
                   </tr>
                 </thead>
@@ -52,8 +48,18 @@
                     </td>
                 </tbody>
               </table>
-            </form>
+
         </div>
+        <div class="card-footer d-flex">
+            <div class=" btn-group col-3">
+                <a href="{{route('teacher.score')}}" class=" btn btn-primary">Voltar</a>
+            </div>
+            <div class=" col-6"></div>
+            <div class=" btn-group col-3">
+                <button type="submit" class=" btn btn-success">Adicionar Nota</button>
+            </div>
+        </div>
+        </form>
     </div>
 
 </div>

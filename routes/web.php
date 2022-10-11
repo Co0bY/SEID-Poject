@@ -93,6 +93,7 @@ Route::prefix('/teacher')->group(function(){
    Route::post('/score/StudentScore/Update' , [\App\Http\Controllers\TeacherController::class, 'updateStudentScore'])->name('teacher.score-update');
    Route::get('/score/AddStudentScore/{registrationClass?}&{classid?}' , [\App\Http\Controllers\TeacherController::class, 'createScoreForm'])->name('teacher.score-create-form');
    Route::post('/score/StudentScore/Create' , [\App\Http\Controllers\TeacherController::class, 'addStudentScore'])->name('teacher.score-create');
+   Route::get('/fecharNota' , [\App\Http\Controllers\TeacherController::class, 'fecharNota'])->name('teacher.score-close-score');
 
    //Homework
    Route::get('/homework' , [\App\Http\Controllers\TeacherController::class, 'listClassesHomework'])->name('teacher.homework');

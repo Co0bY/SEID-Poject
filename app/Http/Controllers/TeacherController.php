@@ -156,7 +156,7 @@ class TeacherController extends Controller
         for($i = 0; $i < $t; $i++){
             $newscore = Score::where('id', $request['id'][$i])->first();
             $newscore->score = $request['score'][$i];
-            $newscore->description = $request['description'];
+            $newscore->description = $request['description'][$i];
             $newscore->save();
         }
         return redirect()->route('teacher.score');
@@ -178,6 +178,29 @@ class TeacherController extends Controller
         $score->score = $request->score;
         $score->description = $request->description;
         $score->save();
+
+        return redirect()->route('teacher.score');
+    }
+
+    public function fecharNota(Request $request){
+        $scores = Score::where('registration_in_class_id', $request->registrationClassId)->get();
+        $finalScore = 0;
+        if($request->metodo == "soma"){
+            foreach($scores as $score){
+                $finalScore = $finalScore + $score->score;
+            }
+        }
+        if($request->metodo == "mediaAritimetica"){
+            $quantidade = count($scores);
+            foreach($scores as $score){
+                $finalScore = $finalScore + $score->score;
+
+            }
+            $finalScore = $finalScore / $quantidade;
+        }
+        $registrationInClass = RegistrationsInClasses::where('id', $request->registrationClassId)->first();
+        $registrationInClass->final_score = $finalScore;
+        $registrationInClass->save();
 
         return redirect()->route('teacher.score');
     }
