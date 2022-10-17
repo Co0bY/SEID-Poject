@@ -51,6 +51,12 @@
         </a>
       </li>
 
+      <li>
+        <a href="{{route('secretary.extraction')}}" class="nav-link link-dark">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
+          Relatórios;
+        </a>
+      </li>
 
     </ul>
     </div>

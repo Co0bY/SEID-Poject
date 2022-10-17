@@ -74,6 +74,11 @@ Route::prefix('/secreatry')->group(function(){
     Route::get('/season', [\App\Http\Controllers\SeasonController::class, 'index'])->name('secretary.season-index');
     Route::get('/season/createform',  [\App\Http\Controllers\SeasonController::class, 'createform'])->name('secretary.season-create-form');
     Route::post('/season/create', [\App\Http\Controllers\SeasonController::class, 'create'])->name('secretary.season-create');
+
+    //reltatórios
+    Route::get('/extraction', [\App\Http\Controllers\ExportacaoController::class, 'index'])->name('secretary.extraction');
+    Route::get('/extraction-attendance', [\App\Http\Controllers\ExportacaoController::class, 'exportFalseAttendances'])->name('secretary.extraction-faltas');
+    Route::get('/extraction-final-score', [\App\Http\Controllers\ExportacaoController::class, 'exportFinishStudents'])->name('secretary.extraction-notas');
 });
 
 Route::prefix('/teacher')->group(function(){
