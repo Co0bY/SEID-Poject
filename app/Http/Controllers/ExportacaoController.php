@@ -17,7 +17,7 @@ class ExportacaoController extends Controller
 
     public function exportFalseAttendances(Request $request){
 
-        dd($request);
+        // dd($request);
 
         $query = DB::table("extracaofaltas");
 
@@ -55,7 +55,7 @@ class ExportacaoController extends Controller
 
             $sheet->setCellValue("A$c", $falta->id);
             $sheet->setCellValue("B$c", $falta->registration);
-            $sheet->setCellValue("C$c", $falta)->student_name;
+            $sheet->setCellValue("C$c", $falta->student_name);
             $sheet->setCellValue("D$c", $falta->student_cpf);
             $sheet->setCellValue("E$c", $falta->student_email);
             $sheet->setCellValue("F$c", $falta->attendance);
@@ -79,6 +79,7 @@ class ExportacaoController extends Controller
     }
 
     public function exportFinishStudents(Request $request){
+
 
         $query = DB::table("extracaonotasfinais");
 

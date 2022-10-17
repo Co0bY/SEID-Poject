@@ -175,7 +175,7 @@ class SecretaryController extends Controller
         elseif($user->type_of_user == '4'){
             $perfil = Teacher::where('user_id', $user->id)->first();
         }
-        return view('secretary.users_delete', ['user' => $user, 'perfil' => $perfil]);
+        return view('secretary.user_delete', ['user' => $user, 'perfil' => $perfil]);
     }
 
     public function deleteUser(Request $request){

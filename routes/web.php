@@ -37,7 +37,7 @@ Route::prefix('/principal')->group(function(){
     Route::post('/delete', [\App\Http\Controllers\PrincipalController::class, 'deleteuser'])->name('principal.delete');
 });
 
-Route::prefix('/secreatry')->group(function(){
+Route::prefix('/secretary')->group(function(){
     Route::get('/home', [\App\Http\Controllers\SecretaryController::class, 'index'])->name('secretary.index');
     Route::get('/users/', [\App\Http\Controllers\SecretaryController::class, 'users'])->name('secretary.users');
     Route::post('/users', [\App\Http\Controllers\SecretaryController::class, 'filtroUsuarios'])->name('secretary.users-filtro');
@@ -45,7 +45,7 @@ Route::prefix('/secreatry')->group(function(){
     Route::post('/create', [\App\Http\Controllers\SecretaryController::class, 'create'])->name('secretary.create');
     Route::get('/editform/{id?}',  [\App\Http\Controllers\SecretaryController::class, 'editform'])->name('secretary.edit-form');
     Route::post('/update', [\App\Http\Controllers\SecretaryController::class, 'updateuser'])->name('secretary.update');
-    Route::get('/deleteform',  [\App\Http\Controllers\SecretaryController::class, 'deleteform'])->name('secretary.delete-form');
+    Route::get('/deleteform/{id?}',  [\App\Http\Controllers\SecretaryController::class, 'deleteform'])->name('secretary.delete-form');
     Route::post('/delete/{id?}', [\App\Http\Controllers\SecretaryController::class, 'deleteuser'])->name('secretary.delete');
 
     Route::get('/discipline', [\App\Http\Controllers\DisciplineController::class, 'index'])->name('secretary.discipline-index');
