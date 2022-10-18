@@ -51,6 +51,8 @@ Route::prefix('/secretary')->group(function(){
     Route::get('/discipline', [\App\Http\Controllers\DisciplineController::class, 'index'])->name('secretary.discipline-index');
     Route::get('/dcreateform',  [\App\Http\Controllers\DisciplineController::class, 'createform'])->name('secretary.discipline-create-form');
     Route::post('/dcreate', [\App\Http\Controllers\DisciplineController::class, 'create'])->name('secretary.discipline-create');
+    Route::get('/deditform/{id?}',  [\App\Http\Controllers\DisciplineController::class, 'show'])->name('secretary.discipline-edit-form');
+    Route::post('/dupdate',  [\App\Http\Controllers\DisciplineController::class, 'update'])->name('secretary.discipline-update');
 
     Route::get('/registration', [\App\Http\Controllers\RegistrationController::class, 'index'])->name('secretary.registration-index');
     Route::get('/rcreateform',  [\App\Http\Controllers\RegistrationController::class, 'createform'])->name('secretary.registration-create-form');

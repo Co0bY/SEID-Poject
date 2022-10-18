@@ -1,36 +1,49 @@
 @extends('layouts.app')
 
 @section('content')
-<div class=" d-flex">
-    <div class=" row-cols-lg-12">
-    @component('secretary._components.sidebar')
-    @endcomponent
+    <div class=" d-flex">
+        <div class=" row">
+            <div class="col">
+                @component('secretary._components.sidebar')
+                @endcomponent
+            </div>
 
-    <div class=" card col-9 d-flex">
-        <div class=" card-body flex">
-            <h1 class=" text-uppercase mb-2">Formulário de Criação</h1>
-            {{-- route('pesquisar') --}}
-            <form action="{{route('secretary.update')}}" method="post">
-                @csrf
-                <input type="hidden" name="id" value="{{$discipline->id}}">
-                <div class=" row-cols-lg-3 mb-3"><label for="" class=" text-dark text-uppercase text-bold">Nome</label>
-                    <input type="text" class=" form-control" id="name" name="name" value="{{$discipline->name}}">
+            <div class="col">
+                <div class=" card">
+                    <div class=" card-body">
+                        <div class="row">
+                            <h1 class=" text-uppercase m-3">Formulário de Criação</h1>
+                        </div>
+
+                        {{-- route('pesquisar') --}}
+                        <form action="{{ route('secretary.discipline-update') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $discipline->id }}">
+                            <div class=" col mb-3"><label for=""
+                                    class=" text-dark text-uppercase text-bold">Nome</label>
+                                <input type="text" class=" form-control" id="discipline_name" name="discipline_name"
+                                    value="{{ $discipline->name }}">
+                            </div>
+                            <div class=" col mb-3"><label for=""
+                                    class=" text-dark text-uppercase text-bold">Código da Disciplina</label>
+                                <input type="text" class=" form-control" id="code" name="code"
+                                    value="{{ $discipline->code }}">
+                            </div>
+
+                            <div class="row">
+                                <div class="col btn-group" role="group" aria-label="Button group">
+                                    <a href="{{ route('secretary.discipline-index') }}"
+                                        class=" btn btn-primary text-uppercase">Voltar</a>
+                                    <button type="submit" class=" btn btn-success text-uppercase">Editar</button>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+
                 </div>
-                <div class=" mb-3"><label for="" class=" text-dark text-uppercase text-bold">Nome</label>
-                    <input type="text" class=" form-control" id="discipline_name" name="discipline_name" value="{{$discipline->name}}">
-                </div>
-                <div class=" mb-3"><label for="" class=" text-dark text-uppercase text-bold">Código da Disciplina</label>
-                    <input type="text" class=" form-control" id="code" name="code" value="{{$discipline->name}}">
-                </div>
-                <div class="row">
-                    <a href="{{route('secretary.users')}}" class=" btn btn-primary text-uppercase">Voltar</a>
-                    <button type="submit" class=" btn btn-success text-uppercase">Editar</button>
-                </div>
-              </form>
+            </div>
+
         </div>
-
     </div>
-    </div>
-</div>
-
 @endsection

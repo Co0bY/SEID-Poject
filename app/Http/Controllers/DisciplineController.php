@@ -38,14 +38,13 @@ class DisciplineController extends Controller
 
     public function update(Request $request){
 
-        $discipline = Discipline::where('id', $request['id']);
+        $discipline = Discipline::where('id', $request['id'])->first();
         $discipline->name = $request['discipline_name'];
         $discipline->code = $request['code'];
         $discipline->active = true;
         $discipline->save();
 
-        $disciplines = Discipline::get();
-        return view('secretary.disciplines.index', ['disciplines' => $disciplines]);
+        return redirect()->route('secretary.discipline-index');
     }
 
     public function delete(){
