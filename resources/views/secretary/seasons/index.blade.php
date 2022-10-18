@@ -11,7 +11,10 @@
             <div class="col">
                 <div class=" card">
                     <div class=" card-body">
-                        <h1 class=" text-uppercase m-3">Filtro</h1>
+                        <div class="row">
+                            <h1 class=" text-uppercase m-3">Filtro</h1>
+                        </div>
+
                         {{-- route('pesquisar') --}}
                         <form action=" " method="post">
                             @csrf
@@ -77,7 +80,8 @@
                         <td scope="col">{{ $season->code }}</td>
                         <td scope="col">
                             <div class=" btn-group">
-                                <a href="{{route('secretary.season-update-form', $season->id)}}" class=" btn btn-dark">Editar</a>
+                                <a href="{{ route('secretary.season-update-form', $season->id) }}"
+                                    class=" btn btn-dark">Editar</a>
                                 <a href="" class=" btn btn-danger">Deletar</a>
                             </div>
                         </td>

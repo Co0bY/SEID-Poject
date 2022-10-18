@@ -30,28 +30,6 @@
           Atribuir Atividades;
         </a>
       </li>
-      <li>
-        <a href="" class="nav-link link-dark">
-          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-          Gerenciar Salas;
-        </a>
-      </li>
-
-      <li>
-        <a href="" class="nav-link link-dark">
-          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-          Gerenciar Turmas;
-        </a>
-      </li>
-
-      <li>
-        <a href="" class="nav-link link-dark">
-          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-          Gerenciar Discilpinas Ativas;
-        </a>
-      </li>
-
-
     </ul>
     </div>
   </div>
