@@ -32,13 +32,13 @@ class SeasonController extends Controller
         return view('secretary.seasons.index', ['seasons' => $seasons]);
     }
 
-    public function show(Request $request){
-        $season = Season::where('id', $request['id'])->first();
+    public function show($id){
+        $season = Season::where('id', $id)->first();
 
         return view('secretary.seasons.season_update', ['season' => $season]);
     }
 
-    public function update(){
+    public function update(Request $request){
         $season = Season::where('id', $request['id'])->first();
         $season->name = $request['name'];
         $season->start_date = $request['start_date'];
@@ -47,6 +47,7 @@ class SeasonController extends Controller
         $season->code = $request['code'];
         $season->save();
 
+        return redirect()->route('secretary.season-index');
     }
 
     public function delete(){

@@ -32,13 +32,13 @@ class RoomController extends Controller
         return view('secretary.room.index', ['rooms' => $rooms]);
     }
 
-    public function show(Request $request){
-        $room = Room::where('id', $request['id'])->first();
+    public function show($id){
+        $room = Room::where('id', $id)->first();
 
-        return view('', ['room' => $room]);
+        return view('secretary.room.room_update', ['room' => $room]);
     }
 
-    public function update(){
+    public function update(Request $request){
         $room = Room::where('id', $request['id'])->first();
         $room->name = $request['name'];
         $room->details = $request['details'];
@@ -46,6 +46,7 @@ class RoomController extends Controller
         $room->code = $request['code'];
         $room->save();
 
+        return redirect()->route('secretary.room-index');
     }
 
     public function delete(){

@@ -55,12 +55,14 @@ Route::prefix('/secretary')->group(function(){
     Route::post('/dupdate',  [\App\Http\Controllers\DisciplineController::class, 'update'])->name('secretary.discipline-update');
 
     Route::get('/registration', [\App\Http\Controllers\RegistrationController::class, 'index'])->name('secretary.registration-index');
-    Route::get('/rcreateform',  [\App\Http\Controllers\RegistrationController::class, 'createform'])->name('secretary.registration-create-form');
-    Route::post('/rcreate', [\App\Http\Controllers\RegistrationController::class, 'create'])->name('secretary.registration-create');
+    Route::get('/registration/createform',  [\App\Http\Controllers\RegistrationController::class, 'createform'])->name('secretary.registration-create-form');
+    Route::post('/registration/create', [\App\Http\Controllers\RegistrationController::class, 'create'])->name('secretary.registration-create');
 
     Route::get('/room', [\App\Http\Controllers\RoomController::class, 'index'])->name('secretary.room-index');
     Route::get('/room/createform',  [\App\Http\Controllers\RoomController::class, 'createform'])->name('secretary.room-create-form');
     Route::post('/room/create', [\App\Http\Controllers\RoomController::class, 'create'])->name('secretary.room-create');
+    Route::get('/room/updateform/{id?}',  [\App\Http\Controllers\RoomController::class, 'show'])->name('secretary.room-update-form');
+    Route::post('/room/update', [\App\Http\Controllers\RoomController::class, 'update'])->name('secretary.room-update');
 
     Route::get('/class', [\App\Http\Controllers\ClassController::class, 'index'])->name('secretary.class-index');
     Route::get('/class/createform',  [\App\Http\Controllers\ClassController::class, 'createform'])->name('secretary.class-create-form');
@@ -69,13 +71,17 @@ Route::prefix('/secretary')->group(function(){
     Route::get('/class/StudentForm', [\App\Http\Controllers\RegistrationsInClassesController::class, 'addform'])->name('secretary.add-student-form');
     Route::post('/class/addTeacher', [\App\Http\Controllers\TeacherInClassesController::class, 'addTeacher'])->name('secretary.add-teacher');
     Route::get('/class/TeacherForm', [\App\Http\Controllers\TeacherInClassesController::class, 'addform'])->name('secretary.add-teacher-form');
+    Route::get('/class/updateform/{id?}',  [\App\Http\Controllers\ClassController::class, 'show'])->name('secretary.class-update-form');
+    Route::post('/class/update', [\App\Http\Controllers\ClassController::class, 'update'])->name('secretary.class-update');
 
-    Route::get('/addregistrationform',  [\App\Http\Controllers\RegistrationsInClassesController::class, 'addform'])->name('secretary.active.assign-registration-form');
-    Route::get('/addregistration',  [\App\Http\Controllers\RegistrationsInClassesController::class, 'addRegistration'])->name('secretary.active.assign-registration');
+    Route::get('/registration/addform',  [\App\Http\Controllers\RegistrationsInClassesController::class, 'addform'])->name('secretary.active.assign-registration-form');
+    Route::get('/registration/add',  [\App\Http\Controllers\RegistrationsInClassesController::class, 'addRegistration'])->name('secretary.active.assign-registration');
 
     Route::get('/season', [\App\Http\Controllers\SeasonController::class, 'index'])->name('secretary.season-index');
     Route::get('/season/createform',  [\App\Http\Controllers\SeasonController::class, 'createform'])->name('secretary.season-create-form');
     Route::post('/season/create', [\App\Http\Controllers\SeasonController::class, 'create'])->name('secretary.season-create');
+    Route::get('/season/updateform/{id?}',  [\App\Http\Controllers\SeasonController::class, 'show'])->name('secretary.season-update-form');
+    Route::post('/season/update', [\App\Http\Controllers\SeasonController::class, 'create'])->name('secretary.season-update');
 
     //reltatórios
     Route::get('/extraction', [\App\Http\Controllers\ExportacaoController::class, 'index'])->name('secretary.extraction');
