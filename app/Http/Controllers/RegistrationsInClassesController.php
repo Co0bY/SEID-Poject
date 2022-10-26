@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Season;
 use App\Models\Classes;
+use App\Models\CoursesDiscipline;
+use App\Models\Discipline;
 use App\Models\Registration;
 use App\Models\RegistrationsInClasses;
+use App\Models\StudentRegistrationInSubject;
+use App\Models\StudentsInCourse;
 use Illuminate\Http\Request;
 
 class RegistrationsInClassesController extends Controller
@@ -22,9 +26,16 @@ class RegistrationsInClassesController extends Controller
         $registration->id_class = $class->id;
         $registration->save();
 
-        $classes = Classes::get();
+        $registrationInCourse = StudentsInCourse::where('registration_id', $matricula->id)->first();
+        $discipline = Discipline::where('id', $class->id_discipline)->first();
+        $disciplinecourse = CoursesDiscipline::where('course_id', $registrationInCourse->course_id)->where('discipline_id', $discipline->id)->first();
 
-        return view('secretary.schoolclass.index', ['classes' => $classes]);;
+        $registros = new StudentRegistrationInSubject();
+        $registros->students_in_courses_id = $registrationInCourse->id;
+        $registros->courses_disciplines_id = $disciplinecourse->id;
+        $registros->save();
+
+        return redirect()->route('secretary.class-index');
     }
 
     public function removeStudent($id){

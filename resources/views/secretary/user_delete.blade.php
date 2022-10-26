@@ -11,7 +11,7 @@
                 <div class=" card">
                     <div class=" card-body">
                         <div class="row">
-                            <h1 class=" text-uppercase m-3">Formulário do Usuário</h1>
+                            <h1 class=" text-uppercase m-3">Formulário de Inativação</h1>
                         </div>
                         {{-- route('pesquisar') --}}
                         <form action="{{ route('secretary.delete') }}" method="post">
@@ -82,7 +82,7 @@
                             <div class="row">
                                 <div class="col btn-group" role="group" aria-label="Button group">
                                     <a href="{{ route('secretary.users') }}" class=" btn btn-primary text-uppercase">Voltar</a>
-                                    <button type="submit" class=" btn btn-danger text-uppercase">Deletar</button>
+                                    <button type="submit" class=" btn btn-danger text-uppercase">Inativar</button>
                                 </div>
                             </div>
                         </form>

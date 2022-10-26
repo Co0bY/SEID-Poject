@@ -46,13 +46,25 @@ Route::prefix('/secretary')->group(function(){
     Route::get('/editform/{id?}',  [\App\Http\Controllers\SecretaryController::class, 'editform'])->name('secretary.edit-form');
     Route::post('/update', [\App\Http\Controllers\SecretaryController::class, 'updateuser'])->name('secretary.update');
     Route::get('/deleteform/{id?}',  [\App\Http\Controllers\SecretaryController::class, 'deleteform'])->name('secretary.delete-form');
-    Route::post('/delete/{id?}', [\App\Http\Controllers\SecretaryController::class, 'deleteuser'])->name('secretary.delete');
+    Route::post('/delete/', [\App\Http\Controllers\SecretaryController::class, 'deleteuser'])->name('secretary.delete');
+    Route::get('/users/inactive', [\App\Http\Controllers\SecretaryController::class, 'usersinactive'])->name('secretary.users-inactive');
+    Route::get('/reactiveform/{id?}',  [\App\Http\Controllers\SecretaryController::class, 'reactiveForm'])->name('secretary.reactive-form');
+    Route::post('/reactive/', [\App\Http\Controllers\SecretaryController::class, 'reActiveUser'])->name('secretary.reactive');
 
     Route::get('/discipline', [\App\Http\Controllers\DisciplineController::class, 'index'])->name('secretary.discipline-index');
     Route::get('/dcreateform',  [\App\Http\Controllers\DisciplineController::class, 'createform'])->name('secretary.discipline-create-form');
     Route::post('/dcreate', [\App\Http\Controllers\DisciplineController::class, 'create'])->name('secretary.discipline-create');
     Route::get('/deditform/{id?}',  [\App\Http\Controllers\DisciplineController::class, 'show'])->name('secretary.discipline-edit-form');
     Route::post('/dupdate',  [\App\Http\Controllers\DisciplineController::class, 'update'])->name('secretary.discipline-update');
+
+    Route::get('/course', [\App\Http\Controllers\CourseController::class, 'index'])->name('secretary.course-index');
+    Route::get('/course/create/form',  [\App\Http\Controllers\CourseController::class, 'createform'])->name('secretary.course-create-form');
+    Route::post('/course/create', [\App\Http\Controllers\CourseController::class, 'create'])->name('secretary.course-create');
+    Route::get('/course/edit/form/{id?}',  [\App\Http\Controllers\CourseController::class, 'show'])->name('secretary.course-edit-form');
+    Route::post('/course/update',  [\App\Http\Controllers\CourseController::class, 'update'])->name('secretary.course-update');
+    Route::get('/course/add/disciplineform',  [\App\Http\Controllers\CourseController::class, 'show'])->name('secretary.course-edit-form');
+    Route::post('/course/add/doscipline',  [\App\Http\Controllers\CourseController::class, 'update'])->name('secretary.course-update');
+
 
     Route::get('/registration', [\App\Http\Controllers\RegistrationController::class, 'index'])->name('secretary.registration-index');
     Route::get('/registration/createform',  [\App\Http\Controllers\RegistrationController::class, 'createform'])->name('secretary.registration-create-form');

@@ -2,48 +2,56 @@
 
 @section('content')
     <div class=" d-flex">
-        <div class=" row-cols-lg-12">
-            @component('secretary._components.sidebar')
-            @endcomponent
+        <div class="row">
+            <div class="col">
+                @component('secretary._components.sidebar')
+                @endcomponent
+            </div>
 
-            <div class=" card col-9 d-flex">
-
-                <div class=" card-body flex">
-                    <h1 class=" text-uppercase mb-2">Filtro</h1>
-                    {{-- route('pesquisar') --}}
-                    <div class="row">
-                        <div class=" col-6"><label for="" class=" text-dark text-uppercase text-bold">Data
-                                Inicial</label>
-                            <input type="date" class=" form-control" id="initial_date" name="initial_date">
+            <div class="col">
+                <div class="card">
+                    <div class=" card-body">
+                        <h1 class=" text-uppercase mb-2">Filtro</h1>
+                        {{-- route('pesquisar') --}}
+                        <div class="row">
+                            <div class=" col-6"><label for="" class=" text-dark text-uppercase text-bold">Data
+                                    Inicial</label>
+                                <input type="date" class=" form-control" id="initial_date" name="initial_date">
+                            </div>
+                            <div class=" col-6 mb-3"><label for="" class=" text-dark text-uppercase text-bold">Data
+                                    Final</label>
+                                <input type="date" class=" form-control" id="final_date" name="final_date">
+                            </div>
                         </div>
-                        <div class=" col-6 mb-3"><label for="" class=" text-dark text-uppercase text-bold">Data
-                                Final</label>
-                            <input type="date" class=" form-control" id="final_date" name="final_date">
+                        <div class="row">
+                            <div class=" col-12 mb-3"><label for=""
+                                    class=" text-dark text-uppercase text-bold">Matricula</label>
+                                <input type="text" class=" form-control" id="registration" name="registration">
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class=" col-12 mb-3"><label for=""
-                                class=" text-dark text-uppercase text-bold">Matricula</label>
-                            <input type="text" class=" form-control" id="registration" name="registration">
+                        <div class="row">
+                            <div class=" col mb-3"><label for="" class=" text-dark text-uppercase text-bold">Código
+                                    da
+                                    Turma</label>
+                                <input type="text" class=" form-control" id="class_code" name="class_code">
+                            </div>
+                            <div class=" col mb-3"><label for="" class=" text-dark text-uppercase text-bold">Código
+                                    do
+                                    Período</label>
+                                <input type="text" class=" form-control" id="season_code" name="season_code">
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class=" col mb-3"><label for="" class=" text-dark text-uppercase text-bold">Código da
-                                Turma</label>
-                            <input type="text" class=" form-control" id="class_code" name="class_code">
+                        <div class="row">
+                            <div class="btn-group col">
+                                <button data-href="/secretary/extraction-attendance" class=" btn btn-success text-uppercase"
+                                    id="exportFaltas" name="exportFaltas" onclick="exportFaltas(event.target)">Exportar
+                                    Faltas</button>
+                                <button data-href="/secretary/extraction-final-score"
+                                    class=" btn btn-success text-uppercase" id="exportNotas" name="exportNotas"
+                                    onclick="exportNotas(event.target)">Exportar
+                                    Notas</button>
+                            </div>
                         </div>
-                        <div class=" col mb-3"><label for="" class=" text-dark text-uppercase text-bold">Código do
-                                Período</label>
-                            <input type="text" class=" form-control" id="season_code" name="season_code">
-                        </div>
-                    </div>
-
-                    <div class="btn-group col">
-                        <button data-href="/secretary/extraction-attendance" class=" btn btn-success text-uppercase"
-                            id="exportFaltas" name="exportFaltas" onclick="exportFaltas(event.target)">Exportar
-                            Faltas</button>
-                        <button data-href="/secretary/extraction-final-score" class=" btn btn-success text-uppercase"
-                            id="exportNotas" name="exportNotas" onclick="exportNotas(event.target)">Exportar Notas</button>
                     </div>
                 </div>
             </div>

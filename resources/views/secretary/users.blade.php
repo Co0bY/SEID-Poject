@@ -52,12 +52,22 @@
                                 </div>
                             </div>
                             <div class="row mt-5">
-                                <div class=" col-12 btn-group">
+                                <div class=" col-8 btn-group">
                                     <a href="{{ route('secretary.create-form') }}" class=" btn btn-primary text-uppercase">
                                         Criar</a>
                                     <button type="submit" class=" btn btn-success text-uppercase">Pesquisar</button>
                                 </div>
+                                <div class="col-1">
+
+                                </div>
+                                <div class="col-3 btn-group">
+                                    <a href="{{ route('secretary.users') }}" class=" btn btn-success text-uppercase">
+                                        Ativos</a>
+                                    <a href="{{ route('secretary.users-inactive') }}" class=" btn btn-danger text-uppercase">
+                                        Inativos</a>
+                                </div>
                             </div>
+                            <input type="hidden" name="active" value="{{$active}}">
                         </form>
                     </div>
                 </div>
@@ -84,8 +94,13 @@
                             <td scope="col">
                                 <div class=" btn-group">
                                     <a href="{{ route('secretary.edit-form', $user->id) }}" class=" btn btn-dark">Editar</a>
+                                    @if($user->active == 1)
                                     <a href="{{ route('secretary.delete-form', $user->id) }}"
-                                        class=" btn btn-danger">Deletar</a>
+                                        class=" btn btn-danger">Inativar</a>
+                                    @else
+                                    <a href="{{ route('secretary.reactive-form', $user->id) }}"
+                                        class=" btn btn-danger">Reativar</a>
+                                    @endif
                                 </div>
                             </td>
                         </tbody>

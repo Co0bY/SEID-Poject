@@ -16,8 +16,9 @@ class SecretaryController extends Controller
         return view('secretary.home');
     }
     public function users(){
-        $users =  DB::table('user_filter')->get();
-        return view('secretary.users', ['users' => $users]);
+        $users =  DB::table('user_filter')->where('active',1)->paginate(10);
+        $active = 1;
+        return view('secretary.users', ['users' => $users, 'active' => $active]);
     }
     public function createform(){
         return view('secretary.user_create');
@@ -75,6 +76,7 @@ class SecretaryController extends Controller
         $address = $request['address'];
         $birth_date = $request['birth_date'];
         $type_of_user = $request['type_of_user'];
+        $active = $request['active'];
 
         $query = DB::table('user_filter');
 
@@ -96,8 +98,9 @@ class SecretaryController extends Controller
         if($birth_date != ""){
             $query->where('user_filter.birth_date', 'like', "%$birth_date%");
         }
+        if($active) $query->where('active', $active);
 
-        $users = $query->get();
+        $users = $query->paginate(10);
 
         return view('secretary.users', ['users' => $users]);
     }
@@ -182,21 +185,69 @@ class SecretaryController extends Controller
         $user = User::where('id', $request['id'])->first();
         if($user->type_of_user == '1'){
             $perfil = Principal::where('user_id', $user->id)->first();
-            $perfil->delete();
+            // $perfil->delete();
         }
         elseif($user->type_of_user == '2'){
             $perfil = Secretary::where('user_id', $user->id)->first();
-            $perfil->delete();
+            // $perfil->delete();
         }
         elseif($user->type_of_user == '3'){
             $perfil = Student::where('user_id', $user->id)->first();
-            $perfil->delete();
+            // $perfil->delete();
         }
         elseif($user->type_of_user == '4'){
             $perfil = Teacher::where('user_id', $user->id)->first();
-            $perfil->delete();
+            // $perfil->delete();
         }
-        $user->delete();
+        $user->active = 0;
+        $user->save();
+
+        return redirect()->route('secretary.users');
+    }
+
+    public function usersinactive(){
+        $users =  DB::table('user_filter')->where('active',0)->paginate(10);
+        $active = 0;
+        return view('secretary.users', ['users' => $users, 'active' => $active]);
+    }
+
+    public function reactiveForm($id){
+        $user = User::where('id', $id)->first();
+        if($user->type_of_user == '1'){
+            $perfil = Principal::where('user_id', $user->id)->first();
+        }
+        elseif($user->type_of_user == '2'){
+            $perfil = Secretary::where('user_id', $user->id)->first();
+        }
+        elseif($user->type_of_user == '3'){
+            $perfil = Student::where('user_id', $user->id)->first();
+        }
+        elseif($user->type_of_user == '4'){
+            $perfil = Teacher::where('user_id', $user->id)->first();
+        }
+        return view('secretary.user_reactive', ['user' => $user, 'perfil' => $perfil]);
+    }
+
+    public function reActiveUser(Request $request){
+        $user = User::where('id', $request['id'])->first();
+        if($user->type_of_user == '1'){
+            $perfil = Principal::where('user_id', $user->id)->first();
+            // $perfil->delete();
+        }
+        elseif($user->type_of_user == '2'){
+            $perfil = Secretary::where('user_id', $user->id)->first();
+            // $perfil->delete();
+        }
+        elseif($user->type_of_user == '3'){
+            $perfil = Student::where('user_id', $user->id)->first();
+            // $perfil->delete();
+        }
+        elseif($user->type_of_user == '4'){
+            $perfil = Teacher::where('user_id', $user->id)->first();
+            // $perfil->delete();
+        }
+        $user->active = 1;
+        $user->save();
 
         return redirect()->route('secretary.users');
     }

@@ -38,7 +38,13 @@
                                         Periodo Válido</label>
                                     <input type="text" class=" form-control" id="code" name="code">
                                 </div>
+                                <div class="col mb-3"><label for=""
+                                    class=" text-dark text-uppercase text-bold">Código
+                                    do Curso</label>
+                                <input type="text" class=" form-control" id="course_code" name="course_code">
                             </div>
+                            </div>
+
 
                             <div class="row">
                                 <div class="col btn-group" role="group" aria-label="Button group">

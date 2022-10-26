@@ -9,8 +9,12 @@ use App\Models\RegistrationsInClasses;
 use App\Models\Student;
 use App\Models\Registration;
 use App\Models\Attendance;
+use App\Models\CoursesDiscipline;
+use App\Models\Discipline;
 use App\Models\Score;
 use App\Models\HomeWork;
+use App\Models\StudentRegistrationInSubject;
+use App\Models\StudentsInCourse;
 use Illuminate\Http\Request;
 
 class TeacherController extends Controller
@@ -201,6 +205,17 @@ class TeacherController extends Controller
         $registrationInClass = RegistrationsInClasses::where('id', $request->registrationClassId)->first();
         $registrationInClass->final_score = $finalScore;
         $registrationInClass->save();
+
+        $registrationInCourse = StudentsInCourse::where('registration_id', $registrationInClass->id_registration)->first();
+        $class = Classes::where('id', $registrationInClass->id_class)->first();
+        $discipline = Discipline::where('id', $class->id_discipline)->first();
+        $disciplinecourse = CoursesDiscipline::where('course_id', $registrationInCourse->course_id)->where('discipline_id', $discipline->id)->first();
+        $subject = StudentRegistrationInSubject::where('students_in_courses_id', $registrationInCourse->id)
+        ->where('courses_disciplines_id', $disciplinecourse->id )->first();
+        if($finalScore > 6){
+            $subject->score = $finalScore;
+            $subject->save();
+        }
 
         return redirect()->route('teacher.score');
     }
