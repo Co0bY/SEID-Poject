@@ -17,22 +17,28 @@
                         {{-- route('pesquisar') --}}
                         <form action=" " method="post">
                             @csrf
-                            <div class=" col mb-3"><label for=""
-                                    class=" text-dark text-uppercase text-bold">Nom do Cursoe</label>
-                                <input type="text" class=" form-control" id="discipline_name" name="name">
+                            <div class="row">
+                                <div class=" col mb-3"><label for=""
+                                    class=" text-dark text-uppercase text-bold">Nome do Curso</label>
+                                    <input type="text" class=" form-control" id="discipline_name" name="name">
+                                </div>
                             </div>
-                            <div class=" col mb-3"><label for="" class=" text-dark text-uppercase text-bold">Tipo de Curso</label>
-                                <input type="text" class=" form-control" id="type_of_course" name="type_of_course">
+                            <div class="row">
+                                <div class=" col-8 mb-3"><label for="" class=" text-dark text-uppercase text-bold">Tipo de Curso</label>
+                                    <input type="text" class=" form-control" id="type_of_course" name="type_of_course">
+                                </div>
+                                <div class=" col mb-3"><label for="" class=" text-dark text-uppercase text-bold">Duração em Anos</label>
+                                    <input type="number" class=" form-control" id="duration_in_years" name="duration_in_years">
+                                </div>
                             </div>
-                            <div class=" col mb-3"><label for="" class=" text-dark text-uppercase text-bold">Duração em Anos</label>
-                            <input type="text" class=" form-control" id="duration_in_years" name="duration_in_years">
-                        </div>
-                        <div class=" col mb-3"><label for="" class=" text-dark text-uppercase text-bold">Código do Curso</label>
-                            <input type="text" class=" form-control" id="code" name="code">
-                        </div>
+                            <div class="row">
+                                <div class=" col mb-3"><label for="" class=" text-dark text-uppercase text-bold">Código do Curso</label>
+                                    <input type="text" class=" form-control" id="code" name="code">
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col btn-group" role="group" aria-label="Button group">
-                                    <a href="{{ route('secretary.discipline-create-form') }}"
+                                    <a href="{{ route('secretary.course-create-form') }}"
                                         class=" btn btn-primary text-uppercase"> Criar</a>
                                     <button type="submit" class=" btn btn-success text-uppercase">Pesquisar</button>
                                 </div>
@@ -64,9 +70,9 @@
                             <td scope="col">{{ $course->duration_in_years }}</td>
                             <td scope="col">
                                 <div class=" btn-group">
-                                    <a href="{{ route('secretary.course-edit-form', $course->id) }}"
-                                        class=" btn btn-dark">Editar</a>
-                                    <a href="" class=" btn btn-danger">Deletar</a>
+                                    <a href="{{ route('secretary.course-details', $course->id) }}"
+                                        class=" btn btn-dark">Detalhes</a>
+                                    <a href="" class=" btn btn-danger">Inativar</a>
                                 </div>
                             </td>
                         </tbody>

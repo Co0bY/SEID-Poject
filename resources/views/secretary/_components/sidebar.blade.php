@@ -17,8 +17,16 @@
                         Home
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('secretary.course-index') }}" class="nav-link" aria-current="page" id="Home" name="Home" >
+                        <svg class="bi pe-none me-2" width="16" height="16">
+                            <use xlink:href="#home" />
+                        </svg>
+                        Gerenciar Cursos
+                    </a>
+                </li>
                 <li>
-                    <a href="{{ route('secretary.users') }}" class="nav-link link-dark" id="GerU" name="GerU">
+                    <a href="{{ route('secretary.users-filtro') }}" class="nav-link link-dark" id="GerU" name="GerU">
                         <svg class="bi pe-none me-2" width="16" height="16">
                             <use xlink:href="#speedometer2" />
                         </svg>

@@ -28,7 +28,8 @@ Auth::routes();
 Route::prefix('/principal')->group(function(){
     Route::get('/home', [\App\Http\Controllers\PrincipalController::class, 'index'])->name('principal.index');
     Route::get('/users', [\App\Http\Controllers\PrincipalController::class, 'users'])->name('principal.users');
-    Route::post('/users', [\App\Http\Controllers\PrincipalController::class, 'filtroUsuarios'])->name('principal.users-filtro');
+    Route::post('/users/filtro', [\App\Http\Controllers\PrincipalController::class, 'filtroUsuarios'])->name('principal.users-filtro');
+    Route::get('/users/filtro', [\App\Http\Controllers\PrincipalController::class, 'filtroUsuarios'])->name('principal.users-filtro');
     Route::get('/createform',  [\App\Http\Controllers\PrincipalController::class, 'createform'])->name('principal.create-form');
     Route::post('/create', [\App\Http\Controllers\PrincipalController::class, 'create'])->name('principal.create');
     Route::get('/editform/{id?}',  [\App\Http\Controllers\PrincipalController::class, 'editform'])->name('principal.edit-form');
@@ -62,8 +63,10 @@ Route::prefix('/secretary')->group(function(){
     Route::post('/course/create', [\App\Http\Controllers\CourseController::class, 'create'])->name('secretary.course-create');
     Route::get('/course/edit/form/{id?}',  [\App\Http\Controllers\CourseController::class, 'show'])->name('secretary.course-edit-form');
     Route::post('/course/update',  [\App\Http\Controllers\CourseController::class, 'update'])->name('secretary.course-update');
-    Route::get('/course/add/disciplineform',  [\App\Http\Controllers\CourseController::class, 'show'])->name('secretary.course-edit-form');
-    Route::post('/course/add/doscipline',  [\App\Http\Controllers\CourseController::class, 'update'])->name('secretary.course-update');
+    Route::get('/course/add-discipline/{id?}',  [\App\Http\Controllers\CoursesDisciplineController::class, 'addform'])->name('secretary.course-add-form');
+    Route::post('/course/add-discipline',  [\App\Http\Controllers\CoursesDisciplineController::class, 'add'])->name('secretary.course-add');
+    Route::get('/course/remove-discipline/{disciplineid?}&{courseid?}',  [\App\Http\Controllers\CoursesDisciplineController::class, 'remove'])->name('secretary.course-remove');
+    Route::get('/course/details/{id?}',  [\App\Http\Controllers\CourseController::class, 'detailspage'])->name('secretary.course-details');
 
 
     Route::get('/registration', [\App\Http\Controllers\RegistrationController::class, 'index'])->name('secretary.registration-index');

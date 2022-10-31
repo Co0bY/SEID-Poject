@@ -17,20 +17,35 @@
                         </div>
 
                         {{-- route('pesquisar') --}}
-                        <form action="{{ route('secretary.course-add-discipline') }}" method="post">
+                        <form action="{{ route('secretary.course-add') }}" method="post">
                             @csrf
-                            <div class="col mb-3"><label for=""
+                            <input type="hidden" name="id" value="{{$course->id}}">
+                            <div class="row">
+                                <div class="col-8 mb-3"><label for=""
+                                    class=" text-dark text-uppercase text-bold">Nome do Curso</label>
+                                    <input type="text" class=" form-control" readonly id="course_name" name="course_name" value="{{$course->name}}">
+                                </div>
+                                <div class="col mb-3"><label for=""
                                     class=" text-dark text-uppercase text-bold">Código do Curso</label>
-                                <input type="text" class=" form-control" id="course_code" name="course_code">
-                            </div>
-                            <div class=" col mb-3"><label for="" class=" text-dark text-uppercase text-bold">Código da Disciplina</label>
-                                <input type="text" class=" form-control" id="discipline_code" name="discipline_code">
+                                    <input type="text" class=" form-control" readonly id="course_code" name="course_code" value="{{$course->code}}">
+                                </div>
                             </div>
                             <div class="row">
+                                <div class="col mb-3">
+                                    <select name="discipline_id" id="discipline_id" class=" form-control">
+                                        <option value="">Selecione uma opção</option>
+                                        @foreach ($disciplines as $discipline)
+                                        <option value="{{$discipline->id}}">{{$discipline->name}} | {{$discipline->code}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
                                 <div class="col btn-group" role="group" aria-label="Button group">
-                                    <a href="{{ route('secretary.course-index') }}"
+                                    <a href="{{ route('secretary.course-details', $course->id) }}"
                                         class=" btn btn-primary text-uppercase">Voltar</a>
-                                    <button type="submit" class=" btn btn-success text-uppercase">Criar</button>
+                                    <button type="submit" class=" btn btn-success text-uppercase">Adicionar</button>
                                 </div>
 
                             </div>

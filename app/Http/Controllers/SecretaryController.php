@@ -15,10 +15,10 @@ class SecretaryController extends Controller
     public function index(){
         return view('secretary.home');
     }
-    public function users(){
-        $users =  DB::table('user_filter')->where('active',1)->paginate(10);
+    public function users(Request $request){
+        $users =  DB::table('user_filter')->where('active',1)->orderByDesc('id')->paginate(2);
         $active = 1;
-        return view('secretary.users', ['users' => $users, 'active' => $active]);
+        return view('secretary.users', ['users' => $users, 'active' => $active, 'request' => $request->all()]);
     }
     public function createform(){
         return view('secretary.user_create');
@@ -36,6 +36,7 @@ class SecretaryController extends Controller
         $user->email = $email;
         $user->password = $password;
         $user->type_of_user = $usertype;
+        $user->active = 1;
         // dd($user);
         $user->save();
 
@@ -65,7 +66,7 @@ class SecretaryController extends Controller
         // dd($user);
         $perfil->save();
 
-        return redirect()->route('secretary.users');
+        return redirect()->route('secretary.users-filtro');
 
     }
 
@@ -100,9 +101,9 @@ class SecretaryController extends Controller
         }
         if($active) $query->where('active', $active);
 
-        $users = $query->paginate(10);
+        $users = $query->orderByDesc('id')->paginate(2);
 
-        return view('secretary.users', ['users' => $users]);
+        return view('secretary.users', ['users' => $users, 'active' => $active, 'request' => $request->all() ]);
     }
     public function editform($id){
         $user = User::where('id', $id)->first();
@@ -134,20 +135,21 @@ class SecretaryController extends Controller
         $user->email = $email;
         $user->password = $password;
         $user->type_of_user = $usertype;
+        $user->active = 1;
 
-        $user->save();
+
 
         if($request['type_of_user'] == '1'){
-            $perfil = new Principal();
+            $perfil = Principal::where('user_id', $user->id)->first();
         }
         elseif($request['type_of_user'] == '2'){
-            $perfil = new Secretary();
+            $perfil = Secretary::where('user_id', $user->id)->first();
         }
         elseif($request['type_of_user'] == '3'){
-            $perfil = new Student();
+            $perfil = Student::where('user_id', $user->id)->first();
         }
         elseif($request['type_of_user'] == '4'){
-            $perfil = new Teacher();
+            $perfil = Teacher::where('user_id', $user->id)->first();
         }
         $data = $request['birth_date'];
         $perfil->user_id = $request['id'];
@@ -159,9 +161,10 @@ class SecretaryController extends Controller
         $perfil->picture = "Ainda em produção";
         // dd($user);
         $perfil->save();
+        $user->save();
 
 
-        return redirect()->route('secretary.users');
+        return redirect()->route('secretary.users-filtro');
     }
 
     public function deleteform($id){
@@ -202,13 +205,13 @@ class SecretaryController extends Controller
         $user->active = 0;
         $user->save();
 
-        return redirect()->route('secretary.users');
+        return redirect()->route('secretary.users-filtro');
     }
 
     public function usersinactive(){
-        $users =  DB::table('user_filter')->where('active',0)->paginate(10);
+        $users =  DB::table('user_filter')->where('active',0)->orderByDesc('id')->paginate(10);
         $active = 0;
-        return view('secretary.users', ['users' => $users, 'active' => $active]);
+        return view('secretary.users', ['users' => $users, 'active' => 0]);
     }
 
     public function reactiveForm($id){
@@ -249,6 +252,6 @@ class SecretaryController extends Controller
         $user->active = 1;
         $user->save();
 
-        return redirect()->route('secretary.users');
+        return redirect()->route('secretary.users-filtro');
     }
 }

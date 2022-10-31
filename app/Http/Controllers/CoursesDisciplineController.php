@@ -13,21 +13,25 @@ class CoursesDisciplineController extends Controller
 
     }
 
-    public function add(Request $request){
-        $course_id = Course::select('id')->where('code', $request->code)->first();
-        $discipline_id = Discipline::select('id')->where('code', $request->code)->first();
-        $addDiscipline = new CoursesDiscipline;
-        $addDiscipline->course_id = $course_id;
-        $addDiscipline->discipline_id = $discipline_id;
-        $addDiscipline->save();
-
-        return redirect()->route('secretary.course-index');
+    public function addform($id){
+        $course = Course::where('id', $id)->first();
+        $disciplines = Discipline::get();
+        return view('secretary.courses.add_discipline', ['course' => $course, 'disciplines' => $disciplines]);
     }
 
-    public function remove($id){
-        $removeDiscipline = CoursesDiscipline::where('id', $id)->first();
-        $removeDiscipline->delete();
+    public function add(Request $request){
+        $addDiscipline = new CoursesDiscipline;
+        $addDiscipline->course_id = $request->id;
+        $addDiscipline->discipline_id = $request->discipline_id;
+        $addDiscipline->save();
 
-        return redirect()->route('secretary.course-index');
+        return redirect()->route('secretary.course-details', $request->id);
+    }
+
+    public function remove($disciplineid, $courseid){
+        $coursediscipline = CoursesDiscipline::where('course_id', $courseid)
+        ->where('discipline_id', $disciplineid)->delete();
+
+        return redirect()->route('secretary.course-details', $courseid);
     }
 }

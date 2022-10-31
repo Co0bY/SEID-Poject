@@ -12,7 +12,13 @@
                 <div class=" card">
                     <div class=" card-body">
                         <div class=" row">
-                            <h1 class="card-title text-uppercase m-3">Filtro</h1>
+                            <h1 class="card-title text-uppercase m-3">Filtro -
+                                @if($active == 1)
+                                  Usuários Ativos
+                                @else
+                                  Usuários Inativos
+                                @endif
+                            </h1>
                         </div>
 
                         <form action="{{ route('secretary.users-filtro') }}" method="post">

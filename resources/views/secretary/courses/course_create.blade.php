@@ -17,7 +17,7 @@
                         </div>
 
                         {{-- route('pesquisar') --}}
-                        <form action="{{ route('secretary.discipline-create') }}" method="post">
+                        <form action="{{ route('secretary.course-create') }}" method="post">
                             @csrf
                             <div class="col mb-3"><label for=""
                                     class=" text-dark text-uppercase text-bold">Nome do Curso</label>
@@ -30,7 +30,7 @@
                                 <input type="number" class=" form-control" id="duration_in_years" name="duration_in_years">
                             </div>
                             <div class=" col mb-3"><label for="" class=" text-dark text-uppercase text-bold">Código do Curso</label>
-                                <input type="number" class=" form-control" id="code" name="code">
+                                <input type="text" class=" form-control" id="code" name="code">
                             </div>
                             <div class="row">
                                 <div class="col btn-group" role="group" aria-label="Button group">
