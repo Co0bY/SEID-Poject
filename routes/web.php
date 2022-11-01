@@ -107,6 +107,9 @@ Route::prefix('/secretary')->group(function(){
 Route::prefix('/teacher')->group(function(){
    Route::get('/home' , [\App\Http\Controllers\TeacherController::class, 'index'])->name('teacher.index');
 
+    //lesson
+    Route::get('/lesson/{id?}' , [\App\Http\Controllers\LessonController::class, 'index'])->name('teacher.lesson-index');
+    Route::get('/lesson-add' , [\App\Http\Controllers\LessonController::class, 'addlesson'])->name('teacher.lesson-add');
    //attendance
    Route::get('/attendance' , [\App\Http\Controllers\TeacherController::class, 'listClassesAttendance'])->name('teacher.attendance');
    Route::get('/presence/form/{id?}' , [\App\Http\Controllers\TeacherController::class, 'listStudentsAttendance'])->name('teacher.attendance-form');

@@ -52,7 +52,7 @@
             <td scope="col">{{$class->active}}</td>
             <td scope="col">
                 <div class=" btn-group">
-                    <a href="" class=" btn btn-dark">Detalhes</a>
+                    <a href="{{route('teacher.lesson-index', $class->id)}}" class=" btn btn-dark">Plano de Aula</a>
                 </div>
             </td>
         </tbody>
