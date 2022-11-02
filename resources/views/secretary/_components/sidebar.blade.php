@@ -92,5 +92,3 @@
 </div>
 </div>
 
-<script>
-</script>

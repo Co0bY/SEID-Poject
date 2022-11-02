@@ -9,6 +9,7 @@ use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class SecretaryController extends Controller
 {
@@ -25,7 +26,39 @@ class SecretaryController extends Controller
     }
 
     public function create(Request $request){
-        // dd($request);
+        $userTypeTable = "secretaries";
+        if($request['type_of_user'] == '1'){
+            $perfil = new secretary();
+            $userTypeTable = 'secretaries';
+        }
+        elseif($request['type_of_user'] == '2'){
+            $perfil = new Secretary();
+            $userTypeTable = 'secretaries';
+        }
+        elseif($request['type_of_user'] == '3'){
+            $perfil = new Student();
+            $userTypeTable = 'students';
+        }
+        elseif($request['type_of_user'] == '4'){
+            $perfil = new Teacher();
+            $userTypeTable = 'teachers';
+        }
+        $descriptions = [
+            'required' => 'Este campo deve ser preenchido*',
+            'name.unique' => 'O nome informado já está em uso*',
+            'email.unique' => 'O email informado já está em uso*',
+            'cpf.unique' => 'O cpf informado já está em uso*'
+        ];
+        $rules = [
+            'name' => 'required|max:255',
+            'email' => 'required|unique:users|max:255',
+            'cpf' => "required|unique:$userTypeTable|max:255",
+            'type_of_user' => ['required', Rule::exists('user_types', 'id')],
+            'address' => 'required',
+            'password' => 'required',
+            'birth_date' => 'required|date',
+        ];
+        $request->validate($rules, $descriptions);
         $email = $request['email'];
         $password = $request['password'];
         $name = $request['name'];
@@ -43,18 +76,6 @@ class SecretaryController extends Controller
         $user = User::where('email', $email)->first();
         $id = $user->id;
 
-        if($request['type_of_user'] == '1'){
-            $perfil = new secretary();
-        }
-        elseif($request['type_of_user'] == '2'){
-            $perfil = new Secretary();
-        }
-        elseif($request['type_of_user'] == '3'){
-            $perfil = new Student();
-        }
-        elseif($request['type_of_user'] == '4'){
-            $perfil = new Teacher();
-        }
         $data = $request['birth_date'];
         $perfil->user_id = $id;
         $perfil->cpf = $request['cpf'];
@@ -123,8 +144,40 @@ class SecretaryController extends Controller
         return view('secretary.user_update', ['user' => $user, 'perfil' => $perfil]);
     }
     public function updateuser(Request $request){
-
         $user = User::where('id', $request['id'])->first();
+        $userTypeTable = "secretaries";
+        if($request['type_of_user'] == '1'){
+            $perfil = Principal::where('user_id', $user->id)->first();
+            $userTypeTable = 'secretaries';
+        }
+        elseif($request['type_of_user'] == '2'){
+            $perfil = Secretary::where('user_id', $user->id)->first();
+            $userTypeTable = 'secretaries';
+        }
+        elseif($request['type_of_user'] == '3'){
+            $perfil = Student::where('user_id', $user->id)->first();
+            $userTypeTable = 'students';
+        }
+        elseif($request['type_of_user'] == '4'){
+            $perfil = Teacher::where('user_id', $user->id)->first();
+            $userTypeTable = 'teachers';
+        }
+        $descriptions = [
+            'required' => 'Este campo deve ser preenchido*',
+            'name.unique' => 'O nome informado já está em uso*',
+            'email.unique' => 'O email informado já está em uso*',
+            'cpf.unique' => 'O cpf informado já está em uso*'
+        ];
+        $rules = [
+            'name' => ['required', Rule::unique('users')->ignore($request['id'])],
+            'email' => ['required', Rule::unique('users')->ignore($request['id'])],
+            'cpf' => ['required'],
+            'type_of_user' => ['required', Rule::exists('user_types', 'id')],
+            'address' => 'required',
+            'password' => 'required',
+            'birth_date' => 'required|date',
+        ];
+        $request->validate($rules, $descriptions);
 
         $email = $request['email'];
         $password = $request['password'];

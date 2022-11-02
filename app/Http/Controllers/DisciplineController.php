@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Teacher;
 use App\Models\Discipline;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class DisciplineController extends Controller
 {
@@ -20,8 +21,18 @@ class DisciplineController extends Controller
     }
 
     public function create(Request $request){
+        $descriptions = [
+            'required' => 'Este campo deve ser preenchido*',
+            'name.unique' => 'O nome informado já está em uso*',
+            'code.unique' => 'O código informado já está em uso*'
+        ];
+        $rules = [
+            'name' => 'required|unique:disciplines|max:255',
+            'code' => 'required|unique:disciplines|max:255',
+        ];
+        $request->validate($rules, $descriptions);
         $discipline = new Discipline;
-        $discipline->name = $request['discipline_name'];
+        $discipline->name = $request['name'];
         $discipline->code = $request['code'];
         $discipline->active = true;
         $discipline->save();
@@ -37,9 +48,18 @@ class DisciplineController extends Controller
     }
 
     public function update(Request $request){
-
+        $descriptions = [
+            'required' => 'Este campo deve ser preenchido*',
+            'name.unique' => 'O nome informado já está em uso*',
+            'code.unique' => 'O codigo informado já está em uso*'
+        ];
+        $rules = [
+            'name' => ['required', Rule::unique('disciplines')->ignore($request['id'])->where(fn ($query) => $query->where('name', $request['name']))],
+            'code' => ['required', Rule::unique('disciplines')->ignore($request['id'])],
+        ];
+        $request->validate($rules, $descriptions);
         $discipline = Discipline::where('id', $request['id'])->first();
-        $discipline->name = $request['discipline_name'];
+        $discipline->name = $request['name'];
         $discipline->code = $request['code'];
         $discipline->active = true;
         $discipline->save();

@@ -11,6 +11,7 @@ use App\Models\RegistrationsInClasses;
 use App\Models\StudentRegistrationInSubject;
 use App\Models\StudentsInCourse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class RegistrationsInClassesController extends Controller
 {
@@ -19,6 +20,16 @@ class RegistrationsInClassesController extends Controller
     }
 
     public function addStudent(Request $request){
+        $descriptions = [
+            'required' => 'Este campo deve ser preenchido*',
+            'registration.exists' => 'A matrícula do alino informado não existe na base*',
+            'code.exists' => 'O código da turma informado não existe na base*',
+        ];
+        $rules = [
+            'registration' => ['required', Rule::exists('registrations', 'registration')],
+            'code' => ['required', Rule::exists('classes', 'code')],
+        ];
+        $request->validate($rules, $descriptions);
         $matricula = Registration::where('registration', $request['registration'])->first();
         $class = Classes::where('code', $request['code'])->first();
         $registration = new RegistrationsInClasses;

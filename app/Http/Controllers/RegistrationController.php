@@ -8,6 +8,7 @@ use App\Models\Registration;
 use App\Models\Season;
 use App\Models\StudentsInCourse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class RegistrationController extends Controller
 {
@@ -21,6 +22,19 @@ class RegistrationController extends Controller
         return view('secretary.Registrations.registration_create');
     }
     public function create(Request $request){
+        $descriptions = [
+            'required' => 'Este campo deve ser preenchido*',
+            'cpf.exists' => 'O cpf informado não existe na base*',
+            'code.exists' => 'O codigo informado não existe na base*',
+            'course_code.exists' => 'O codigo informado não existe na base*'
+        ];
+        $rules = [
+            'cpf' => ['required', Rule::exists('students', 'cpf')],
+            'code' => ['required', Rule::exists('seasons', 'code')],
+            'course_code' => ['required', Rule::exists('courses', 'code')],
+        ];
+        $request->validate($rules, $descriptions);
+
         $student = Student::where('cpf',$request['cpf'])->first();
         $season = Season::where('code', $request['code'])->first();
 
@@ -38,8 +52,8 @@ class RegistrationController extends Controller
         $registration_id = Registration::select('id')->orderByDesc('id')->first();
 
         $studentInCourse = new StudentsInCourse();
-        $studentInCourse->course_id = $course_id;
-        $studentInCourse->registration_id = $registration_id;
+        $studentInCourse->course_id = $course_id->id;
+        $studentInCourse->registration_id = $registration_id->id;
         $studentInCourse->save();
 
         return redirect()->route('secretary.registration-index');

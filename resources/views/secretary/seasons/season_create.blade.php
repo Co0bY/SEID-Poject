@@ -19,26 +19,46 @@
                             <div class="row">
                                 <div class="col mb-3"><label for=""
                                         class=" text-dark text-uppercase text-bold">Nome</label>
-                                    <input type="text" class=" form-control" id="discipline_name" name="name">
+                                    <input type="text" class=" form-control" id="discipline_name" name="name" value="{{old('name')}}">
+                                    <div class="mt-1" style="color: red" role="alert">
+                                        @if($errors->has('name'))
+                                        {{$errors->first('name')}}
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col mb-3"><label for="" class=" text-dark text-uppercase text-bold">Data
                                         de
                                         Inicio</label>
-                                    <input type="date" class=" form-control" id="start_date" name="start_date">
+                                    <input type="date" class=" form-control" id="start_date" name="start_date" value="{{old('start_date')}}">
+                                    <div class="mt-1" style="color: red" role="alert">
+                                        @if($errors->has('start_date'))
+                                        {{$errors->first('start_date')}}
+                                        @endif
+                                    </div>
                                 </div>
                                 <div class="col mb-3"><label for="" class=" text-dark text-uppercase text-bold">Data
                                         de
                                         Encerramento</label>
-                                    <input type="date" class=" form-control" id="end_date" name="end_date">
+                                    <input type="date" class=" form-control" id="end_date" name="end_date" value="{{old('end_date')}}">
+                                    <div class="mt-1" style="color: red" role="alert">
+                                        @if($errors->has('end_date'))
+                                        {{$errors->first('end_date')}}
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col mb-3"><label for=""
                                         class=" text-dark text-uppercase text-bold">Codigo
                                         do Período</label>
-                                    <input type="text" class=" form-control" id="code" name="code">
+                                    <input type="text" class=" form-control" id="code" name="code" value="{{old('code')}}">
+                                    <div class="mt-1" style="color: red" role="alert">
+                                        @if($errors->has('code'))
+                                        {{$errors->first('code')}}
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">

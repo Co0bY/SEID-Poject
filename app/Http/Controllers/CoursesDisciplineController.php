@@ -20,6 +20,13 @@ class CoursesDisciplineController extends Controller
     }
 
     public function add(Request $request){
+        $descriptions = [
+            'required' => 'Este campo deve ser preenchido*',
+        ];
+        $rules = [
+            'discipline_id' => 'required',
+        ];
+        $request->validate($rules, $descriptions);
         $addDiscipline = new CoursesDiscipline;
         $addDiscipline->course_id = $request->id;
         $addDiscipline->discipline_id = $request->discipline_id;

@@ -19,20 +19,40 @@
                             @csrf
                             <div class=" col mb-3"><label for=""
                                     class=" text-dark text-uppercase text-bold">Nome</label>
-                                <input type="text" class=" form-control" id="discipline_name" name="name">
+                                <input type="text" class=" form-control" id="name" name="name" value="{{old('name')}}">
+                                <div class="mt-1" style="color: red" role="alert">
+                                    @if($errors->has('name'))
+                                    {{$errors->first('name')}}
+                                    @endif
+                                </div>
                             </div>
                             <div class=" col mb-3"><label for=""
                                     class=" text-dark text-uppercase text-bold">Detalhes</label>
-                                <input type="text" class=" form-control" id="details" name="details">
+                                <input type="text" class=" form-control" id="details" name="details" value="{{old('details')}}">
+                                <div class="mt-1" style="color: red" role="alert">
+                                    @if($errors->has('details'))
+                                    {{$errors->first('details')}}
+                                    @endif
+                                </div>
                             </div>
                             <div class=" col mb-3"><label for=""
                                     class=" text-dark text-uppercase text-bold">Equipamento</label>
-                                <input type="text" class=" form-control" id="equipment" name="equipment">
+                                <input type="text" class=" form-control" id="equipment" name="equipment" value="{{old('equipment')}}">
+                                <div class="mt-1" style="color: red" role="alert">
+                                    @if($errors->has('equipment'))
+                                    {{$errors->first('equipment')}}
+                                    @endif
+                                </div>
                             </div>
                             <div class="col mb-3"><label for="" class=" text-dark text-uppercase text-bold">Codigo
                                     da
                                     Sala</label>
-                                <input type="text" class=" form-control" id="code" name="code">
+                                <input type="text" class=" form-control" id="code" name="code" value="{{old('code')}}">
+                                <div class="mt-1" style="color: red" role="alert">
+                                    @if($errors->has('code'))
+                                    {{$errors->first('code')}}
+                                    @endif
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col btn-group" role="group" aria-label="Button group">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class RoomController extends Controller
 {
@@ -19,7 +20,18 @@ class RoomController extends Controller
 
     public function create(Request $request){
 
-
+        $descriptions = [
+            'required' => 'Este campo deve ser preenchido*',
+            'name.unique' => 'O nome informado já está em uso*',
+            'code.unique' => 'O codigo informado já está em uso*'
+        ];
+        $rules = [
+            'name' => 'required|unique:rooms|max:255',
+            'code' => 'required|unique:rooms|max:255',
+            'details' => 'required',
+            'equipment' => 'required',
+        ];
+        $request->validate($rules, $descriptions);
         $room = new Room;
         $room->name = $request['name'];
         $room->details = $request['details'];
@@ -39,6 +51,18 @@ class RoomController extends Controller
     }
 
     public function update(Request $request){
+        $descriptions = [
+            'required' => 'Este campo deve ser preenchido*',
+            'name.unique' => 'O nome informado já está em uso*',
+            'code.unique' => 'O codigo informado já está em uso*'
+        ];
+        $rules = [
+            'name' => ['required', Rule::unique('rooms')->ignore($request['id'])],
+            'code' => ['required', Rule::unique('rooms')->ignore($request['id'])],
+            'equipment' => 'required',
+            'details' => 'required',
+        ];
+        $request->validate($rules, $descriptions);
         $room = Room::where('id', $request['id'])->first();
         $room->name = $request['name'];
         $room->details = $request['details'];

@@ -19,15 +19,23 @@
                         <form action="{{ route('secretary.discipline-update') }}" method="post">
                             @csrf
                             <input type="hidden" name="id" value="{{ $discipline->id }}">
-                            <div class=" col mb-3"><label for=""
-                                    class=" text-dark text-uppercase text-bold">Nome</label>
-                                <input type="text" class=" form-control" id="discipline_name" name="discipline_name"
-                                    value="{{ $discipline->name }}">
+                            <div class=" col mb-3">
+                                <label for=""class=" text-dark text-uppercase text-bold">Nome</label>
+                                <input type="text" class=" form-control" id="name" name="name" value="{{old('name') ?? $discipline->name}}">
+                                <div class="mt-1" style="color: red" role="alert">
+                                    @if($errors->has('name'))
+                                    {{$errors->first('name')}}
+                                    @endif
+                                </div>
                             </div>
-                            <div class=" col mb-3"><label for=""
-                                    class=" text-dark text-uppercase text-bold">Código da Disciplina</label>
-                                <input type="text" class=" form-control" id="code" name="code"
-                                    value="{{ $discipline->code }}">
+                            <div class=" col mb-3">
+                                <label for="" class=" text-dark text-uppercase text-bold">Código da Disciplina</label>
+                                <input type="text" class=" form-control" id="code" name="code" value="{{ old('code') ?? $discipline->code }}">
+                                <div class="mt-1" style="color: red" role="alert">
+                                    @if($errors->has('code'))
+                                    {{$errors->first('code')}}
+                                    @endif
+                                </div>
                             </div>
 
                             <div class="row">

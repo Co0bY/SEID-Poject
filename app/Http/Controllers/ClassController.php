@@ -6,6 +6,7 @@ use App\Models\Season;
 use App\Models\Discipline;
 use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ClassController extends Controller
 {
@@ -20,6 +21,22 @@ class ClassController extends Controller
     }
 
     public function create(Request $request){
+        $descriptions = [
+            'required' => 'Este campo deve ser preenchido*',
+            'name.unique' => 'O nome informado já está em uso*',
+            'code.unique' => 'O codigo informado já está em uso*',
+            'season_code.exists' => 'O código do período informado não existe na base*',
+            'discipline_code.exists' => 'O código da disciplina informado não existe na base*',
+            'room_code.exists' => 'O código da sala informado não existe na base*',
+        ];
+        $rules = [
+            'name' => 'required|unique:courses|max:255',
+            'code' => 'required|unique:courses|max:255',
+            'season_code' => ['required', Rule::exists('seasons', 'code')],
+            'discipline_code' => ['required', Rule::exists('disciplines', 'code')],
+            'room_code' => ['required', Rule::exists('rooms', 'code')],
+        ];
+        $request->validate($rules, $descriptions);
         $season = Season::where('code', $request['season_code'])->first();
         $discipline = Discipline::where('code', $request['discipline_code'])->first();
         $room = Room::where('code', $request['room_code'])->first();
@@ -40,9 +57,9 @@ class ClassController extends Controller
 
     public function show($id){
         $class = Classes::where('id', $id)->first();
-        $season = Season::where('id', $class->id)->first();
-        $discipline = Discipline::where('id', $class->id)->first();
-        $room = Room::where('id', $class->id)->first();
+        $season = Season::where('id', $class->id_season)->first();
+        $discipline = Discipline::where('id', $class->id_discipline)->first();
+        $room = Room::where('id', $class->id_room)->first();
 
         $class->season_code = $season->code;
         $class->discipline_code = $discipline->code;
@@ -51,6 +68,22 @@ class ClassController extends Controller
     }
 
     public function update(Request $request){
+        $descriptions = [
+            'required' => 'Este campo deve ser preenchido*',
+            'name.unique' => 'O nome informado já está em uso*',
+            'code.unique' => 'O codigo informado já está em uso*',
+            'season_code.exists' => 'O código do período informado não existe na base*',
+            'discipline_code.exists' => 'O código da disciplina informado não existe na base*',
+            'room_code.exists' => 'O código da sala informado não existe na base*',
+        ];
+        $rules = [
+            'name' => ['required', Rule::unique('classes')->ignore($request['id'])],
+            'code' => ['required', Rule::unique('classes')->ignore($request['id'])],
+            'season_code' => ['required', Rule::exists('seasons', 'code')],
+            'discipline_code' => ['required', Rule::exists('disciplines', 'code')],
+            'room_code' => ['required', Rule::exists('rooms', 'code')],
+        ];
+        $request->validate($rules, $descriptions);
         $class = Classes::where('id', $request['id'])->first();
         $season = Season::where('code', $request['season_code'])->first();
         $discipline = Discipline::where('code', $request['discipline_code'])->first();

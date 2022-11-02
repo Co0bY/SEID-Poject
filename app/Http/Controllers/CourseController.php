@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\CoursesDiscipline;
 use App\Models\Discipline;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class CourseController extends Controller
 {
@@ -20,13 +21,25 @@ class CourseController extends Controller
     }
 
     public function create(Request $request){
+        $descriptions = [
+            'required' => 'Este campo deve ser preenchido*',
+            'name.unique' => 'O nome informado já está em uso*',
+            'code.unique' => 'O codigo informado já está em uso*'
+        ];
+        $rules = [
+            'name' => 'required|unique:courses|max:255',
+            'code' => 'required|unique:courses|max:255',
+            'type_of_course' => 'required',
+            'duration_in_years' => 'required',
+        ];
+        $request->validate($rules, $descriptions);
+
         $course = new Course();
         $course->name = $request->name;
         $course->type_of_course = $request->type_of_course;
         $course->duration_in_years = $request->duration_in_years;
         $course->code = $request->code;
         $course->save();
-        $courses = Course::get();
         return redirect()->route('secretary.course-index');
     }
 
@@ -38,7 +51,18 @@ class CourseController extends Controller
     }
 
     public function update(Request $request){
-
+        $descriptions = [
+            'required' => 'Este campo deve ser preenchido*',
+            'name.unique' => 'O nome informado já está em uso*',
+            'code.unique' => 'O codigo informado já está em uso*'
+        ];
+        $rules = [
+            'name' => ['required', Rule::unique('courses')->ignore($request['id'])->where(fn ($query) => $query->where('name', $request['name']))],
+            'code' => ['required',Rule::unique('courses')->ignore($request['id'])],
+            'type_of_course' => 'required',
+            'duration_in_years' => 'required',
+        ];
+        $request->validate($rules, $descriptions);
         $course = Course::where('id', $request['id'])->first();
         $course->name = $request['name'];
         $course->code = $request['code'];

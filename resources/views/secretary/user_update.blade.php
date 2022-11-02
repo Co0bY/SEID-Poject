@@ -21,19 +21,34 @@
                                 <div class=" col mb-3"><label for=""
                                         class=" text-dark text-uppercase text-bold">Nome</label>
                                     <input type="text" class=" form-control" id="name" name="name"
-                                        value="{{ $user->name }}">
+                                        value="{{ old('name') ?? $user->name }}">
+                                    <div class="mt-1" style="color: red" role="alert">
+                                        @if($errors->has('name'))
+                                            {{$errors->first('name')}}
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class=" col mb-3"><label for=""
                                         class=" text-dark text-uppercase text-bold">Email</label>
                                     <input type="text" class=" form-control" id="email" name="email"
-                                        value="{{ $user->email }}">
+                                        value="{{ old('email') ?? $user->email }}">
+                                    <div class="mt-1" style="color: red" role="alert">
+                                        @if($errors->has('email'))
+                                            {{$errors->first('email')}}
+                                        @endif
+                                    </div>
                                 </div>
                                 <div class=" col mb-3"><label for=""
                                         class=" text-dark text-uppercase text-bold">Senha</label>
                                     <input type="password" class=" form-control" id="password" name="password"
-                                        value="{{ $user->password }}">
+                                        value="{{ old('password') ?? $user->password }}">
+                                    <div class="mt-1" style="color: red" role="alert">
+                                        @if($errors->has('password'))
+                                            {{$errors->first('password')}}
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
 
@@ -41,12 +56,22 @@
                                 <div class=" col mb-3"><label for=""
                                         class=" text-dark text-uppercase text-bold">CPF</label>
                                     <input type="text" class=" form-control" id="cpf" name="cpf"
-                                        value="{{ $perfil->cpf }}">
+                                        value="{{ old('cpf') ?? $perfil->cpf }}">
+                                    <div class="mt-1" style="color: red" role="alert">
+                                            @if($errors->has('cpf'))
+                                            {{$errors->first('cpf')}}
+                                        @endif
+                                    </div>
                                 </div>
                                 <div class=" col mb-3"><label for=""
                                         class=" text-dark text-uppercase text-bold">Data de Nascimento</label>
                                     <input type="date" class=" form-control" id="birth_date" name="birth_date"
-                                        value="{{ $perfil->birth_date }}">
+                                        value="{{ old('birth_date') ?? $perfil->birth_date }}">
+                                    <div class="mt-1" style="color: red" role="alert">
+                                        @if($errors->has('birth_date'))
+                                            {{$errors->first('birth_date')}}
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
 
@@ -54,7 +79,12 @@
                                 <div class=" col mb-3"><label for=""
                                         class=" text-dark text-uppercase text-bold">Endereço</label>
                                     <input type="text" class=" form-control" id="address" name="address"
-                                        value="{{ $perfil->address }}">
+                                        value="{{old('address') ?? $perfil->address }}">
+                                    <div class="mt-1" style="color: red" role="alert">
+                                        @if($errors->has('address'))
+                                            {{$errors->first('address')}}
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
 

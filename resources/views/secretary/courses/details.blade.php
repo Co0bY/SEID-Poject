@@ -24,21 +24,43 @@
                                 <div class="row">
                                     <div class=" col mb-3"><label for=""
                                         class=" text-dark text-uppercase text-bold">Nome do Curso</label>
-                                        <input type="text" class=" form-control" id="discipline_name" name="name" value="{{$course->name}}">
+                                        <input type="text" class=" form-control" id="discipline_name" name="name" value="{{old('name') ?? $course->name}}">
+                                        <div class="mt-1" style="color: red" role="alert">
+                                            @if($errors->has('name'))
+                                            {{$errors->first('name')}}
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div class="row">
-                                    <div class=" col-8 mb-3"><label for="" class=" text-dark text-uppercase text-bold">Tipo de Curso</label>
-                                        <input type="text" class=" form-control" id="type_of_course" name="type_of_course" value="{{$course->type_of_course}}">
+                                    <div class=" col-8 mb-3">
+                                        <label for="" class=" text-dark text-uppercase text-bold">Tipo de Curso</label>
+                                        <input type="text" class=" form-control" id="type_of_course" name="type_of_course" value="{{old('type_of_course') ?? $course->type_of_course}}">
+                                        <div class="mt-1" style="color: red" role="alert">
+                                            @if($errors->has('type_of_course'))
+                                                {{$errors->first('type_of_course')}}
+                                            @endif
+                                        </div>
                                     </div>
-                                    <div class=" col-4 mb-3"><label for="" class=" text-dark text-uppercase text-bold">Duração em Anos</label>
-                                        <input type="text" class=" form-control" id="duration_in_years" name="duration_in_years" value="{{$course->duration_in_years}}">
+                                    <div class=" col-4 mb-3">
+                                        <label for="" class="text-dark text-uppercase text-bold">Duração em Anos</label>
+                                        <input type="text" class=" form-control" id="duration_in_years" name="duration_in_years" value="{{old('duration_in_years') ?? $course->duration_in_years}}">
+                                        <div class="mt-1" style="color: red" role="alert">
+                                            @if($errors->has('duration_in_years'))
+                                                {{$errors->first('duration_in_years')}}
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             <div class="row">
                                 <div class=" col mb-3"><label for="" class=" text-dark text-uppercase text-bold">Código do Curso</label>
-                                    <input type="text" class=" form-control" id="code" name="code" value="{{$course->code}}">
+                                    <input type="text" class=" form-control" id="code" name="code" value="{{old('code') ?? $course->code}}">
+                                    <div class="mt-1" style="color: red" role="alert">
+                                        @if($errors->has('code'))
+                                            {{$errors->first('code')}}
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
 

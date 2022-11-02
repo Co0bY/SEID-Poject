@@ -25,8 +25,8 @@
                                     class=" text-dark text-uppercase text-bold">Nome do Curso</label>
                                     <input type="text" class=" form-control" readonly id="course_name" name="course_name" value="{{$course->name}}">
                                 </div>
-                                <div class="col mb-3"><label for=""
-                                    class=" text-dark text-uppercase text-bold">Código do Curso</label>
+                                <div class="col mb-3">
+                                    <label for=""class=" text-dark text-uppercase text-bold">Código do Curso</label>
                                     <input type="text" class=" form-control" readonly id="course_code" name="course_code" value="{{$course->code}}">
                                 </div>
                             </div>
@@ -38,6 +38,11 @@
                                         <option value="{{$discipline->id}}">{{$discipline->name}} | {{$discipline->code}}</option>
                                         @endforeach
                                     </select>
+                                    <div class="mt-1" style="color: red" role="alert">
+                                        @if($errors->has('discipline_id'))
+                                        {{$errors->first('discipline_id')}}
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
 

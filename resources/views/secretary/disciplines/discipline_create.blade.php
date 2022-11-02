@@ -19,14 +19,23 @@
                         {{-- route('pesquisar') --}}
                         <form action="{{ route('secretary.discipline-create') }}" method="post">
                             @csrf
-                            <div class="col mb-3"><label for=""
-                                    class=" text-dark text-uppercase text-bold">Nome</label>
-                                <input type="text" class=" form-control" id="discipline_name" name="discipline_name">
+                            <div class="col mb-3">
+                                <label for="" class=" text-dark text-uppercase text-bold">Nome</label>
+                                <input type="text" class=" form-control" value="{{old('name')}}" id="name" name="name">
+                                <div class="mt-1" style="color: red" role="alert">
+                                    @if($errors->has('name'))
+                                    {{$errors->first('name')}}
+                                    @endif
+                                </div>
                             </div>
-                            <div class=" col mb-3"><label for="" class=" text-dark text-uppercase text-bold">Código
-                                    da
-                                    Disciplina</label>
-                                <input type="text" class=" form-control" id="code" name="code">
+                            <div class=" col mb-3">
+                                <label for="" class=" text-dark text-uppercase text-bold">Código da Disciplina</label>
+                                <input type="text" class=" form-control" value="{{old('code')}}" id="code" name="code">
+                                <div class="mt-1" style="color: red" role="alert">
+                                    @if($errors->has('code'))
+                                    {{$errors->first('code')}}
+                                    @endif
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col btn-group" role="group" aria-label="Button group">

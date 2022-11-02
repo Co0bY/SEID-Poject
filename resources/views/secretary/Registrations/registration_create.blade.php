@@ -27,22 +27,33 @@
                             </div>
 
                             <div class="row">
-                                <div class="col mb-3"><label for="" class=" text-dark text-uppercase text-bold">Cpf
-                                        do
-                                        Aluno</label>
-                                    <input type="text" class=" form-control" id="cpf" name="cpf">
+                                <div class="col mb-3">
+                                    <label for="" class=" text-dark text-uppercase text-bold">Cpf do Aluno</label>
+                                    <input type="text" class=" form-control" id="cpf" name="cpf" value="{{old('cpf')}}">
+                                    <div class="mt-1" style="color: red" role="alert">
+                                        @if($errors->has('cpf'))
+                                        {{$errors->first('cpf')}}
+                                        @endif
+                                    </div>
                                 </div>
-                                <div class="col mb-3"><label for=""
-                                        class=" text-dark text-uppercase text-bold">Código
-                                        do
-                                        Periodo Válido</label>
-                                    <input type="text" class=" form-control" id="code" name="code">
+                                <div class="col mb-3">
+                                    <label for="" class=" text-dark text-uppercase text-bold">Código do Periodo Válido</label>
+                                    <input type="text" class=" form-control" id="code" name="code" value="{{old('code')}}">
+                                    <div class="mt-1" style="color: red" role="alert">
+                                        @if($errors->has('code'))
+                                        {{$errors->first('code')}}
+                                        @endif
+                                    </div>
                                 </div>
-                                <div class="col mb-3"><label for=""
-                                    class=" text-dark text-uppercase text-bold">Código
-                                    do Curso</label>
-                                <input type="text" class=" form-control" id="course_code" name="course_code">
-                            </div>
+                                <div class="col mb-3">
+                                    <label for="" class=" text-dark text-uppercase text-bold">Código do Curso</label>
+                                    <input type="text" class=" form-control" id="course_code" name="course_code" value="{{old('course_code')}}">
+                                    <div class="mt-1" style="color: red" role="alert">
+                                        @if($errors->has('course_code'))
+                                        {{$errors->first('course_code')}}
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
 
 
