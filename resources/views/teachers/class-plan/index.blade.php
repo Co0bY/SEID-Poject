@@ -43,7 +43,6 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
                             <th scope="col">Número da Aula</th>
                             <th scope="col">Conteudo</th>
                             <th scope="col">Notas da Aula</th>
@@ -52,13 +51,12 @@
 
                     @foreach ($lessons as $lesson)
                         <tbody>
-                            <td scope="col">{{ $lesson->id }}</td>
                             <td scope="col">{{ $lesson->number_of_lesson }}</td>
                             <td scope="col">{{ $lesson->content }}</td>
                             <td scope="col">{{ $lesson->notes }}</td>
                             <td scope="col">
                                 <div class=" btn-group">
-                                    <a href="" class=" btn btn-danger">Editar</a>
+                                    <a href="{{route('teacher.lesson-edit-form', $lesson->id)}}" class=" btn btn-danger">Editar</a>
                                 </div>
                             </td>
                         </tbody>
@@ -92,6 +90,31 @@
                     </div>
                 </div>
 
+                <div class="modal fade" id="modalEditLesson" tabindex="-1" role="dialog"
+                aria-labelledby="modalEditLesson" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Edição</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body d-inline">
+                            <input type="hidden" name="classid" id="classid" value="{{$class->id}}">
+                            <div class=" col mb-3"><label for="" class=" text-dark text-uppercase text-bold">Número de Aulas que deseja adicionar</label>
+                                <input type="number" class=" form-control"  id="number_of_lesson" name="number_of_lesson" value="1">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-href="/teacher/lesson/add" class="btn btn-primary"
+                                onclick="addLessons()" id="btnAdd">Adicionar</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
                 <script>
                     function showModal() {
                         $('#modalAddLessons').modal('show');
@@ -115,7 +138,7 @@
                         success: function(response) {
                             $('#btnAdd').prop('disabled', false);
                             $('#btnAdd').text('Adicionar');
-                            // document.location.href = response;
+                            document.location.href = response;
                         },
                         complete: function() {
                             $('#btnAdd').prop('disabled', false);

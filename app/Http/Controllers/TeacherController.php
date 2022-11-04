@@ -13,6 +13,7 @@ use App\Models\CoursesDiscipline;
 use App\Models\Discipline;
 use App\Models\Score;
 use App\Models\HomeWork;
+use App\Models\LessonPlan;
 use App\Models\StudentRegistrationInSubject;
 use App\Models\StudentsInCourse;
 use Illuminate\Http\Request;
@@ -64,7 +65,7 @@ class TeacherController extends Controller
     public function listStudentsAttendance($id){
         $classesregistrations = RegistrationsInClasses::where('id_class', $id)->get();
         $students =[];
-        $classid = $id;
+        $class =Classes::where('id', $id)->first();
         $i = 0;
         if(isset($classesregistrations)){
             foreach($classesregistrations as $classesregistration){
@@ -74,8 +75,9 @@ class TeacherController extends Controller
                 $students[$i]->name = $student->name;
                 $i++;
             }
+        $lessons = LessonPlan::where('class_id', $id)->where('notes', 'Faça uma chamada para adicionar')->get();
         }
-        return view('teachers.attendance_form', ['students' => $students, 'classid' => $classid]);
+        return view('teachers.attendance_form', ['students' => $students, 'class' => $class, 'lessons' => $lessons]);
     }
 
     public function makeAttendance(Request $request){
@@ -86,9 +88,14 @@ class TeacherController extends Controller
             $attendance = new Attendance;
             $attendance->registration_in_class_id = $registrationInClass->id;
             $attendance->attendance = $request['attendance'][$i];
+            $attendance->date_of_attendance = $request['date_of_attendance'];
             // dd($attendance);
             $attendance->save();
         }
+        $lesson = LessonPlan::where('id', $request->lesson_id)->first();
+        $lesson->content = $request->content;
+        $lesson->notes = $request->notes;
+        $lesson->save();
         return redirect()->route('teacher.attendance');
     }
 

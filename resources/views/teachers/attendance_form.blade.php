@@ -8,8 +8,30 @@
 
 <div class="col-9">
     <form action="{{route('teacher.attendance-make')}}" method="POST">
+        <div class="row">
+            <div class="col">
+                <label for="" class=" text-dark text-uppercase text-bold">Número da Aula</label>
+                <select name="lesson_id" id="lesson_id" class=" form-control">
+                    @foreach ($lessons as $lesson)
+                        <option value="{{$lesson->id}}"> {{$lesson->number_of_lesson}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col">
+                <label for="" class=" text-dark text-uppercase text-bold">Contéudo da Aula</label>
+                <input type="text" id="content" name="content" class=" form-control">
+            </div>
+            <div class="col">
+                <label for="" class=" text-dark text-uppercase text-bold">Observações</label>
+                <input type="text" id="notes" name="notes" class=" form-control">
+            </div>
+            <div class="col">
+                <label for="" class=" text-dark text-uppercase text-bold">Dia da Chamada</label>
+                <input type="date" id="date_of_attendance" name="date_of_attendance" class=" form-control">
+            </div>
+        </div>
         @csrf
-        <input type="hidden" name="classid" id="classid" value="{{$classid}}">
+        <input type="hidden" name="classid" id="classid" value="{{$class->id}}">
     <hr>
     <table class="table">
         <thead>

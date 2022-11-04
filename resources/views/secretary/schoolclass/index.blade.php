@@ -51,6 +51,7 @@
                             <th scope="col">#</th>
                             <th scope="col">Nome</th>
                             <th scope="col">Código da Turma</th>
+                            <th scope="col">Nome da Sala</th>
                         </tr>
                     </thead>
                     @foreach ($classes as $class)
@@ -58,6 +59,7 @@
                             <td scope="col">{{ $class->id }}</td>
                             <td scope="col">{{ $class->name }}</td>
                             <td scope="col">{{ $class->code }}</td>
+                            <td scope="col">{{ $class->room->name }}</td>
                             <td scope="col">
                                 <div class=" btn-group">
                                     <a href="{{route('secretary.class-update-form', $class->id)}}" class=" btn btn-dark">Editar</a>
