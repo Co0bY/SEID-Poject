@@ -25,15 +25,16 @@ class LessonController extends Controller
     }
 
     public function addlesson(Request $request){
-        return dd($request);
+        // return dd($request->all());
 
         $lessons = LessonPlan::where('class_id', $request->id)->get();
-        if(isset($lessons)){
-            $lastlesson = LessonPlan::where('class_id', $request->id)->orderByDesc('id')->first();
-            $lastnumberlesson = $lastlesson->number_of_lesson;
-            $lastnumberlesson ++;
-
+        // dd($lessons);
+        if(count($lessons) > 0){
+            // dd($lessons);
             for ($contador = $request->number_of_lesson; $contador > 0; $contador--){
+                $lastlesson = LessonPlan::where('class_id', $request->id)->orderByDesc('id')->first();
+                $lastnumberlesson = $lastlesson->number_of_lesson;
+                $lastnumberlesson ++;
                 $newlesson = new LessonPlan();
                 $newlesson->number_of_lesson = $lastnumberlesson;
                 $newlesson->class_id = $request->id;
@@ -53,5 +54,21 @@ class LessonController extends Controller
         }
 
         return route('teacher.lesson-index', $request->id);
+    }
+
+    public function edit(Request $request){
+
+        $lesson = LessonPlan::where('id', $request->id)->first();
+        $lesson->content = $request->content;
+        $lesson->notes = $lesson->notes;
+        $lesson->save();
+
+        return redirect()->route('teacher.lesson-index', $request->class_id);
+    }
+
+    public function editForm ($id) {
+        $lesson = LessonPlan::where('id', $id)->first();
+
+        return view('teachers.class-plan.edit_form', ['lesson' => $lesson]);
     }
 }

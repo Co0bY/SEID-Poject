@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class ClassController extends Controller
 {
     public function index(){
-        $classes = Classes::get();
+        $classes = Classes::with('room')->get();
 
         return view('secretary.schoolclass.index', ['classes' => $classes]);
     }

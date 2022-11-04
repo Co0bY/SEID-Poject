@@ -110,6 +110,9 @@ Route::prefix('/teacher')->group(function(){
     //lesson
     Route::get('/lesson/{id?}' , [\App\Http\Controllers\LessonController::class, 'index'])->name('teacher.lesson-index');
     Route::get('/lesson-add' , [\App\Http\Controllers\LessonController::class, 'addlesson'])->name('teacher.lesson-add');
+    Route::get('/lesson/edit-form/{id?}' , [\App\Http\Controllers\LessonController::class, 'editForm'])->name('teacher.lesson-edit-form');
+    Route::post('/lesson/edit}' , [\App\Http\Controllers\LessonController::class, 'edit'])->name('teacher.lesson-edit');
+
    //attendance
    Route::get('/attendance' , [\App\Http\Controllers\TeacherController::class, 'listClassesAttendance'])->name('teacher.attendance');
    Route::get('/presence/form/{id?}' , [\App\Http\Controllers\TeacherController::class, 'listStudentsAttendance'])->name('teacher.attendance-form');
