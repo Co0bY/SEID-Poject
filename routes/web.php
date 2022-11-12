@@ -27,15 +27,17 @@ Auth::routes();
 
 Route::prefix('/principal')->group(function(){
     Route::get('/home', [\App\Http\Controllers\PrincipalController::class, 'index'])->name('principal.index');
-    Route::get('/users', [\App\Http\Controllers\PrincipalController::class, 'users'])->name('principal.users');
-    Route::post('/users/filtro', [\App\Http\Controllers\PrincipalController::class, 'filtroUsuarios'])->name('principal.users-filtro');
-    Route::get('/users/filtro', [\App\Http\Controllers\PrincipalController::class, 'filtroUsuarios'])->name('principal.users-filtro');
+    Route::get('/users/', [\App\Http\Controllers\PrincipalController::class, 'users'])->name('principal.users');
+    Route::post('/users', [\App\Http\Controllers\PrincipalController::class, 'filtroUsuarios'])->name('principal.users-filtro');
     Route::get('/createform',  [\App\Http\Controllers\PrincipalController::class, 'createform'])->name('principal.create-form');
     Route::post('/create', [\App\Http\Controllers\PrincipalController::class, 'create'])->name('principal.create');
     Route::get('/editform/{id?}',  [\App\Http\Controllers\PrincipalController::class, 'editform'])->name('principal.edit-form');
     Route::post('/update', [\App\Http\Controllers\PrincipalController::class, 'updateuser'])->name('principal.update');
     Route::get('/deleteform/{id?}',  [\App\Http\Controllers\PrincipalController::class, 'deleteform'])->name('principal.delete-form');
-    Route::post('/delete', [\App\Http\Controllers\PrincipalController::class, 'deleteuser'])->name('principal.delete');
+    Route::post('/delete/', [\App\Http\Controllers\PrincipalController::class, 'deleteuser'])->name('principal.delete');
+    Route::get('/users/inactive', [\App\Http\Controllers\PrincipalController::class, 'usersinactive'])->name('principal.users-inactive');
+    Route::get('/reactiveform/{id?}',  [\App\Http\Controllers\PrincipalController::class, 'reactiveForm'])->name('principal.reactive-form');
+    Route::post('/reactive/', [\App\Http\Controllers\PrincipalController::class, 'reActiveUser'])->name('principal.reactive');
 });
 
 Route::prefix('/secretary')->group(function(){

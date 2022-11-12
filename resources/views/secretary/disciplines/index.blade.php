@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col">
                 <hr>
                 <table class="table">
                     <thead>
@@ -47,6 +47,7 @@
                             <th scope="col">#</th>
                             <th scope="col">Nome</th>
                             <th scope="col">Codigo da Disciplina</th>
+                            <th scope="col">Ações</th>
                         </tr>
                     </thead>
 

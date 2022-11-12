@@ -7,24 +7,58 @@ use App\Models\Secretary;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class PrincipalController extends Controller
 {
     public function index(){
-        return view('principal.home');
+        return redirect()->route('principal.users-filtro');
     }
-    public function users(){
-        $users =  DB::table('user_filter')->get();
-        return view('principal.users', ['users' => $users]);
+    public function users(Request $request){
+        $users =  DB::table('user_filter')->where('active',1)->orderByDesc('id')->paginate(10);
+        $active = 1;
+        return view('principal.users', ['users' => $users, 'active' => $active, 'request' => $request->all()]);
     }
     public function createform(){
         return view('principal.user_create');
     }
 
     public function create(Request $request){
-        // dd($request);
+        $userTypeTable = "secretaries";
+        if($request['type_of_user'] == '1'){
+            $perfil = new secretary();
+            $userTypeTable = 'secretaries';
+        }
+        elseif($request['type_of_user'] == '2'){
+            $perfil = new Secretary();
+            $userTypeTable = 'secretaries';
+        }
+        elseif($request['type_of_user'] == '3'){
+            $perfil = new Student();
+            $userTypeTable = 'students';
+        }
+        elseif($request['type_of_user'] == '4'){
+            $perfil = new Teacher();
+            $userTypeTable = 'teachers';
+        }
+        $descriptions = [
+            'required' => 'Este campo deve ser preenchido*',
+            'name.unique' => 'O nome informado já está em uso*',
+            'email.unique' => 'O email informado já está em uso*',
+            'cpf.unique' => 'O cpf informado já está em uso*'
+        ];
+        $rules = [
+            'name' => 'required|max:255',
+            'email' => 'required|unique:users|max:255',
+            'cpf' => "required|unique:$userTypeTable|max:255",
+            'type_of_user' => ['required', Rule::exists('user_types', 'id')],
+            'address' => 'required',
+            'password' => 'required',
+            'birth_date' => 'required|date',
+        ];
+        $request->validate($rules, $descriptions);
         $email = $request['email'];
         $password = $request['password'];
         $name = $request['name'];
@@ -35,24 +69,13 @@ class PrincipalController extends Controller
         $user->email = $email;
         $user->password = $password;
         $user->type_of_user = $usertype;
+        $user->active = 1;
         // dd($user);
         $user->save();
 
         $user = User::where('email', $email)->first();
         $id = $user->id;
 
-        if($request['type_of_user'] == '1'){
-            $perfil = new Principal();
-        }
-        elseif($request['type_of_user'] == '2'){
-            $perfil = new Secretary();
-        }
-        elseif($request['type_of_user'] == '3'){
-            $perfil = new Student();
-        }
-        elseif($request['type_of_user'] == '4'){
-            $perfil = new Teacher();
-        }
         $data = $request['birth_date'];
         $perfil->user_id = $id;
         $perfil->cpf = $request['cpf'];
@@ -64,7 +87,8 @@ class PrincipalController extends Controller
         // dd($user);
         $perfil->save();
 
-        return redirect()->route('principal.users');
+        return redirect()->route('principal.users-filtro');
+
     }
 
     public function filtroUsuarios(Request $request){
@@ -74,6 +98,7 @@ class PrincipalController extends Controller
         $address = $request['address'];
         $birth_date = $request['birth_date'];
         $type_of_user = $request['type_of_user'];
+        $active = $request['active'];
 
         $query = DB::table('user_filter');
 
@@ -95,10 +120,11 @@ class PrincipalController extends Controller
         if($birth_date != ""){
             $query->where('user_filter.birth_date', 'like', "%$birth_date%");
         }
+        if($active) $query->where('active', $active);
 
-        $users = $query->get();
+        $users = $query->orderByDesc('id')->paginate(10);
 
-        return view('principal.users', ['users' => $users]);
+        return view('principal.users', ['users' => $users, 'active' => $active, 'request' => $request->all() ]);
     }
     public function editform($id){
         $user = User::where('id', $id)->first();
@@ -119,6 +145,39 @@ class PrincipalController extends Controller
     }
     public function updateuser(Request $request){
         $user = User::where('id', $request['id'])->first();
+        $userTypeTable = "secretaries";
+        if($request['type_of_user'] == '1'){
+            $perfil = Principal::where('user_id', $user->id)->first();
+            $userTypeTable = 'secretaries';
+        }
+        elseif($request['type_of_user'] == '2'){
+            $perfil = Secretary::where('user_id', $user->id)->first();
+            $userTypeTable = 'secretaries';
+        }
+        elseif($request['type_of_user'] == '3'){
+            $perfil = Student::where('user_id', $user->id)->first();
+            $userTypeTable = 'students';
+        }
+        elseif($request['type_of_user'] == '4'){
+            $perfil = Teacher::where('user_id', $user->id)->first();
+            $userTypeTable = 'teachers';
+        }
+        $descriptions = [
+            'required' => 'Este campo deve ser preenchido*',
+            'name.unique' => 'O nome informado já está em uso*',
+            'email.unique' => 'O email informado já está em uso*',
+            'cpf.unique' => 'O cpf informado já está em uso*'
+        ];
+        $rules = [
+            'name' => ['required', Rule::unique('users')->ignore($request['id'])],
+            'email' => ['required', Rule::unique('users')->ignore($request['id'])],
+            'cpf' => ['required'],
+            'type_of_user' => ['required', Rule::exists('user_types', 'id')],
+            'address' => 'required',
+            'password' => 'required',
+            'birth_date' => 'required|date',
+        ];
+        $request->validate($rules, $descriptions);
 
         $email = $request['email'];
         $password = $request['password'];
@@ -129,19 +188,21 @@ class PrincipalController extends Controller
         $user->email = $email;
         $user->password = $password;
         $user->type_of_user = $usertype;
-        $user->save();
+        $user->active = 1;
+
+
 
         if($request['type_of_user'] == '1'){
-            $perfil = new Principal();
+            $perfil = Principal::where('user_id', $user->id)->first();
         }
         elseif($request['type_of_user'] == '2'){
-            $perfil = new Secretary();
+            $perfil = Secretary::where('user_id', $user->id)->first();
         }
         elseif($request['type_of_user'] == '3'){
-            $perfil = new Student();
+            $perfil = Student::where('user_id', $user->id)->first();
         }
         elseif($request['type_of_user'] == '4'){
-            $perfil = new Teacher();
+            $perfil = Teacher::where('user_id', $user->id)->first();
         }
         $data = $request['birth_date'];
         $perfil->user_id = $request['id'];
@@ -153,7 +214,10 @@ class PrincipalController extends Controller
         $perfil->picture = "Ainda em produção";
         // dd($user);
         $perfil->save();
-        return redirect()->route('principal.users');
+        $user->save();
+
+
+        return redirect()->route('principal.users-filtro');
     }
 
     public function deleteform($id){
@@ -170,29 +234,77 @@ class PrincipalController extends Controller
         elseif($user->type_of_user == '4'){
             $perfil = Teacher::where('user_id', $user->id)->first();
         }
-        return view('principal.user_delete', ['user' => $user, 'perfil' => $perfil]);
+        return view('secretary.user_delete', ['user' => $user, 'perfil' => $perfil]);
     }
 
     public function deleteUser(Request $request){
         $user = User::where('id', $request['id'])->first();
         if($user->type_of_user == '1'){
             $perfil = Principal::where('user_id', $user->id)->first();
-            $perfil->delete();
+            // $perfil->delete();
         }
         elseif($user->type_of_user == '2'){
             $perfil = Secretary::where('user_id', $user->id)->first();
-            $perfil->delete();
+            // $perfil->delete();
         }
         elseif($user->type_of_user == '3'){
             $perfil = Student::where('user_id', $user->id)->first();
-            $perfil->delete();
+            // $perfil->delete();
         }
         elseif($user->type_of_user == '4'){
             $perfil = Teacher::where('user_id', $user->id)->first();
-            $perfil->delete();
+            // $perfil->delete();
         }
-        $user->delete();
-        $users =  DB::table('user_filter')->get();
-        return view('principal.users', ['users' => $users]);
+        $user->active = 0;
+        $user->save();
+
+        return redirect()->route('principal.users-filtro');
+    }
+
+    public function usersinactive(){
+        $users =  DB::table('user_filter')->where('active',0)->orderByDesc('id')->paginate(10);
+        $active = 0;
+        return view('principal.users', ['users' => $users, 'active' => 0]);
+    }
+
+    public function reactiveForm($id){
+        $user = User::where('id', $id)->first();
+        if($user->type_of_user == '1'){
+            $perfil = Principal::where('user_id', $user->id)->first();
+        }
+        elseif($user->type_of_user == '2'){
+            $perfil = Secretary::where('user_id', $user->id)->first();
+        }
+        elseif($user->type_of_user == '3'){
+            $perfil = Student::where('user_id', $user->id)->first();
+        }
+        elseif($user->type_of_user == '4'){
+            $perfil = Teacher::where('user_id', $user->id)->first();
+        }
+        return view('secretary.user_reactive', ['user' => $user, 'perfil' => $perfil]);
+    }
+
+    public function reActiveUser(Request $request){
+        $user = User::where('id', $request['id'])->first();
+        if($user->type_of_user == '1'){
+            $perfil = Principal::where('user_id', $user->id)->first();
+            // $perfil->delete();
+        }
+        elseif($user->type_of_user == '2'){
+            $perfil = Secretary::where('user_id', $user->id)->first();
+            // $perfil->delete();
+        }
+        elseif($user->type_of_user == '3'){
+            $perfil = Student::where('user_id', $user->id)->first();
+            // $perfil->delete();
+        }
+        elseif($user->type_of_user == '4'){
+            $perfil = Teacher::where('user_id', $user->id)->first();
+            // $perfil->delete();
+        }
+        $user->active = 1;
+        $user->save();
+
+        return redirect()->route('principal.users-filtro');
     }
 }

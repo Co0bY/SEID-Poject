@@ -38,10 +38,20 @@
                                         @endif
                                     </div>
                                 </div>
-
+                            </div>
+                            <div class="row mb-3">
                                 <div class=" col mb-3"><label for=""
                                         class=" text-dark text-uppercase text-bold">Senha</label>
                                     <input type="password" class=" form-control" id="password" name="password" value="{{old('password')}}">
+                                    <div class="mt-1" style="color: red" role="alert">
+                                        @if($errors->has('password'))
+                                        {{$errors->first('password')}}
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class=" col mb-3"><label for=""
+                                        class=" text-dark text-uppercase text-bold">Confirme a Senha</label>
+                                    <input type="password" class=" form-control" id="confirm_password" name="confirm_password" value="{{old('password')}}">
                                     <div class="mt-1" style="color: red" role="alert">
                                         @if($errors->has('password'))
                                         {{$errors->first('password')}}

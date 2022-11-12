@@ -18,13 +18,13 @@
                         {{-- route('pesquisar') --}}
                         <form action="{{ route('secretary.registration-create') }}" method="post">
                             @csrf
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col mb-3"><label for="" class=" text-dark text-uppercase text-bold">Nome
                                         do
                                         Aluno</label>
                                     <input type="text" class=" form-control" id="name" name="name" readonly>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="row">
                                 <div class="col mb-3">

@@ -17,7 +17,7 @@ class SecretaryController extends Controller
         return view('secretary.home');
     }
     public function users(Request $request){
-        $users =  DB::table('user_filter')->where('active',1)->orderByDesc('id')->paginate(2);
+        $users =  DB::table('user_filter')->where('active',1)->orderByDesc('id')->paginate(10);
         $active = 1;
         return view('secretary.users', ['users' => $users, 'active' => $active, 'request' => $request->all()]);
     }
@@ -122,7 +122,7 @@ class SecretaryController extends Controller
         }
         if($active) $query->where('active', $active);
 
-        $users = $query->orderByDesc('id')->paginate(2);
+        $users = $query->orderByDesc('id')->paginate(10);
 
         return view('secretary.users', ['users' => $users, 'active' => $active, 'request' => $request->all() ]);
     }

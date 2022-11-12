@@ -56,7 +56,7 @@
                             <td scope="col">{{ $lesson->notes }}</td>
                             <td scope="col">
                                 <div class=" btn-group">
-                                    <a href="{{route('teacher.lesson-edit-form', $lesson->id)}}" class=" btn btn-danger">Editar</a>
+                                    <a href="{{route('teacher.lesson-edit-form', $lesson->id)}}" class=" btn btn-success">Editar</a>
                                 </div>
                             </td>
                         </tbody>
