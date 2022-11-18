@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\CoursesDiscipline;
 use App\Models\Discipline;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class CourseController extends Controller
@@ -91,5 +92,29 @@ class CourseController extends Controller
         return view('secretary.courses.details', ['course' => $course, 'disciplines' => $disciplines]);
     }
 
+    public function filtroCurso(Request $request){
+        $name = $request->name;
+        $type_of_course = $request->type_of_course;
+        $duration_in_years = $request->duration_in_years;
+        $code = $request->code;
 
+        $query = Course::query();
+
+        if($name != ""){
+           $query->where('name', 'like', "%$name%");
+        }
+        if($type_of_course != ""){
+           $query->where('type_of_course', 'like', "%$type_of_course%");
+        }
+        if($duration_in_years != ""){
+            $query->where('duration_in_years', 'like', "%$duration_in_years%");
+        }
+        if($code != ""){
+            $query->where('code', 'like', "%$code%");
+        }
+
+        $courses = $query->orderByDesc('id')->paginate(10);
+
+        return view('secretary.courses.index', ['courses' => $courses]);
+    }
 }

@@ -8,7 +8,7 @@ use Illuminate\Validation\Rule;
 class SeasonController extends Controller
 {
     public function index(){
-        $seasons = Season::get();
+        $seasons = Season::paginate(10);
 
         return view('secretary.seasons.index', ['seasons' => $seasons]);
     }
@@ -78,5 +78,31 @@ class SeasonController extends Controller
 
     public function delete(){
 
+    }
+
+    public function filtro(Request $request){
+        $name = $request->name;
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        $code = $request->code;
+
+        $query = Season::query();
+
+        if($name != ""){
+           $query->where('name', 'like', "%$name%");
+        }
+        if($start_date != ""){
+            $query->where('start_date', 'like', "%$start_date%");
+         }
+         if($end_date != ""){
+            $query->where('equipment', 'like', "%$end_date%");
+         }
+        if($code != ""){
+            $query->where('code', 'like', "%$code%");
+        }
+
+        $seasons = $query->orderByDesc('id')->paginate(10);
+
+        return view('secretary.seasons.index', ['seasons' => $seasons]);
     }
 }

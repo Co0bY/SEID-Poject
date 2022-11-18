@@ -71,4 +71,22 @@ class DisciplineController extends Controller
 
     }
 
+    public function filtro(Request $request){
+        $discipline_name = $request->discipline_name;
+        $code = $request->code;
+
+        $query = Discipline::query();
+
+        if($discipline_name != ""){
+           $query->where('name', 'like', "%$discipline_name%");
+        }
+        if($code != ""){
+            $query->where('code', 'like', "%$code%");
+        }
+
+        $disciplines = $query->orderByDesc('id')->paginate(10);
+
+        return view('secretary.disciplines.index', ['disciplines' => $disciplines]);
+    }
+
 }

@@ -15,15 +15,15 @@
                         </div>
 
                         {{-- route('pesquisar') --}}
-                        <form action=" " method="post">
+                        <form action="{{route('secretary.discipline-filtro')}}" method="post">
                             @csrf
                             <div class=" col mb-3"><label for=""
                                     class=" text-dark text-uppercase text-bold">Nome</label>
-                                <input type="text" class=" form-control" id="discipline_name" name="name">
+                                <input type="text" class=" form-control" id="discipline_name" name="discipline_name">
                             </div>
                             <div class=" col mb-3"><label for="" class=" text-dark text-uppercase text-bold">Código
                                     da Disciplina</label>
-                                <input type="text" class=" form-control" id="code" name="name">
+                                <input type="text" class=" form-control" id="code" name="code">
                             </div>
                             <div class="row">
                                 <div class="col btn-group" role="group" aria-label="Button group">

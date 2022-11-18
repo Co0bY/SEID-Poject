@@ -11,11 +11,11 @@
     <div class="col">
         <div class=" card">
             <div class=" card-body">
-                <div class=" row m-3">
-                    <h1 class=" text-uppercase mb-2">Filtro</h1>
+                <div class=" row">
+                    <h1 class=" text-uppercase m-3">Filtro</h1>
                 </div>
                     {{-- route('pesquisar') --}}
-                    <form action="" method="post">
+                    <form action="{{route('teacher.attendance-filtro')}}" method="post">
                         @csrf
                         <div class=" row mb-2">
                             <div class=" col">
@@ -34,7 +34,7 @@
                                 <input type="text" class=" form-control" id="code_room" name="code_room">
                             </div>
                            </div>
-                           <div class="row mt-2">
+                           <div class="row mt-3">
                             <div class=" col-12 btn-group">
                                 <button type="submit" class=" btn btn-success text-uppercase">Pesquisar</button>
                             </div>

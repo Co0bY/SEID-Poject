@@ -16,12 +16,12 @@
                         </div>
 
                         {{-- route('pesquisar') --}}
-                        <form action=" " method="post">
+                        <form action="{{route('secretary.season-filtro')}}" method="post">
                             @csrf
                             <div class="row">
                                 <div class="col mb-3"><label for=""
                                         class=" text-dark text-uppercase text-bold">Nome</label>
-                                    <input type="text" class=" form-control" id="discipline_name" name="name">
+                                    <input type="text" class=" form-control" id="name" name="name">
                                 </div>
                             </div>
                             <div class="row">

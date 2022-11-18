@@ -14,6 +14,7 @@ use App\Models\Discipline;
 use App\Models\Score;
 use App\Models\HomeWork;
 use App\Models\LessonPlan;
+use App\Models\Room;
 use App\Models\StudentRegistrationInSubject;
 use App\Models\StudentsInCourse;
 use Illuminate\Http\Request;
@@ -261,5 +262,110 @@ class TeacherController extends Controller
             $homework->score = $request->score;
         }
         $homework->save();
+    }
+
+    public function filtroHome(Request $request){
+        $userid = $request->session()->get('id');
+        $teacher = Teacher::where('user_id', $userid)->first();
+        $ligation = TeacherInClasses::where('id_teacher', $teacher->id)->first();
+        if(isset($ligation)){
+            $name = $request->name;
+            $code_class = $request->code_class;
+            $code_room = $request->code_room;
+
+            $query = Classes::query();
+
+            if($name != ""){
+               $query->where('name', 'like', "%$name%");
+            }
+            if($code_class != ""){
+                $query->where('code', 'like', "%$code_class%");
+            }
+            if($code_room != ""){
+                $room = Room::where('code', 'like', "%$code_room%")->first();
+                if(isset($student)){
+                    $query->where('id_room', $room->id);
+                }else{
+                    $query->where('id_room', '');
+                }
+            }
+
+            $classes = $query->orderByDesc('id')->paginate(10);
+        }
+        else{
+            $classes = [];
+        }
+
+        return view('teachers.index', ['classes' => $classes]);
+    }
+
+    public function filtroScore(Request $request){
+        $userid = $request->session()->get('id');
+        $teacher = Teacher::where('user_id', $userid)->first();
+        $ligation = TeacherInClasses::where('id_teacher', $teacher->id)->first();
+        if(isset($ligation)){
+            $name = $request->name;
+            $code_class = $request->code_class;
+            $code_room = $request->code_room;
+
+            $query = Classes::query();
+
+            if($name != ""){
+               $query->where('name', 'like', "%$name%");
+            }
+            if($code_class != ""){
+                $query->where('code', 'like', "%$code_class%");
+            }
+            if($code_room != ""){
+                $room = Room::where('code', 'like', "%$code_room%")->first();
+                if(isset($student)){
+                    $query->where('id_room', $room->id);
+                }else{
+                    $query->where('id_room', '');
+                }
+            }
+
+            $classes = $query->orderByDesc('id')->paginate(10);
+        }
+        else{
+            $classes = [];
+        }
+
+        return view('teachers.score', ['classes' => $classes]);
+    }
+
+    public function filtroAttendance(Request $request){
+        $userid = $request->session()->get('id');
+        $teacher = Teacher::where('user_id', $userid)->first();
+        $ligation = TeacherInClasses::where('id_teacher', $teacher->id)->first();
+        if(isset($ligation)){
+            $name = $request->name;
+            $code_class = $request->code_class;
+            $code_room = $request->code_room;
+
+            $query = Classes::query();
+
+            if($name != ""){
+               $query->where('name', 'like', "%$name%");
+            }
+            if($code_class != ""){
+                $query->where('code', 'like', "%$code_class%");
+            }
+            if($code_room != ""){
+                $room = Room::where('code', 'like', "%$code_room%")->first();
+                if(isset($student)){
+                    $query->where('id_room', $room->id);
+                }else{
+                    $query->where('id_room', '');
+                }
+            }
+
+            $classes = $query->orderByDesc('id')->paginate(10);
+        }
+        else{
+            $classes = [];
+        }
+
+        return view('teachers.attendance', ['classes' => $classes]);
     }
 }

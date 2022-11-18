@@ -76,4 +76,30 @@ class RoomController extends Controller
     public function delete(){
 
     }
+
+    public function filtro(Request $request){
+        $name = $request->name;
+        $details = $request->details;
+        $equipment = $request->equipment;
+        $code = $request->code;
+
+        $query = Room::query();
+
+        if($name != ""){
+           $query->where('name', 'like', "%$name%");
+        }
+        if($details != ""){
+            $query->where('details', 'like', "%$details%");
+         }
+         if($equipment != ""){
+            $query->where('equipment', 'like', "%$equipment%");
+         }
+        if($code != ""){
+            $query->where('code', 'like', "%$code%");
+        }
+
+        $rooms = $query->orderByDesc('id')->paginate(10);
+
+        return view('secretary.room.index', ['rooms' => $rooms]);
+    }
 }

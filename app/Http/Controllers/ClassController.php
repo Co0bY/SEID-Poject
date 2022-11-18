@@ -11,7 +11,7 @@ use Illuminate\Validation\Rule;
 class ClassController extends Controller
 {
     public function index(){
-        $classes = Classes::with('room')->get();
+        $classes = Classes::with('room')->orderByDesc('id')->paginate(10);
 
         return view('secretary.schoolclass.index', ['classes' => $classes]);
     }
@@ -101,5 +101,23 @@ class ClassController extends Controller
 
     public function delete(){
 
+    }
+
+    public function filtro(Request $request){
+        $name = $request->name;
+        $code = $request->code;
+
+        $query = Classes::query();
+
+        if($name != ""){
+           $query->where('name', 'like', "%$name%");
+        }
+        if($code != ""){
+            $query->where('code', 'like', "%$code%");
+        }
+
+        $classes = $query->with('room')->orderByDesc('id')->paginate(10);
+
+        return view('secretary.schoolclass.index', ['classes' => $classes]);
     }
 }

@@ -14,7 +14,7 @@
                             <h1 class=" text-uppercase m-3">Filtro</h1>
                         </div>
 
-                        <form action="" method="post">
+                        <form action="{{route('teacher.score-filtro')}}" method="post">
                             @csrf
                             <div class=" row mb-3">
                                 <div class=" col"><label for="" class=" text-dark text-uppercase text-bold">Nome da Turma</label>
@@ -26,8 +26,9 @@
                                     <input type="text" class=" form-control" id="code_class" name="code_class">
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <div class=" col"><label for="" class=" text-dark text-uppercase text-bold">Código da Sala</label>
+                            <div class=" row mb-3">
+                                <div class="col">
+                                    <label for="" class=" text-dark text-uppercase text-bold">Código da Sala</label>
                                     <input type="text" class=" form-control" id="code_room" name="code_room">
                                 </div>
                             </div>

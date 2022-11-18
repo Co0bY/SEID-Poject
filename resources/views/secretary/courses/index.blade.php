@@ -15,12 +15,12 @@
                         </div>
 
                         {{-- route('pesquisar') --}}
-                        <form action=" " method="post">
+                        <form action="{{route('secretary.course-filtro')}}" method="post">
                             @csrf
                             <div class="row">
                                 <div class=" col mb-3"><label for=""
                                     class=" text-dark text-uppercase text-bold">Nome do Curso</label>
-                                    <input type="text" class=" form-control" id="discipline_name" name="name">
+                                    <input type="text" class=" form-control" id="name" name="name">
                                 </div>
                             </div>
                             <div class="row">
@@ -59,6 +59,7 @@
                             <th scope="col">Nome</th>
                             <th scope="col">Tipo do Curso</th>
                             <th scope="col">Duração em Anos</th>
+                            <th scope="col">Código do Curso</th>
                         </tr>
                     </thead>
 
@@ -67,7 +68,8 @@
                             <td scope="col">{{ $course->id }}</td>
                             <td scope="col">{{ $course->name }}</td>
                             <td scope="col">{{ $course->type_of_course }}</td>
-                            <td scope="col">{{ $course->duration_in_years }}</td>
+                            <td scope="col">{{ $course->duration_in_years }} Anos</td>
+                            <td scope="col">{{ $course->code }}</td>
                             <td scope="col">
                                 <div class=" btn-group">
                                     <a href="{{ route('secretary.course-details', $course->id) }}"

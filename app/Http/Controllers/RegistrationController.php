@@ -13,7 +13,7 @@ use Illuminate\Validation\Rule;
 class RegistrationController extends Controller
 {
     public function index(){
-        $registrations = Registration::get();
+        $registrations = Registration::with('student')->with('season')->get();
 
         return view('secretary.Registrations.index', ['registrations' => $registrations]);
     }
@@ -80,5 +80,47 @@ class RegistrationController extends Controller
 
     public function delete(){
 
+    }
+
+    public function filtro(Request $request){
+        $registration = $request->registration;
+        $student_name = $request->student_name;
+        $cpf = $request->cpf;
+        $code = $request->code;
+
+        $query = Registration::query();
+
+        if($registration != ""){
+           $query->where('registration', 'like', "%$registration%");
+        }
+        if($cpf != ""){
+            $student = Student::where('cpf', 'like', "%$cpf%")->first();
+            if(isset($student)){
+                $query->where('student_id', $student->id);
+            }else{
+                $query->where('student_id', '');
+            }
+        }
+        if($student_name != ""){
+            $student = Student::where('name', 'like', "%$student_name%")->first();
+            if(isset($student)){
+                $query->where('student_id', $student->id);
+            }else{
+                $query->where('student_id', '');
+            }
+        }
+        if($code != ""){
+            $season = Season::where('code','like', $code)->first();
+            if(isset($season)){
+                $query->where('season_id', 'like', $season->id);
+            }else{
+                $query->where('season_id', '');
+            }
+
+        }
+
+        $registrations = $query->with('student')->with('season')->orderByDesc('id')->paginate(10);
+
+        return view('secretary.Registrations.index', ['registrations' => $registrations]);
     }
 }

@@ -20,7 +20,7 @@
                             <a href="{{ route('secretary.add-teacher-form') }}" class=" btn btn-dark text-uppercase">
                                 Adicionar Professor</a>
                         </div>
-                        <form action=" " method="post">
+                        <form action="{{route('secretary.class-filtro')}}" method="post">
                             @csrf
                             <div class=" col mb-3"><label for=""
                                     class=" text-dark text-uppercase text-bold">Nome</label>
