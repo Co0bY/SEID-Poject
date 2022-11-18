@@ -158,8 +158,8 @@ class TeacherController extends Controller
         $student = $registration;
         $student->name = $studentfocus->name;
         $registrationClass = $classregistration->id;
-
-        return view('teachers.score_edit_form', ['student' => $student, 'scores' => $scores, 'classid' => $classid, 'registrationClass' => $registrationClass]);
+        $finalscore = $classregistration->final_score;
+        return view('teachers.score_edit_form', ['student' => $student, 'scores' => $scores, 'classid' => $classid, 'registrationClass' => $registrationClass, 'finalscore' => $finalscore]);
     }
 
     public function updateStudentScore(Request $request){

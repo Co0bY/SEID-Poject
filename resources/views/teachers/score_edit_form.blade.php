@@ -15,6 +15,12 @@
                             <div class=" col-12 text-center uppercase">
                                 <p> <span class="">Matricula: {{ $student->registration }}</span> Nome:
                                     {{ $student->name }}</p>
+                                    <p>
+                                        @if ($finalscore > 6)
+                                        <span class="text-success">  Nota final : {{$finalscore}}</span>
+                                        @else
+                                        <span class="text-danger"> Nota final : {{$finalscore}}</span>
+                                    @endif</p>
                             </div>
                             <input type="hidden" name="registrationClass" id="registrationClass"
                                 value="{{ $registrationClass }}">
