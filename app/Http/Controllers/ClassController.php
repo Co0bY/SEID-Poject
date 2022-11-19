@@ -11,9 +11,9 @@ use Illuminate\Validation\Rule;
 class ClassController extends Controller
 {
     public function index(){
-        $classes = Classes::with('room')->where('active',1)->orderByDesc('id')->paginate(10);
-
-        return view('secretary.schoolclass.index', ['classes' => $classes]);
+        $classes = Classes::with('room')->with('season')->where('active',1)->orderByDesc('id')->paginate(10);
+        $active = 1;
+        return view('secretary.schoolclass.index', ['classes' => $classes, 'active' => $active]);
     }
 
     public function createform(){
@@ -52,7 +52,7 @@ class ClassController extends Controller
 
         $classes = Classes::get();
 
-        return view('secretary.schoolclass.index', ['classes' => $classes]);
+        return redirect()->route('secretary.class-index');
     }
 
     public function show($id){
@@ -99,8 +99,24 @@ class ClassController extends Controller
         return redirect()->route('secretary.class-index');
     }
 
-    public function delete(){
+    public function deleteForm($id){
+        $class = Classes::where('id', $id)->first();
+        $season = Season::where('id', $class->id_season)->first();
+        $discipline = Discipline::where('id', $class->id_discipline)->first();
+        $room = Room::where('id', $class->id_room)->first();
 
+        $class->season_code = $season->code;
+        $class->discipline_code = $discipline->code;
+        $class->room_code = $room->code;
+        return view('secretary.schoolclass.class_delete', ['class' => $class]);
+    }
+
+    public function delete(Request $request){
+        $class = Classes::where('id', $request->id)->first();
+        $class->active = 0;
+        $class->save();
+
+        return redirect()->route('secretary.class-index');
     }
 
     public function filtro(Request $request){
@@ -115,9 +131,62 @@ class ClassController extends Controller
         if($code != ""){
             $query->where('code', 'like', "%$code%");
         }
-
+        $active = 1;
         $classes = $query->with('room')->where('active',1)->orderByDesc('id')->paginate(10);
 
-        return view('secretary.schoolclass.index', ['classes' => $classes]);
+        return view('secretary.schoolclass.index', ['classes' => $classes, 'active' => $active]);
+    }
+
+    public function inactivesClasses(Request $request){
+        $classes = Classes::with('room')->where('active',0)->orderByDesc('id')->paginate(10);
+        $active = 1;
+        return view('secretary.schoolclass.index', ['classes' => $classes, 'active' => $active]);
+    }
+
+    public function filtroInativos(Request $request){
+        $name = $request->name;
+        $code = $request->code;
+
+        $query = Classes::query();
+
+        if($name != ""){
+           $query->where('name', 'like', "%$name%");
+        }
+        if($code != ""){
+            $query->where('code', 'like', "%$code%");
+        }
+        $active = 0;
+        $classes = $query->with('room')->with('season')->where('active',0)->orderByDesc('id')->paginate(10);
+
+        return view('secretary.schoolclass.index', ['classes' => $classes, 'active' => $active]);
+    }
+
+    public function reactiveForm($id){
+        $class = Classes::where('id', $id)->first();
+        $season = Season::where('id', $class->id_season)->first();
+        $discipline = Discipline::where('id', $class->id_discipline)->first();
+        $room = Room::where('id', $class->id_room)->first();
+
+        $class->season_code = $season->code;
+        $class->discipline_code = $discipline->code;
+        $class->room_code = $room->code;
+        return view('secretary.schoolclass.class_reactive', ['class' => $class]);
+    }
+
+    public function reactive(Request $request){
+        $descriptions = [
+            'season_code.exists' => 'O código do período informado não existe na base ou está inativo*',
+        ];
+        $rules = [
+            'season_code' => ['required', Rule::exists('seasons', 'code')->where('active', 1)],
+        ];
+        $request->validate($rules, $descriptions);
+        $season = Season::where('code', $request->season_code)->first();
+        $class = Classes::where('id', $request->id)->first();
+        $class->id_season = $season->id;
+        $class->active = 1;
+        $class->save();
+
+        return redirect()->route('secretary.class-index');
     }
 }

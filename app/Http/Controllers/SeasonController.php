@@ -51,7 +51,7 @@ class SeasonController extends Controller
     public function show($id){
         $season = Season::where('id', $id)->first();
 
-        return view('secretary.seasons.season_update', ['season' => $season]);
+        return redirect()->route('secretary.season-index');
     }
 
     public function update(Request $request){

@@ -96,6 +96,12 @@ Route::prefix('/secretary')->group(function(){
     Route::get('/class/TeacherForm', [\App\Http\Controllers\TeacherInClassesController::class, 'addform'])->name('secretary.add-teacher-form');
     Route::get('/class/updateform/{id?}',  [\App\Http\Controllers\ClassController::class, 'show'])->name('secretary.class-update-form');
     Route::post('/class/update', [\App\Http\Controllers\ClassController::class, 'update'])->name('secretary.class-update');
+    Route::get('/class/delete/form/{id?}',  [\App\Http\Controllers\ClassController::class, 'deleteForm'])->name('secretary.class-delete-form');
+    Route::post('/class/delete', [\App\Http\Controllers\ClassController::class, 'delete'])->name('secretary.class-delete');
+    Route::get('/class/inactive', [\App\Http\Controllers\ClassController::class, 'inactivesClasses'])->name('secretary.class-inactives');
+    Route::post('/classes/inactives', [\App\Http\Controllers\ClassController::class, 'filtroInativos'])->name('secretary.class1-inactives-filtro');
+    Route::get('/class/reactive/form/{id?}',  [\App\Http\Controllers\ClassController::class, 'reactiveForm'])->name('secretary.class-reactive-form');
+    Route::post('/class/reactive', [\App\Http\Controllers\ClassController::class, 'reactive'])->name('secretary.class-reactive');
 
     Route::get('/registration/addform',  [\App\Http\Controllers\RegistrationsInClassesController::class, 'addform'])->name('secretary.active.assign-registration-form');
     Route::get('/registration/add',  [\App\Http\Controllers\RegistrationsInClassesController::class, 'addRegistration'])->name('secretary.active.assign-registration');

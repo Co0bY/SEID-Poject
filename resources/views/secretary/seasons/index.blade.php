@@ -65,7 +65,7 @@
 
                                 </div>
                                 <div class="col-3 btn-group">
-                                    <a href="" class=" btn btn-success text-uppercase">
+                                    <a href="{{route('secretary.season-index')}}" class=" btn btn-success text-uppercase">
                                         Ativos</a>
                                     <a href="{{route('secretary.season-inactive')}}" class=" btn btn-danger text-uppercase">
                                         Inativos</a>
