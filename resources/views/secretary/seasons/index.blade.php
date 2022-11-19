@@ -12,11 +12,21 @@
                 <div class=" card">
                     <div class=" card-body">
                         <div class="row">
-                            <h1 class=" text-uppercase m-3">Filtro</h1>
+                            <h1 class=" text-uppercase m-3">Filtro -
+                                @if($active == 1)
+                                    Períodos Ativos
+                                @else
+                                    Períodos Inativos
+                                @endif
+                            </h1>
                         </div>
-
-                        {{-- route('pesquisar') --}}
+                        @if($active ==1)
                         <form action="{{route('secretary.season-filtro')}}" method="post">
+                        @else
+                        <form action="{{ route('secretary.season-inactive-filtro') }}" method="post">
+                        @endif
+                        {{-- route('pesquisar') --}}
+
                             @csrf
                             <div class="row">
                                 <div class="col mb-3"><label for=""
@@ -51,6 +61,15 @@
                                         Criar</a>
                                     <button type="submit" class=" btn btn-success text-uppercase">Pesquisar</button>
                                 </div>
+                                <div class="col-1">
+
+                                </div>
+                                <div class="col-3 btn-group">
+                                    <a href="" class=" btn btn-success text-uppercase">
+                                        Ativos</a>
+                                    <a href="{{route('secretary.season-inactive')}}" class=" btn btn-danger text-uppercase">
+                                        Inativos</a>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -82,7 +101,13 @@
                             <div class=" btn-group">
                                 <a href="{{ route('secretary.season-update-form', $season->id) }}"
                                     class=" btn btn-dark">Editar</a>
-                                <a href="" class=" btn btn-danger">Deletar</a>
+                                    @if($season->active == 1)
+                                    <a href="{{route('secretary.season-delete-form', $season->id)}}" class=" btn btn-danger">Inativar</a>
+                                    @else
+                                    <a href="{{ route('secretary.season-reactive-form', $season->id) }}"
+                                        class=" btn btn-danger">Reativar</a>
+                                    @endif
+
                             </div>
                         </td>
                     </tbody>

@@ -267,6 +267,42 @@ class SecretaryController extends Controller
         return view('secretary.users', ['users' => $users, 'active' => 0]);
     }
 
+    public function usersinactiveFiltro(Request $request){
+        $name = $request['name'];
+        $email = $request['email'];
+        $cpf = $request['cpf'];
+        $address = $request['address'];
+        $birth_date = $request['birth_date'];
+        $type_of_user = $request['type_of_user'];
+        $active = $request['active'];
+
+        $query = DB::table('user_filter');
+
+        if($name != ""){
+           $query->where('user_filter.name', 'like', "%$name%");
+        }
+        if($email != ""){
+            $query->where('user_filter.email', 'like', "%$email%");
+        }
+        if($type_of_user != ""){
+            $query->where('user_filter.type_user', $type_of_user);
+        }
+        if($cpf != ""){
+            $query->where('user_filter.cpf', 'like', "%$cpf%");
+        }
+        if($address != ""){
+            $query->where('user_filter.address', 'like', "%$address%");
+        }
+        if($birth_date != ""){
+            $query->where('user_filter.birth_date', 'like', "%$birth_date%");
+        }
+        if($active) $query->where('active', $active);
+
+        $users = $query->orderByDesc('id')->paginate(10);
+
+        return view('secretary.users', ['users' => $users, 'active' => 0, 'request' => $request->all() ]);
+    }
+
     public function reactiveForm($id){
         $user = User::where('id', $id)->first();
         if($user->type_of_user == '1'){

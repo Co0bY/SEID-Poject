@@ -20,8 +20,11 @@
                                 @endif
                             </h1>
                         </div>
-
+                        @if($active ==1)
                         <form action="{{ route('secretary.users-filtro') }}" method="post">
+                        @else
+                        <form action="{{ route('secretary.users-inactive-filtro') }}" method="post">
+                        @endif
                             @csrf
                             <div class=" row mb-3">
                                 <div class=" col mb-3"><label for="name"
@@ -67,9 +70,9 @@
 
                                 </div>
                                 <div class="col-3 btn-group">
-                                    <a href="{{ route('secretary.users') }}" class=" btn btn-success text-uppercase">
+                                    <a href="{{route('secretary.users-filtro')}}" class=" btn btn-success text-uppercase">
                                         Ativos</a>
-                                    <a href="{{ route('secretary.users-inactive') }}" class=" btn btn-danger text-uppercase">
+                                    <a href="{{route('secretary.users-inactive')}}" class=" btn btn-danger text-uppercase">
                                         Inativos</a>
                                 </div>
                             </div>

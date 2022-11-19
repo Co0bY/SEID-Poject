@@ -51,6 +51,7 @@ Route::prefix('/secretary')->group(function(){
     Route::get('/deleteform/{id?}',  [\App\Http\Controllers\SecretaryController::class, 'deleteform'])->name('secretary.delete-form');
     Route::post('/delete/', [\App\Http\Controllers\SecretaryController::class, 'deleteuser'])->name('secretary.delete');
     Route::get('/users/inactive', [\App\Http\Controllers\SecretaryController::class, 'usersinactive'])->name('secretary.users-inactive');
+    Route::post('/users/inactives', [\App\Http\Controllers\SecretaryController::class, 'usersinactiveFiltro'])->name('secretary.users-inactive-filtro');
     Route::get('/reactiveform/{id?}',  [\App\Http\Controllers\SecretaryController::class, 'reactiveForm'])->name('secretary.reactive-form');
     Route::post('/reactive/', [\App\Http\Controllers\SecretaryController::class, 'reActiveUser'])->name('secretary.reactive');
 
@@ -105,7 +106,12 @@ Route::prefix('/secretary')->group(function(){
     Route::post('/season/create', [\App\Http\Controllers\SeasonController::class, 'create'])->name('secretary.season-create');
     Route::get('/season/updateform/{id?}',  [\App\Http\Controllers\SeasonController::class, 'show'])->name('secretary.season-update-form');
     Route::post('/season/update', [\App\Http\Controllers\SeasonController::class, 'create'])->name('secretary.season-update');
-
+    Route::get('/season/delete/form/{id?}',  [\App\Http\Controllers\SeasonController::class, 'deleteForm'])->name('secretary.season-delete-form');
+    Route::post('/season/delete', [\App\Http\Controllers\SeasonController::class, 'delete'])->name('secretary.season-delete');
+    Route::get('/season/reactive/form/{id?}',  [\App\Http\Controllers\SeasonController::class, 'reactiveForm'])->name('secretary.season-reactive-form');
+    Route::post('/season/reactive', [\App\Http\Controllers\SeasonController::class, 'reactiveSeason'])->name('secretary.season-reactive');
+    Route::get('/season/inactive', [\App\Http\Controllers\SeasonController::class, 'seasoninactive'])->name('secretary.season-inactive');
+    Route::post('/season/inactives', [\App\Http\Controllers\SeasonController::class, 'filtroInativos'])->name('secretary.season-inactive-filtro');
     //reltatórios
     Route::get('/extraction', [\App\Http\Controllers\ExportacaoController::class, 'index'])->name('secretary.extraction');
     Route::get('/extraction-attendance', [\App\Http\Controllers\ExportacaoController::class, 'exportFalseAttendances'])->name('secretary.extraction-faltas');
@@ -127,6 +133,7 @@ Route::prefix('/teacher')->group(function(){
    Route::post('/attendances' , [\App\Http\Controllers\TeacherController::class, 'filtroAttendance'])->name('teacher.attendance-filtro');
    Route::get('/presence/form/{id?}' , [\App\Http\Controllers\TeacherController::class, 'listStudentsAttendance'])->name('teacher.attendance-form');
    Route::post('/presence/makepresence' , [\App\Http\Controllers\TeacherController::class, 'makeAttendance'])->name('teacher.attendance-make');
+;
 
     //Score
    Route::get('/score' , [\App\Http\Controllers\TeacherController::class, 'listClassesScore'])->name('teacher.score');

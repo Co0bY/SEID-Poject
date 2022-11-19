@@ -69,7 +69,6 @@
                         <td scope="col">
                             <div class=" btn-group">
                                 <a href="{{route('secretary.room-update-form', $room->id)}}" class=" btn btn-dark">Editar</a>
-                                <a href="" class=" btn btn-danger">Deletar</a>
                             </div>
                         </td>
                     </tbody>

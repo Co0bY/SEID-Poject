@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Classes;
+use App\Models\Registration;
 use App\Models\Season;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -8,9 +11,9 @@ use Illuminate\Validation\Rule;
 class SeasonController extends Controller
 {
     public function index(){
-        $seasons = Season::paginate(10);
-
-        return view('secretary.seasons.index', ['seasons' => $seasons]);
+        $seasons = Season::where('active',1)->paginate(10);
+        $active = 1;
+        return view('secretary.seasons.index', ['seasons' => $seasons, 'active' => $active]);
     }
 
     public function createform(){
@@ -76,8 +79,30 @@ class SeasonController extends Controller
         return redirect()->route('secretary.season-index');
     }
 
-    public function delete(){
+    public function deleteForm($id){
+        $season = Season::where('id', $id)->first();
 
+        return view('secretary.seasons.delete_form', ['season' => $season]);
+    }
+
+    public function delete(Request $request){
+        $season = Season::where('id', $request->id)->first();
+        $season->active = 0;
+        $season->save();
+
+        $registrations = Registration::where('season_id', $season->id)->get();
+        foreach($registrations as $registration){
+            $registration->active = 0;
+            $registration->save();
+        }
+
+        $classes = Classes::where('id_season', $season->id)->get();
+        foreach($classes as $class){
+            $class->active = 0;
+            $class->save();
+        }
+
+        return redirect()->route('secretary.season-index');
     }
 
     public function filtro(Request $request){
@@ -100,9 +125,71 @@ class SeasonController extends Controller
         if($code != ""){
             $query->where('code', 'like', "%$code%");
         }
+        $query->where('active',1);
+        $active = 1;
 
         $seasons = $query->orderByDesc('id')->paginate(10);
 
-        return view('secretary.seasons.index', ['seasons' => $seasons]);
+        return view('secretary.seasons.index', ['seasons' => $seasons, 'active' => $active]);
+    }
+
+    public function seasonInactive(){
+        $seasons = Season::where('active', 0)->paginate(10);
+        $active = 0;
+        return view('secretary.seasons.index', ['seasons' => $seasons, 'active' => $active]);
+    }
+
+    public function filtroInativos(Request $request){
+        $name = $request->name;
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        $code = $request->code;
+
+        $query = Season::query();
+
+        if($name != ""){
+           $query->where('name', 'like', "%$name%");
+        }
+        if($start_date != ""){
+            $query->where('start_date', 'like', "%$start_date%");
+         }
+         if($end_date != ""){
+            $query->where('equipment', 'like', "%$end_date%");
+         }
+        if($code != ""){
+            $query->where('code', 'like', "%$code%");
+        }
+        $query->where('active',0);
+        $active = 0;
+
+        $seasons = $query->orderByDesc('id')->paginate(10);
+
+        return view('secretary.seasons.index', ['seasons' => $seasons, 'active' => $active]);
+    }
+
+    public function reactiveForm($id){
+        $season = Season::where('id', $id)->first();
+
+        return view('secretary.seasons.reactive_form', ['season' => $season]);
+    }
+
+    public function reactiveSeason(Request $request){
+        $season = Season::where('id', $request->id)->first();
+        $season->active = 1;
+        $season->save();
+
+        $registrations = Registration::where('season_id', $season->id)->get();
+        foreach($registrations as $registration){
+            $registration->active = 1;
+            $registration->save();
+        }
+
+        $classes = Classes::where('id_season', $season->id)->get();
+        foreach($classes as $class){
+            $class->active = 1;
+            $class->save();
+        }
+
+        return redirect()->route('secretary.season-index');
     }
 }

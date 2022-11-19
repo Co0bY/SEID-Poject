@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Schedule;
+use Illuminate\Console\Scheduling\Schedule as SchedulingSchedule;
 use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
 {
     public function index(){
-        $schedule = Schedule::get();
+        $schedule = SchedulingSchedule::get();
     }
 
     public function create(Request $request){
