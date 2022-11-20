@@ -40,13 +40,24 @@
                                         @endif
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class=" col mb-3"><label for=""
                                         class=" text-dark text-uppercase text-bold">Senha</label>
-                                    <input type="password" class=" form-control" id="password" name="password"
+                                    <input type="password" class=" form-control" id="password" onblur="confirmarSenha()" name="password"
                                         value="{{ old('password') ?? $user->password }}">
                                     <div class="mt-1" style="color: red" role="alert">
                                         @if($errors->has('password'))
                                             {{$errors->first('password')}}
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class=" col mb-3"><label for=""
+                                        class=" text-dark text-uppercase text-bold">Confirme a Senha</label>
+                                    <input type="password" class=" form-control" id="confirm_password" name="confirm_password" onblur="confirmarSenha()" value="{{ old('password') ?? $user->password }}">
+                                    <div class="mt-1" style="color: red" role="alert">
+                                        @if($errors->has('password'))
+                                        {{$errors->first('password')}}
                                         @endif
                                     </div>
                                 </div>
@@ -111,7 +122,7 @@
                                 <div class=" col btn-group" role="group" aria-label="Button group">
                                     <a href="{{ route('principal.users') }}"
                                         class=" btn btn-primary text-uppercase">Voltar</a>
-                                    <button type="submit" class=" btn btn-success text-uppercase">Editar</button>
+                                        <button type="submit" class=" btn btn-success text-uppercase" id="btn-criar" disabled>Editar</button>
                                 </div>
                             </div>
                         </form>
@@ -120,4 +131,14 @@
             </div>
         </div>
     </div>
+    <script>
+
+        function confirmarSenha(){
+            if($('#confirm_password').val() != $('#password').val()){
+                $('#btn-criar').prop('disabled', true)
+            }else{
+                $('#btn-criar').prop('disabled', false)
+            }
+        }
+    </script>
 @endsection
