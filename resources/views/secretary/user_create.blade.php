@@ -42,7 +42,7 @@
                             <div class="row mb-3">
                                 <div class=" col mb-3"><label for=""
                                         class=" text-dark text-uppercase text-bold">Senha</label>
-                                    <input type="password" class=" form-control" id="password" name="password" value="{{old('password')}}">
+                                    <input type="password" class=" form-control" id="password" name="password" onblur="confirmarSenha()" value="{{old('password')}}">
                                     <div class="mt-1" style="color: red" role="alert">
                                         @if($errors->has('password'))
                                         {{$errors->first('password')}}
@@ -51,7 +51,7 @@
                                 </div>
                                 <div class=" col mb-3"><label for=""
                                         class=" text-dark text-uppercase text-bold">Confirme a Senha</label>
-                                    <input type="password" class=" form-control" id="confirm_password" name="confirm_password" value="{{old('password')}}">
+                                    <input type="password" class=" form-control" id="confirm_password" name="confirm_password" onblur="confirmarSenha()" value="{{old('password')}}">
                                     <div class="mt-1" style="color: red" role="alert">
                                         @if($errors->has('password'))
                                         {{$errors->first('password')}}
@@ -115,7 +115,7 @@
                                 <div class="btn-group col" role="group" aria-label="Button group">
                                     <a href="{{ route('secretary.users') }}"
                                         class=" btn btn-primary text-uppercase">Voltar</a>
-                                    <button type="submit" class=" btn btn-success text-uppercase">Criar</button>
+                                    <button type="submit" class=" btn btn-success text-uppercase" id="btn-criar" disabled>Criar</button>
                                 </div>
                             </div>
                         </form>
@@ -128,4 +128,15 @@
 
     </div>
     </div>
+
+    <script>
+
+        function confirmarSenha(){
+            if($('#confirm_password').val() != $('#password').val()){
+                $('#btn-criar').prop('disabled', true)
+            }else{
+                $('#btn-criar').prop('disabled', false)
+            }
+        }
+    </script>
 @endsection
