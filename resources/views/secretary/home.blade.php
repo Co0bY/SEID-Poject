@@ -12,8 +12,9 @@
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">SEJA BEM VINDO</h5>
-                    <p class="card-text"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aspernatur dicta recusandae perferendis fuga nihil officiis possimus molestias quisquam non eaque.</p>
+                    <h5 class="card-title">SEJA BEM VINDO {{session()->get('name')}}</h5>
+                    <p class="card-text"> Seja Bem vindo ao programa SEID </p>
+                    <p>Grafico</p>
                 </div>
             </div>
         </div>

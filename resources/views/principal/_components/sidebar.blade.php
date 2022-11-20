@@ -16,13 +16,13 @@
                       </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('principal.users')}}" class="nav-link link-dark">
+                    <a href="{{route('secretary.index')}}" class="nav-link link-dark">
                         <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
                         Interface de Secretário(a);
                       </a>
                 </li>
                 <li>
-                    <a href="{{route('principal.users')}}" class="nav-link link-dark">
+                    <a href="{{route('teacher.index')}}" class="nav-link link-dark">
                         <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
                         Interface de Professor(a)
                       </a>

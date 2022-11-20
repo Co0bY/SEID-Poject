@@ -28,82 +28,97 @@ class TeacherController extends Controller
 
         if (Permissions::check(self::PERMISSION));
 
-        $userid = $request->session()->get('id');
-        $teacher = Teacher::where('user_id', $userid)->first();
-        $ligation = TeacherInClasses::where('id_teacher', $teacher->id)->first();
-        if (isset($ligation)) {
+        if($request->session()->get('type_of_user') == 4){
+            $userid = $request->session()->get('id');
+            $teacher = Teacher::where('user_id', $userid)->first();
+            $ligation = TeacherInClasses::where('id_teacher', $teacher->id)->first();
+            if (isset($ligation)) {
             $classes = Classes::where('id', $ligation->id_class)->get();
-        $ligations = TeacherInClasses::where('id_teacher', $teacher->id)->get();
-        $classes = [];
-        if(count($ligations) > 0){
-            $i = 0;
-            foreach($ligations as $ligation){
-                $class = Classes::where('id', $ligation->id_class)->first();
-                $classes[$i] = $class;
-                $i++;
+            $ligations = TeacherInClasses::where('id_teacher', $teacher->id)->get();
+            $classes = [];
+            if(count($ligations) > 0){
+                $i = 0;
+                foreach($ligations as $ligation){
+                    $class = Classes::where('id', $ligation->id_class)->where('active',1)->first();
+                    $classes[$i] = $class;
+                    $i++;
+                }
+            }
+            else {
+                $classes = [];
             }
         }
-        else {
-            $classes = [];
+            return view('teachers.index', ['classes' => $classes]);
         }
-        return view('teachers.index', ['classes' => $classes]);
+        else{
+            $classes = Classes::where('active',1)->get();
+            return view('teachers.index', ['classes' => $classes]);
+        }
+
     }
 
     public function listClassesAttendance(Request $request){
 
         if (Permissions::check(self::PERMISSION));
-
-        $userid = $request->session()->get('id');
-        $teacher = Teacher::where('user_id', $userid)->first();
-        $ligations = TeacherInClasses::where('id_teacher', $teacher->id)->get();
-        $classes = [];
-        if(count($ligations) > 0){
-            $i = 0;
-            foreach($ligations as $ligation){
-                $class = Classes::where('id', $ligation->id_class)->first();
-                $classes[$i] = $class;
-                $i++;
-            }
-        }
-        else{
+        if($request->session()->get('type_of_user') == 4){
+            $userid = $request->session()->get('id');
+            $teacher = Teacher::where('user_id', $userid)->first();
+            $ligations = TeacherInClasses::where('id_teacher', $teacher->id)->get();
             $classes = [];
+            if(count($ligations) > 0){
+                $i = 0;
+                foreach($ligations as $ligation){
+                    $class = Classes::where('id', $ligation->id_class)->where('active',1)->first();
+                    $classes[$i] = $class;
+                    $i++;
+                }
+            }
+            else{
+                $classes = [];
+            }
+
+            return view('teachers.attendance', ['classes' => $classes]);
+        }else{
+            $classes = Classes::where('active',1)->get();
+            return view('teachers.attendance', ['classes' => $classes]);
         }
 
-        return view('teachers.attendance', ['classes' => $classes]);
     }
 
     public function listClassesScore(Request $request){
 
         if (Permissions::check(self::PERMISSION));
-
-        $userid = $request->session()->get('id');
-        $teacher = Teacher::where('user_id', $userid)->first();
-        $ligations = TeacherInClasses::where('id_teacher', $teacher->id)->get();
-        $classes = [];
-        if(count($ligations) > 0){
-            $i = 0;
-            foreach($ligations as $ligation){
-                $class = Classes::where('id', $ligation->id_class)->first();
-                $classes[$i] = $class;
-                $i++;
-            }
-        }
-        else{
+        if($request->session()->get('type_of_user') == 4){
+            $userid = $request->session()->get('id');
+            $teacher = Teacher::where('user_id', $userid)->first();
+            $ligations = TeacherInClasses::where('id_teacher', $teacher->id)->get();
             $classes = [];
+            if(count($ligations) > 0){
+                $i = 0;
+                foreach($ligations as $ligation){
+                    $class = Classes::where('id', $ligation->id_class)->first();
+                    $classes[$i] = $class;
+                    $i++;
+                }
+            }
+            else{
+                $classes = [];
+            }
+
+            return view('teachers.score', ['classes' => $classes]);
+        }else{
+            $classes = Classes::where('active',1)->get();
+            return view('teachers.score', ['classes' => $classes]);
         }
 
-        return view('teachers.score', ['classes' => $classes]);
     }
 
     public function listStudentsAttendance($id){
-<<<<<<< HEAD
 
         if (Permissions::check(self::PERMISSION));
 
-        $classesregistrations = RegistrationsInClasses::where('id_class', $id)->get();
-=======
+
         $classesregistrations = RegistrationsInClasses::where('id_class', $id)->where('active', 1)->get();
->>>>>>> 28c655c4cd381c9e6f772fdf881c0cc5e397dc0a
         $students =[];
         $class =Classes::where('id', $id)->first();
         $i = 0;
@@ -144,14 +159,10 @@ class TeacherController extends Controller
     }
 
     public function listStudentsScore($id){
-<<<<<<< HEAD
 
         if (Permissions::check(self::PERMISSION));
 
-        $classesregistrations = RegistrationsInClasses::where('id_class', $id)->get();
-=======
         $classesregistrations = RegistrationsInClasses::where('id_class', $id)->where('active', 1)->get();
->>>>>>> 28c655c4cd381c9e6f772fdf881c0cc5e397dc0a
         $students =[];
         $classid = $id;
         $i = 0;
@@ -292,17 +303,24 @@ class TeacherController extends Controller
     }
 
     public function listClassesHomework(Request $request){
-        $userid = $request->session()->get('id');
-        $teacher = Teacher::where('user_id', $userid)->first();
-        $ligation = TeacherInClasses::where('id_teacher', $teacher->id)->first();
-        if(isset($ligation)){
-            $classes = Classes::where('id', $ligation->id_class)->get();
-        }
-        else{
-            $classes = [];
+
+        if($request->session()->get('type_of_user') == 4){
+            $userid = $request->session()->get('id');
+            $teacher = Teacher::where('user_id', $userid)->first();
+            $ligation = TeacherInClasses::where('id_teacher', $teacher->id)->first();
+            if(isset($ligation)){
+                $classes = Classes::where('id', $ligation->id_class)->get();
+            }
+            else{
+                $classes = [];
+            }
+
+            return view('teachers.homework_index', ['classes' => $classes]);
+        }else{
+            $classes = Classes::where('active',1)->get();
+            return view('teachers.homework_index', ['classes' => $classes]);
         }
 
-        return view('teachers.homework_index', ['classes' => $classes]);
     }
 
 
@@ -328,45 +346,102 @@ class TeacherController extends Controller
     }
 
     public function filtroHome(Request $request){
-        $userid = $request->session()->get('id');
-        $teacher = Teacher::where('user_id', $userid)->first();
-        $ligation = TeacherInClasses::where('id_teacher', $teacher->id)->first();
-        if(isset($ligation)){
-            $name = $request->name;
-            $code_class = $request->code_class;
-            $code_room = $request->code_room;
+        if($request->session()->get('type_of_user') == 4){
+            $userid = $request->session()->get('id');
+            $teacher = Teacher::where('user_id', $userid)->first();
+            $ligation = TeacherInClasses::where('id_teacher', $teacher->id)->first();
+            if(isset($ligation)){
+                $name = $request->name;
+                $code_class = $request->code_class;
+                $code_room = $request->code_room;
 
-            $query = Classes::query();
+                $query = Classes::query();
 
-            if($name != ""){
-               $query->where('name', 'like', "%$name%");
-            }
-            if($code_class != ""){
-                $query->where('code', 'like', "%$code_class%");
-            }
-            if($code_room != ""){
-                $room = Room::where('code', 'like', "%$code_room%")->first();
-                if(isset($student)){
-                    $query->where('id_room', $room->id);
-                }else{
-                    $query->where('id_room', '');
+                if($name != ""){
+                $query->where('name', 'like', "%$name%");
                 }
+                if($code_class != ""){
+                    $query->where('code', 'like', "%$code_class%");
+                }
+                if($code_room != ""){
+                    $room = Room::where('code', 'like', "%$code_room%")->first();
+                    if(isset($student)){
+                        $query->where('id_room', $room->id);
+                    }else{
+                        $query->where('id_room', '');
+                    }
+                }
+
+                $classes = $query->where('active',1)->orderByDesc('id')->paginate(10);
+            }
+            else{
+                $classes = [];
             }
 
-            $classes = $query->orderByDesc('id')->paginate(10);
-        }
-        else{
-            $classes = [];
-        }
+            return view('teachers.index', ['classes' => $classes]);
+        }else{
+            $name = $request->name;
+                $code_class = $request->code_class;
+                $code_room = $request->code_room;
 
-        return view('teachers.index', ['classes' => $classes]);
+                $query = Classes::query();
+
+                if($name != ""){
+                $query->where('name', 'like', "%$name%");
+                }
+                if($code_class != ""){
+                    $query->where('code', 'like', "%$code_class%");
+                }
+                if($code_room != ""){
+                    $room = Room::where('code', 'like', "%$code_room%")->first();
+                    if(isset($student)){
+                        $query->where('id_room', $room->id);
+                    }else{
+                        $query->where('id_room', '');
+                    }
+                }
+
+
+                $classes = $query->where('active',1)->orderByDesc('id')->paginate(10);
+                return view('teachers.index', ['classes' => $classes]);
+        }
     }
 
     public function filtroScore(Request $request){
-        $userid = $request->session()->get('id');
-        $teacher = Teacher::where('user_id', $userid)->first();
-        $ligation = TeacherInClasses::where('id_teacher', $teacher->id)->first();
-        if(isset($ligation)){
+        if($request->session()->get('type_of_user') == 4){
+            $userid = $request->session()->get('id');
+            $teacher = Teacher::where('user_id', $userid)->first();
+            $ligation = TeacherInClasses::where('id_teacher', $teacher->id)->first();
+            if(isset($ligation)){
+                $name = $request->name;
+                $code_class = $request->code_class;
+                $code_room = $request->code_room;
+
+                $query = Classes::query();
+
+                if($name != ""){
+                $query->where('name', 'like', "%$name%");
+                }
+                if($code_class != ""){
+                    $query->where('code', 'like', "%$code_class%");
+                }
+                if($code_room != ""){
+                    $room = Room::where('code', 'like', "%$code_room%")->first();
+                    if(isset($student)){
+                        $query->where('id_room', $room->id);
+                    }else{
+                        $query->where('id_room', '');
+                    }
+                }
+
+                $classes = $query->where('active',1)->orderByDesc('id')->paginate(10);
+            }
+            else{
+                $classes = [];
+            }
+
+            return view('teachers.score', ['classes' => $classes]);
+        }else{
             $name = $request->name;
             $code_class = $request->code_class;
             $code_room = $request->code_room;
@@ -374,7 +449,7 @@ class TeacherController extends Controller
             $query = Classes::query();
 
             if($name != ""){
-               $query->where('name', 'like', "%$name%");
+            $query->where('name', 'like', "%$name%");
             }
             if($code_class != ""){
                 $query->where('code', 'like', "%$code_class%");
@@ -388,20 +463,47 @@ class TeacherController extends Controller
                 }
             }
 
-            $classes = $query->orderByDesc('id')->paginate(10);
-        }
-        else{
-            $classes = [];
-        }
 
-        return view('teachers.score', ['classes' => $classes]);
+            $classes = $query->where('active',1)->orderByDesc('id')->paginate(10);
+            return view('teachers.index', ['classes' => $classes]);
+        }
     }
 
     public function filtroAttendance(Request $request){
-        $userid = $request->session()->get('id');
-        $teacher = Teacher::where('user_id', $userid)->first();
-        $ligation = TeacherInClasses::where('id_teacher', $teacher->id)->first();
-        if(isset($ligation)){
+        if($request->session()->get('type_of_user') == 4){
+            $userid = $request->session()->get('id');
+            $teacher = Teacher::where('user_id', $userid)->first();
+            $ligation = TeacherInClasses::where('id_teacher', $teacher->id)->first();
+            if(isset($ligation)){
+                $name = $request->name;
+                $code_class = $request->code_class;
+                $code_room = $request->code_room;
+
+                $query = Classes::query();
+
+                if($name != ""){
+                $query->where('name', 'like', "%$name%");
+                }
+                if($code_class != ""){
+                    $query->where('code', 'like', "%$code_class%");
+                }
+                if($code_room != ""){
+                    $room = Room::where('code', 'like', "%$code_room%")->first();
+                    if(isset($student)){
+                        $query->where('id_room', $room->id);
+                    }else{
+                        $query->where('id_room', '');
+                    }
+                }
+
+                $classes = $query->where('active',1)->orderByDesc('id')->paginate(10);
+            }
+            else{
+                $classes = [];
+            }
+
+            return view('teachers.attendance', ['classes' => $classes]);
+        }else{
             $name = $request->name;
             $code_class = $request->code_class;
             $code_room = $request->code_room;
@@ -409,7 +511,7 @@ class TeacherController extends Controller
             $query = Classes::query();
 
             if($name != ""){
-               $query->where('name', 'like', "%$name%");
+            $query->where('name', 'like', "%$name%");
             }
             if($code_class != ""){
                 $query->where('code', 'like', "%$code_class%");
@@ -423,12 +525,9 @@ class TeacherController extends Controller
                 }
             }
 
-            $classes = $query->orderByDesc('id')->paginate(10);
-        }
-        else{
-            $classes = [];
-        }
 
-        return view('teachers.attendance', ['classes' => $classes]);
+            $classes = $query->where('active',1)->orderByDesc('id')->paginate(10);
+            return view('teachers.index', ['classes' => $classes]);
+        }
     }
 }

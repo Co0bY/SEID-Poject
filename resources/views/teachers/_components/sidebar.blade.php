@@ -43,6 +43,19 @@
                     </a>
                 </li>
 
+                @if(session()->get('type_of_user') == 1)
+                <li>
+                    <a href="{{route('principal.index')}}" class="nav-link link-danger" id="Rel">
+                        <svg class="bi pe-none me-2" width="16" height="16">
+                            <use xlink:href="#speedometer2" />
+                        </svg>
+                        Voltar
+                    </a>
+                </li>
+                @else
+
+                @endif
+
                 <li>
                     <a href="/logout" class="nav-link link-danger" id="Rel">
                         <svg class="bi pe-none me-2" width="16" height="16">
@@ -51,6 +64,8 @@
                         SAIR
                     </a>
                 </li>
+
+
             </ul>
         </div>
     </div>
