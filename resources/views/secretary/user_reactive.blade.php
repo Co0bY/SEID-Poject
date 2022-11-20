@@ -28,15 +28,37 @@
                             <div class="row">
                                 <div class=" col mb-3"><label for=""
                                         class=" text-dark text-uppercase text-bold">Email</label>
-                                    <input type="text" class=" form-control" id="email" name="email"
-                                        value="{{ $user->email }}" readonly>
-                                </div>
-                                <div class=" col mb-3"><label for=""
-                                        class=" text-dark text-uppercase text-bold">Senha</label>
-                                    <input type="password" class=" form-control" id="password" name="password"
-                                        value="{{ $user->password }}" readonly>
+                                    <input type="text" class=" form-control" id="email" name="email" readonly
+                                        value="{{ old('email') ?? $user->email }}">
+                                    <div class="mt-1" style="color: red" role="alert">
+                                        @if($errors->has('email'))
+                                            {{$errors->first('email')}}
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class=" col mb-3"><label for=""
+                                        class=" text-dark text-uppercase text-bold">Senha</label>
+                                    <input type="password" class=" form-control" readonly id="password" onblur="confirmarSenha()" name="password"
+                                        value="{{ old('password') ?? $user->password }}">
+                                    <div class="mt-1" style="color: red" role="alert">
+                                        @if($errors->has('password'))
+                                            {{$errors->first('password')}}
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class=" col mb-3"><label for=""
+                                        class=" text-dark text-uppercase text-bold">Confirme a Senha</label>
+                                    <input type="password" class=" form-control" readonly id="confirm_password" name="confirm_password" onblur="confirmarSenha()" value="{{ old('password') ?? $user->password }}">
+                                    <div class="mt-1" style="color: red" role="alert">
+                                        @if($errors->has('password'))
+                                        {{$errors->first('password')}}
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
 
                             <div class="row">
                                 <div class=" col mb-3"><label for=""
