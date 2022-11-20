@@ -96,14 +96,11 @@ class TeacherController extends Controller
     }
 
     public function listStudentsAttendance($id){
-<<<<<<< HEAD
 
         if (Permissions::check(self::PERMISSION));
 
         $classesregistrations = RegistrationsInClasses::where('id_class', $id)->get();
-=======
         $classesregistrations = RegistrationsInClasses::where('id_class', $id)->where('active', 1)->get();
->>>>>>> 28c655c4cd381c9e6f772fdf881c0cc5e397dc0a
         $students =[];
         $class =Classes::where('id', $id)->first();
         $i = 0;
