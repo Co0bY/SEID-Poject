@@ -8,6 +8,7 @@
             @endcomponent
         </div>
 
+
         <div class="col">
             <div class=" card">
                 <div class=" card-body">
@@ -57,12 +58,18 @@
             <th scope="col">Ações</th>
           </tr>
         </thead>
-         @foreach ($classes as $class)
+         @foreach ($classes as $class);
         <tbody>
             <td scope="col">{{$class->id}}</td>
             <td scope="col">{{$class->name}}</td>
             <td scope="col">{{$class->code}}</td>
-            <td scope="col">{{$class->active}}</td>
+            <td scope="col">
+                @if ($class->active == 1)
+                <p class="text-success">Ativo</p>
+                @else
+                <p class="text-danger">Inativo</p>
+                @endif
+            </td>
             <td scope="col">
                 <div class=" btn-group">
                     <a href="{{route('teacher.lesson-index', $class->id)}}" onclick="alert()" class=" btn btn-dark">Plano de Aula</a>

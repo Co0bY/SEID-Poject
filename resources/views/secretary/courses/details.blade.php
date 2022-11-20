@@ -95,9 +95,9 @@
                             <td scope="col">{{ $discipline->name }}</td>
                             <td scope="col">{{ $discipline->code }}</td>
                             <td scope="col">
-                                <div class=" btn-group">
+                                {{-- <div class=" btn-group">
                                     <a href="{{route('secretary.course-remove', ['courseid' => $course->id, 'disciplineid' => $discipline->id])}}" class=" btn btn-danger">Remover</a>
-                                </div>
+                                </div> --}}
                             </td>
                         </tbody>
                     @endforeach

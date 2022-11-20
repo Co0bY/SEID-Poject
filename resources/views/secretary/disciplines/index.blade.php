@@ -60,7 +60,6 @@
                                 <div class=" btn-group">
                                     <a href="{{ route('secretary.discipline-edit-form', $discipline->id) }}"
                                         class=" btn btn-dark">Editar</a>
-                                    <a href="" class=" btn btn-danger">Deletar</a>
                                 </div>
                             </td>
                         </tbody>

@@ -11,9 +11,20 @@
             <div class="col">
                 <div class=" card">
                     <div class=" card-body">
-                        <h1 class=" text-uppercase mb-2">Filtro</h1>
-                        {{-- route('pesquisar') --}}
+                        <h1 class=" text-uppercase mb-2">Filtro -
+                            @if($active == 1)
+                            Matrículas Ativas
+                        @else
+                            Matrículas Inativas
+                        @endif
+                        </h1>
+                        @if($active ==1)
                         <form action="{{route('secretary.registration-filtro')}}" method="post">
+                        @else
+                        <form action="{{route('secretary.registration-inactives-filtro')}}" method="post">
+                        @endif
+                        {{-- route('pesquisar') --}}
+
                             @csrf
                             <div class=" col mb-3"><label for=""
                                     class=" text-dark text-uppercase text-bold">Matrícula</label>
@@ -35,6 +46,15 @@
                                     <a href="{{ route('secretary.registration-create-form') }}"
                                         class=" btn btn-primary text-uppercase"> Criar</a>
                                     <button type="submit" class=" btn btn-success text-uppercase">Pesquisar</button>
+                                </div>
+                                <div class="col-1">
+
+                                </div>
+                                <div class="col-3 btn-group">
+                                    <a href="{{route('secretary.registration-index')}}" class=" btn btn-success text-uppercase">
+                                        Ativos</a>
+                                    <a href="{{route('secretary.registration-inactives')}}" class=" btn btn-danger text-uppercase">
+                                        Inativos</a>
                                 </div>
                             </div>
                         </form>
@@ -70,8 +90,13 @@
                             </td>
                             <td scope="col">
                                 <div class=" btn-group">
-                                    <a href="" class=" btn btn-dark">Editar</a>
-                                    <a href="" class=" btn btn-danger">Deletar</a>
+                                    @if($registration->active == 1)
+                                    <a href="{{route('secretary.registration-delete-form', $registration->id)}}" class=" btn btn-danger">Inativar</a>
+                                    @else
+                                    <a href="{{ route('secretary.registration-reactive-form', $registration->id) }}"
+                                        class=" btn btn-danger">Reativar</a>
+                                    @endif
+
                                 </div>
                             </td>
                         </tbody>

@@ -98,8 +98,7 @@ class SecretaryController extends Controller
         $address = $request['address'];
         $birth_date = $request['birth_date'];
         $type_of_user = $request['type_of_user'];
-        $active = $request['active'];
-
+        $active = 1;
         $query = DB::table('user_filter');
 
         if($name != ""){
@@ -120,9 +119,8 @@ class SecretaryController extends Controller
         if($birth_date != ""){
             $query->where('user_filter.birth_date', 'like', "%$birth_date%");
         }
-        if($active) $query->where('active', $active);
 
-        $users = $query->orderByDesc('id')->paginate(10);
+        $users = $query->where('user_filter.active',1)->orderByDesc('id')->paginate(10);
 
         return view('secretary.users', ['users' => $users, 'active' => $active, 'request' => $request->all() ]);
     }
@@ -274,7 +272,6 @@ class SecretaryController extends Controller
         $address = $request['address'];
         $birth_date = $request['birth_date'];
         $type_of_user = $request['type_of_user'];
-        $active = $request['active'];
 
         $query = DB::table('user_filter');
 
@@ -296,11 +293,10 @@ class SecretaryController extends Controller
         if($birth_date != ""){
             $query->where('user_filter.birth_date', 'like', "%$birth_date%");
         }
-        if($active) $query->where('active', $active);
+        $active = 0;
+        $users = $query->where('user_filter.active',0)->orderByDesc('id')->paginate(10);
 
-        $users = $query->orderByDesc('id')->paginate(10);
-
-        return view('secretary.users', ['users' => $users, 'active' => 0, 'request' => $request->all() ]);
+        return view('secretary.users', ['users' => $users, 'active' => $active, 'request' => $request->all() ]);
     }
 
     public function reactiveForm($id){

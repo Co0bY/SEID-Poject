@@ -24,23 +24,34 @@ class TeacherController extends Controller
     public function index(Request $request){
         $userid = $request->session()->get('id');
         $teacher = Teacher::where('user_id', $userid)->first();
-        $ligation = TeacherInClasses::where('id_teacher', $teacher->id)->first();
-        if(isset($ligation)){
-            $classes = Classes::where('id', $ligation->id_class)->get();
+        $ligations = TeacherInClasses::where('id_teacher', $teacher->id)->get();
+        $classes = [];
+        if(count($ligations) > 0){
+            $i = 0;
+            foreach($ligations as $ligation){
+                $class = Classes::where('id', $ligation->id_class)->first();
+                $classes[$i] = $class;
+                $i++;
+            }
         }
         else{
             $classes = [];
         }
-
         return view('teachers.index', ['classes' => $classes]);
     }
 
     public function listClassesAttendance(Request $request){
         $userid = $request->session()->get('id');
         $teacher = Teacher::where('user_id', $userid)->first();
-        $ligation = TeacherInClasses::where('id_teacher', $teacher->id)->first();
-        if(isset($ligation)){
-            $classes = Classes::where('id', $ligation->id_class)->get();
+        $ligations = TeacherInClasses::where('id_teacher', $teacher->id)->get();
+        $classes = [];
+        if(count($ligations) > 0){
+            $i = 0;
+            foreach($ligations as $ligation){
+                $class = Classes::where('id', $ligation->id_class)->first();
+                $classes[$i] = $class;
+                $i++;
+            }
         }
         else{
             $classes = [];
@@ -52,9 +63,15 @@ class TeacherController extends Controller
     public function listClassesScore(Request $request){
         $userid = $request->session()->get('id');
         $teacher = Teacher::where('user_id', $userid)->first();
-        $ligation = TeacherInClasses::where('id_teacher', $teacher->id)->first();
-        if(isset($ligation)){
-            $classes = Classes::where('id', $ligation->id_class)->get();
+        $ligations = TeacherInClasses::where('id_teacher', $teacher->id)->get();
+        $classes = [];
+        if(count($ligations) > 0){
+            $i = 0;
+            foreach($ligations as $ligation){
+                $class = Classes::where('id', $ligation->id_class)->first();
+                $classes[$i] = $class;
+                $i++;
+            }
         }
         else{
             $classes = [];
@@ -64,14 +81,15 @@ class TeacherController extends Controller
     }
 
     public function listStudentsAttendance($id){
-        $classesregistrations = RegistrationsInClasses::where('id_class', $id)->get();
+        $classesregistrations = RegistrationsInClasses::where('id_class', $id)->where('active', 1)->get();
         $students =[];
         $class =Classes::where('id', $id)->first();
         $i = 0;
-        if(isset($classesregistrations)){
+        if(count($classesregistrations)> 0){
             foreach($classesregistrations as $classesregistration){
-                $registration = Registration::where('id', $classesregistration->id)->first();
+                $registration = Registration::where('id', $classesregistration->id_registration)->first();
                 $student = Student::where('id', $registration->student_id)->first();
+
                 $students[$i] = $registration;
                 $students[$i]->name = $student->name;
                 $i++;
@@ -85,7 +103,7 @@ class TeacherController extends Controller
         // dd($request);
         $t = count($request['name']);
         for($i = 0; $i < $t; $i++){
-            $registrationInClass = RegistrationsInClasses::where('id_registration', $request['id'][$i])->where('id_class', $request['classid'])->first();
+            $registrationInClass = RegistrationsInClasses::where('id_registration', $request['id'][$i])->where('id_class', $request['classid'])->where('active', 1)->first();
             $attendance = new Attendance;
             $attendance->registration_in_class_id = $registrationInClass->id;
             $attendance->attendance = $request['attendance'][$i];
@@ -101,13 +119,13 @@ class TeacherController extends Controller
     }
 
     public function listStudentsScore($id){
-        $classesregistrations = RegistrationsInClasses::where('id_class', $id)->get();
+        $classesregistrations = RegistrationsInClasses::where('id_class', $id)->where('active', 1)->get();
         $students =[];
         $classid = $id;
         $i = 0;
-        if(isset($classesregistrations)){
+        if(count($classesregistrations) > 0){
             foreach($classesregistrations as $classesregistration){
-                $registration = Registration::where('id', $classesregistration->id)->first();
+                $registration = Registration::where('id', $classesregistration->id_registration)->first();
                 $student = Student::where('id', $registration->student_id)->first();
                 $students[$i] = $registration;
                 $students[$i]->name = $student->name;
@@ -122,7 +140,7 @@ class TeacherController extends Controller
         $t = count($request['name']);
         for($i = 0; $i < $t; $i++){
             if(isset($request['score'][$i]))
-            $registrationInClass = RegistrationsInClasses::where('id_registration', $request['id'][$i])->where('id_class', $request['classid'])->first();
+            $registrationInClass = RegistrationsInClasses::where('id_registration', $request['id'][$i])->where('id_class', $request['classid'])->where('active', 1)->first();
             $attendance = new Score;
             $attendance->registration_in_class_id = $registrationInClass->id;
             $attendance->score = $request['score'][$i];
@@ -133,13 +151,13 @@ class TeacherController extends Controller
     }
 
     public function listStudentsScoreEdit($id){
-        $classesregistrations = RegistrationsInClasses::where('id_class', $id)->get();
+        $classesregistrations = RegistrationsInClasses::where('id_class', $id)->where('active', 1)->get();
         $students =[];
         $classid = $id;
         $i = 0;
-        if(isset($classesregistrations)){
+        if(count($classesregistrations) > 0){
             foreach($classesregistrations as $classesregistration){
-                $registration = Registration::where('id', $classesregistration->id)->first();
+                $registration = Registration::where('id', $classesregistration->id_registration)->first();
                 $student = Student::where('id', $registration->student_id)->first();
                 $students[$i] = $registration;
                 $students[$i]->name = $student->name;
@@ -175,7 +193,7 @@ class TeacherController extends Controller
     }
 
     public function createScoreForm($registrationClass, $classid){
-        $classregistration =  $classregistration = RegistrationsInClasses::where('id_class', $classid)->where('id_registration', $registrationClass)->first();
+        $classregistration = RegistrationsInClasses::where('id', $registrationClass)->first();
         $registration = Registration::where('id', $classregistration->id_registration)->first();
         $studentfocus = Student::where('id', $registration->student_id)->first();
         $student = $registration;
@@ -200,7 +218,9 @@ class TeacherController extends Controller
         if($request->metodo == "soma"){
             foreach($scores as $score){
                 $finalScore = $finalScore + $score->score;
+
             }
+
         }
         if($request->metodo == "mediaAritimetica"){
             $quantidade = count($scores);
@@ -214,14 +234,25 @@ class TeacherController extends Controller
         $registrationInClass->final_score = $finalScore;
         $registrationInClass->save();
 
-        $registrationInCourse = StudentsInCourse::where('registration_id', $registrationInClass->id_registration)->first();
         $class = Classes::where('id', $registrationInClass->id_class)->first();
+        $registrationInCourse = StudentsInCourse::where('registration_id', $registrationInClass->id_registration)->first();
         $discipline = Discipline::where('id', $class->id_discipline)->first();
-        $disciplinecourse = CoursesDiscipline::where('course_id', $registrationInCourse->course_id)->where('discipline_id', $discipline->id)->first();
+        $disciplinecourse = CoursesDiscipline::where('course_id', $registrationInCourse->course_id)
+        ->where('discipline_id', $discipline->id)->first();
+        $attendanceTrue = Attendance::where('registration_in_class_id', $registrationInClass->id)->where('attendance', 1)->get();
+        $attendanceTrue = count($attendanceTrue);
+        $attendancefalse = Attendance::where('registration_in_class_id', $registrationInClass->id)->where('attendance', 0)->get();
+        $attendancefalse = count($attendancefalse);
+        $allattendance = Attendance::where('registration_in_class_id', $registrationInClass->id)->get();
+        $allattendance = count($allattendance);
+        $finalattendance = $attendanceTrue/$allattendance;
+
+
         $subject = StudentRegistrationInSubject::where('students_in_courses_id', $registrationInCourse->id)
         ->where('courses_disciplines_id', $disciplinecourse->id )->first();
-        if($finalScore > 6){
+        if($finalScore){
             $subject->score = $finalScore;
+            $subject->attendance_frequency = $finalattendance;
             $subject->save();
         }
 

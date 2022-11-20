@@ -74,7 +74,7 @@
                                 <div class=" btn-group">
                                     <a href="{{ route('secretary.course-details', $course->id) }}"
                                         class=" btn btn-dark">Detalhes</a>
-                                    <a href="" class=" btn btn-danger">Inativar</a>
+                                    <a href="{{route('secretary.certifed-list', ['id' => $course->id, 'msg' => $msg = ''])}}" class=" btn btn-primary"> Certificados</a>
                                 </div>
                             </td>
                         </tbody>

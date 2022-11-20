@@ -51,4 +51,10 @@ class LoginController extends Controller
             return redirect()->route('home');
         }
     }
+
+    public function logout(){
+        // session()->destroy();
+
+        return redirect()->route('home');
+    }
 }

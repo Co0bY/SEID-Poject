@@ -19,6 +19,7 @@ Route::get('/', function () {
 )->name('home');
 
 Route::post('/fazerlogin', [\App\Http\Controllers\LoginController::class, 'login'])->name('fazer.login');
+Route::get('/logout', [\App\Http\Controllers\LoginController::class, 'logout'])->name('fazer-logout');
 
 
 
@@ -78,6 +79,14 @@ Route::prefix('/secretary')->group(function(){
     Route::post('/registrations', [\App\Http\Controllers\RegistrationController::class, 'filtro'])->name('secretary.registration-filtro');
     Route::get('/registration/createform',  [\App\Http\Controllers\RegistrationController::class, 'createform'])->name('secretary.registration-create-form');
     Route::post('/registration/create', [\App\Http\Controllers\RegistrationController::class, 'create'])->name('secretary.registration-create');
+    Route::get('/registration/update/form/{id?}',  [\App\Http\Controllers\RegistrationController::class, 'createform'])->name('secretary.registration-update-form');
+    Route::post('/registration/update', [\App\Http\Controllers\RegistrationController::class, 'create'])->name('secretary.registration-update');
+    Route::get('/registration/delete/form/{id?}',  [\App\Http\Controllers\RegistrationController::class, 'deleteForm'])->name('secretary.registration-delete-form');
+    Route::post('/registration/delete', [\App\Http\Controllers\RegistrationController::class, 'delete'])->name('secretary.registration-delete');
+    Route::get('/registration/inactive', [\App\Http\Controllers\RegistrationController::class, 'inactives'])->name('secretary.registration-inactives');
+    Route::post('/registrations/inactives', [\App\Http\Controllers\RegistrationController::class, 'filtroInativos'])->name('secretary.registration-inactives-filtro');
+    Route::get('/registration/reactive/form/{id?}',  [\App\Http\Controllers\RegistrationController::class, 'reactiveForm'])->name('secretary.registration-reactive-form');
+    Route::post('/registration/reactive', [\App\Http\Controllers\RegistrationController::class, 'reactive'])->name('secretary.registration-reactive');
 
     Route::get('/room', [\App\Http\Controllers\RoomController::class, 'index'])->name('secretary.room-index');
     Route::post('/rooms', [\App\Http\Controllers\RoomController::class, 'filtro'])->name('secretary.room-filtro');
@@ -122,6 +131,8 @@ Route::prefix('/secretary')->group(function(){
     Route::get('/extraction', [\App\Http\Controllers\ExportacaoController::class, 'index'])->name('secretary.extraction');
     Route::get('/extraction-attendance', [\App\Http\Controllers\ExportacaoController::class, 'exportFalseAttendances'])->name('secretary.extraction-faltas');
     Route::get('/extraction-final-score', [\App\Http\Controllers\ExportacaoController::class, 'exportFinishStudents'])->name('secretary.extraction-notas');
+
+    Route::get('/certifed/list/{id?}&{msg?}', [\App\Http\Controllers\StudentInCourseController::class, 'list'])->name('secretary.certifed-list');
 });
 
 Route::prefix('/teacher')->group(function(){

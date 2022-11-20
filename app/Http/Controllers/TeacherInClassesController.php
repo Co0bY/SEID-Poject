@@ -35,6 +35,6 @@ class TeacherInClassesController extends Controller
 
         $classes = Classes::get();
 
-        return view('secretary.schoolclass.index', ['classes' => $classes]);
+        return redirect()->route('secretary.class-index');
     }
 }

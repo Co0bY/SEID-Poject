@@ -35,16 +35,19 @@ class RegistrationsInClassesController extends Controller
         $registration = new RegistrationsInClasses;
         $registration->id_registration = $matricula->id;
         $registration->id_class = $class->id;
+        $registration->final_score = 0;
         $registration->save();
 
-        $registrationInCourse = StudentsInCourse::where('registration_id', $matricula->id)->first();
-        $discipline = Discipline::where('id', $class->id_discipline)->first();
-        $disciplinecourse = CoursesDiscipline::where('course_id', $registrationInCourse->course_id)->where('discipline_id', $discipline->id)->first();
+        // $registrationInCourse = StudentsInCourse::where('registration_id', $matricula->id)->first();
+        // $discipline = Discipline::where('id', $class->id_discipline)->first();
+        // $disciplinecourse = CoursesDiscipline::where('course_id', $registrationInCourse->course_id)->where('discipline_id', $discipline->id)->first();
 
-        $registros = new StudentRegistrationInSubject();
-        $registros->students_in_courses_id = $registrationInCourse->id;
-        $registros->courses_disciplines_id = $disciplinecourse->id;
-        $registros->save();
+        // $registros = new StudentRegistrationInSubject();
+        // $registros->students_in_courses_id = $registrationInCourse->id;
+        // $registros->courses_disciplines_id = $disciplinecourse->id;
+        // $registros->score = 0;
+        // $registros->attendance_frequency = 0;
+        // $registros->save();
 
         return redirect()->route('secretary.class-index');
     }
