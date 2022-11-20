@@ -14,7 +14,7 @@ class AddCertifiedColumnInStudentsInCoursesTable extends Migration
     public function up()
     {
         Schema::table('students_in_courses', function (Blueprint $table) {
-            $table->string('certified');
+            $table->string('certified')->nullable()->default(null);
         });
     }
 

@@ -58,7 +58,6 @@ class RegistrationController extends Controller
         $studentInCourse = new StudentsInCourse();
         $studentInCourse->course_id = $course_id->id;
         $studentInCourse->registration_id = $registration_id->id;
-        $studentInCourse->certified = "";
         $studentInCourse->save();
 
         $coursedisciplines = CoursesDiscipline::where('course_id', $course_id->id)->get();

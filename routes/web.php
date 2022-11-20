@@ -18,6 +18,10 @@ Route::get('/', function () {
     return view('loginscreen');}
 )->name('home');
 
+Route::get('/pdf', function () {
+    return view('certificado');}
+)->name('pdf');
+
 Route::post('/fazerlogin', [\App\Http\Controllers\LoginController::class, 'login'])->name('fazer.login');
 Route::get('/logout', [\App\Http\Controllers\LoginController::class, 'logout'])->name('fazer-logout');
 
@@ -133,6 +137,7 @@ Route::prefix('/secretary')->group(function(){
     Route::get('/extraction-final-score', [\App\Http\Controllers\ExportacaoController::class, 'exportFinishStudents'])->name('secretary.extraction-notas');
 
     Route::get('/certifed/list/{id?}&{msg?}', [\App\Http\Controllers\StudentInCourseController::class, 'list'])->name('secretary.certifed-list');
+    Route::get('/certifeds/list/{id?}', [\App\Http\Controllers\StudentInCourseController::class, 'createPDF'])->name('secretary.certifed-create');
 });
 
 Route::prefix('/teacher')->group(function(){

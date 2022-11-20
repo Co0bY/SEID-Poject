@@ -3,15 +3,14 @@
 @section('content')
 <div class=" d-flex">
     <div class=" row-cols-lg-12">
-    @component('teachers._components.sidebar')
-    @endcomponent
-
+        @component('secretary._components.sidebar')
+        @endcomponent
 <div class="col-9">
     <form action="" method="POST">
         @csrf
-        @if(!empty($msg))
+        @if($msg != "")
         <div class="alert alert-warning justify-content-center text-align-center" role="alert">
-           {{$msg}}
+        {!! $msg !!}
         </div>
         @endif
     <hr>
@@ -21,14 +20,12 @@
             <th scope="col">#</th>
             <th scope="col">Matricula</th>
             <th scope="col">Nome</th>
-            <th scope="col"><button type="submit" class=" btn btn-success">Atribuir Notas em Massa</button></th>
-            <th><input type="text" name="description" id="description" class=" form-control" placeholder="Ex: Nota da Prova"></th>
           </tr>
         </thead>
          @foreach ($registrations as $registration)
         <tbody>
             <td scope="col">{{$registration->id}}
-            <input type="hidden" name="id[]" id="id[]" value="{{$student->id}}">
+            <input type="hidden" name="id[]" id="id[]" value="{{$registration->id}}">
             </td>
             <td scope="col">{{$registration->registration}}</td>
             <td scope="col" colspan="2">
@@ -38,7 +35,7 @@
             </td>
             <td scope="col">
                 <div class=" input-group">
-                  <a href="" class=" btn btn-success"> Gerar Certificado</a>
+                  <a href="{{route('secretary.certifed-create', $registration->id)}}" class=" btn btn-success"> Gerar Certificado</a>
                 </div>
             </td>
         </tbody>
@@ -47,4 +44,6 @@
     </form>
 </div>
 </div>
+
+
 @endsection
