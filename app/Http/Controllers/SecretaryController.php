@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Principal;
+use App\Models\Registration;
+use App\Models\RegistrationsInClasses;
 use App\Models\Secretary;
 use App\Models\Student;
+use App\Models\StudentsInCourse;
 use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -98,8 +101,7 @@ class SecretaryController extends Controller
         $address = $request['address'];
         $birth_date = $request['birth_date'];
         $type_of_user = $request['type_of_user'];
-        $active = $request['active'];
-
+        $active = 1;
         $query = DB::table('user_filter');
 
         if($name != ""){
@@ -120,9 +122,8 @@ class SecretaryController extends Controller
         if($birth_date != ""){
             $query->where('user_filter.birth_date', 'like', "%$birth_date%");
         }
-        if($active) $query->where('active', $active);
 
-        $users = $query->orderByDesc('id')->paginate(10);
+        $users = $query->where('user_filter.active',1)->orderByDesc('id')->paginate(10);
 
         return view('secretary.users', ['users' => $users, 'active' => $active, 'request' => $request->all() ]);
     }
@@ -249,7 +250,23 @@ class SecretaryController extends Controller
         }
         elseif($user->type_of_user == '3'){
             $perfil = Student::where('user_id', $user->id)->first();
-            // $perfil->delete();
+            $registration = Registration::where('student_id', $perfil->id)->first();
+            if(isset($registration)){
+                $registration->active = 0;
+                $registration->save();
+                $registrationsinclasses = RegistrationsInClasses::where('id_registration', $registration->id)->get();
+                if(count($registrationsinclasses) > 0){
+                    foreach($registrationsinclasses as $registrationsinclasse){
+                        $registrationsinclasse->active = 0;
+                        $registrationsinclasse->save();
+                    }
+                }
+                $registrationincourse = StudentsInCourse::where('registration_id', $registration->id)->first();
+                if(isset($registrationincourse)){
+                    $registrationincourse->active = 0;
+                    $registrationincourse->save();
+                }
+            }
         }
         elseif($user->type_of_user == '4'){
             $perfil = Teacher::where('user_id', $user->id)->first();
@@ -274,7 +291,6 @@ class SecretaryController extends Controller
         $address = $request['address'];
         $birth_date = $request['birth_date'];
         $type_of_user = $request['type_of_user'];
-        $active = $request['active'];
 
         $query = DB::table('user_filter');
 
@@ -296,11 +312,10 @@ class SecretaryController extends Controller
         if($birth_date != ""){
             $query->where('user_filter.birth_date', 'like', "%$birth_date%");
         }
-        if($active) $query->where('active', $active);
+        $active = 0;
+        $users = $query->where('user_filter.active',0)->orderByDesc('id')->paginate(10);
 
-        $users = $query->orderByDesc('id')->paginate(10);
-
-        return view('secretary.users', ['users' => $users, 'active' => 0, 'request' => $request->all() ]);
+        return view('secretary.users', ['users' => $users, 'active' => $active, 'request' => $request->all() ]);
     }
 
     public function reactiveForm($id){
@@ -332,7 +347,23 @@ class SecretaryController extends Controller
         }
         elseif($user->type_of_user == '3'){
             $perfil = Student::where('user_id', $user->id)->first();
-            // $perfil->delete();
+            $registration = Registration::where('student_id', $perfil->id)->first();
+            if(isset($registration)){
+                $registration->active = 1;
+                $registration->save();
+                $registrationsinclasses = RegistrationsInClasses::where('id_registration', $registration->id)->get();
+                if(count($registrationsinclasses) > 0){
+                    foreach($registrationsinclasses as $registrationsinclasse){
+                        $registrationsinclasse->active = 1;
+                        $registrationsinclasse->save();
+                    }
+                }
+                $registrationincourse = StudentsInCourse::where('registration_id', $registration->id)->first();
+                if(isset($registrationincourse)){
+                    $registrationincourse->active = 1;
+                    $registrationincourse->save();
+                };
+            }
         }
         elseif($user->type_of_user == '4'){
             $perfil = Teacher::where('user_id', $user->id)->first();

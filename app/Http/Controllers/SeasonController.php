@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Classes;
 use App\Models\Registration;
+use App\Models\RegistrationsInClasses;
 use App\Models\Season;
+use App\Models\StudentsInCourse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -51,7 +53,7 @@ class SeasonController extends Controller
     public function show($id){
         $season = Season::where('id', $id)->first();
 
-        return view('secretary.seasons.season_update', ['season' => $season]);
+        return redirect()->route('secretary.season-index');
     }
 
     public function update(Request $request){
@@ -94,6 +96,18 @@ class SeasonController extends Controller
         foreach($registrations as $registration){
             $registration->active = 0;
             $registration->save();
+            $registrationsinclasses = RegistrationsInClasses::where('id_registration', $registration->id)->get();
+            if(count($registrationsinclasses) > 0){
+                foreach($registrationsinclasses as $registrationsinclasse){
+                    $registrationsinclasse->active = 0;
+                    $registrationsinclasse->save();
+                }
+            }
+            $registrationincourse = StudentsInCourse::where('registration_id', $registration->id)->first();
+            if(isset($registrationincourse)){
+                $registrationincourse->active = 0;
+                $registrationincourse->save();
+            }
         }
 
         $classes = Classes::where('id_season', $season->id)->get();

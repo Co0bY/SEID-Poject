@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCertifiedColumnInStudentsInCoursesTable extends Migration
+class AddColumnInStudentsInCoursesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddCertifiedColumnInStudentsInCoursesTable extends Migration
     public function up()
     {
         Schema::table('students_in_courses', function (Blueprint $table) {
-            $table->string('certified')->nullable()->default(null);
+            $table->boolean('active')->default(1);
         });
     }
 
@@ -26,7 +26,7 @@ class AddCertifiedColumnInStudentsInCoursesTable extends Migration
     public function down()
     {
         Schema::table('students_in_courses', function (Blueprint $table) {
-            $table->dropColumn('certified');
+            $table->dropColumn('active');
         });
     }
 }

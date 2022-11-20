@@ -26,6 +26,7 @@
                         <form action="{{ route('secretary.users-inactive-filtro') }}" method="post">
                         @endif
                             @csrf
+                            <input type="hidden" name="active" id="active" value="{{$active}}">
                             <div class=" row mb-3">
                                 <div class=" col mb-3"><label for="name"
                                         class=" text-dark text-uppercase text-bold">Nome</label>
