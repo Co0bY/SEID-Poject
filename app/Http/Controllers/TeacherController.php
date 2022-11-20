@@ -17,18 +17,24 @@ use App\Models\LessonPlan;
 use App\Models\Room;
 use App\Models\StudentRegistrationInSubject;
 use App\Models\StudentsInCourse;
+use App\Services\Permissions;
 use Illuminate\Http\Request;
 
 class TeacherController extends Controller
 {
+    CONST PERMISSION = 'professor';
+
     public function index(Request $request){
+
+        if (Permissions::check(self::PERMISSION));
+
         $userid = $request->session()->get('id');
         $teacher = Teacher::where('user_id', $userid)->first();
         $ligation = TeacherInClasses::where('id_teacher', $teacher->id)->first();
-        if(isset($ligation)){
+        if (isset($ligation)) {
             $classes = Classes::where('id', $ligation->id_class)->get();
         }
-        else{
+        else {
             $classes = [];
         }
 
@@ -36,6 +42,9 @@ class TeacherController extends Controller
     }
 
     public function listClassesAttendance(Request $request){
+
+        if (Permissions::check(self::PERMISSION));
+
         $userid = $request->session()->get('id');
         $teacher = Teacher::where('user_id', $userid)->first();
         $ligation = TeacherInClasses::where('id_teacher', $teacher->id)->first();
@@ -50,6 +59,9 @@ class TeacherController extends Controller
     }
 
     public function listClassesScore(Request $request){
+
+        if (Permissions::check(self::PERMISSION));
+
         $userid = $request->session()->get('id');
         $teacher = Teacher::where('user_id', $userid)->first();
         $ligation = TeacherInClasses::where('id_teacher', $teacher->id)->first();
@@ -64,6 +76,9 @@ class TeacherController extends Controller
     }
 
     public function listStudentsAttendance($id){
+
+        if (Permissions::check(self::PERMISSION));
+
         $classesregistrations = RegistrationsInClasses::where('id_class', $id)->get();
         $students =[];
         $class =Classes::where('id', $id)->first();
@@ -82,6 +97,9 @@ class TeacherController extends Controller
     }
 
     public function makeAttendance(Request $request){
+
+        if (Permissions::check(self::PERMISSION));
+
         // dd($request);
         $t = count($request['name']);
         for($i = 0; $i < $t; $i++){
@@ -101,6 +119,9 @@ class TeacherController extends Controller
     }
 
     public function listStudentsScore($id){
+
+        if (Permissions::check(self::PERMISSION));
+
         $classesregistrations = RegistrationsInClasses::where('id_class', $id)->get();
         $students =[];
         $classid = $id;

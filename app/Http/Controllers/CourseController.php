@@ -5,23 +5,29 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\CoursesDiscipline;
 use App\Models\Discipline;
+use App\Services\Permissions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class CourseController extends Controller
 {
-    public function index(){
+    CONST PERMISSION = 'courses';
+
+    public function index() {
+
+        if (Permissions::check(self::PERMISSION));
+
         $courses = Course::get();
 
         return view('secretary.courses.index', ['courses' => $courses]);
     }
 
-    public function createform(){
+    public function createform() {
         return view('secretary.courses.course_create');
     }
 
-    public function create(Request $request){
+    public function create(Request $request) {
         $descriptions = [
             'required' => 'Este campo deve ser preenchido*',
             'name.unique' => 'O nome informado já está em uso*',
@@ -44,7 +50,7 @@ class CourseController extends Controller
         return redirect()->route('secretary.course-index');
     }
 
-    public function show($id){
+    public function show($id) {
         $course = Course::where('id',$id)->first();
 
 
