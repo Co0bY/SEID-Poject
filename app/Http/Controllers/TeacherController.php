@@ -117,7 +117,6 @@ class TeacherController extends Controller
 
         if (Permissions::check(self::PERMISSION));
 
-
         $classesregistrations = RegistrationsInClasses::where('id_class', $id)->where('active', 1)->get();
         $students =[];
         $class =Classes::where('id', $id)->first();
