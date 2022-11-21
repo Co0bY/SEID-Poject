@@ -29,6 +29,15 @@
                 </li>
 
                 <li>
+                    <a href="https://www.youtube.com/playlist?list=PLvJgCLhV71q48ZFUVkuLFbLJxlDIyOEvt" class="nav-link link-danger" id="Rel">
+                        <svg class="bi pe-none me-2" width="16" height="16">
+                            <use xlink:href="#speedometer2" />
+                        </svg>
+                        Manual do Usuário
+                    </a>
+                </li>
+
+                <li>
                     <a href="/logout" class="nav-link link-dark" id="Rel">
                         <svg class="bi pe-none me-2" width="16" height="16">
                             <use xlink:href="#speedometer2" />
