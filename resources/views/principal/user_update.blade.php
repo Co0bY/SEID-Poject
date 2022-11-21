@@ -14,7 +14,7 @@
                             <h1 class=" text-uppercase m-3">Formulario de Edição</h1>
                         </div>
                         {{-- route('pesquisar') --}}
-                        <form action="{{ route('secretary.update') }}" method="post">
+                        <form action="{{ route('principal.update') }}" method="post">
                             @csrf
                             <input type="hidden" name="id" value="{{ $user->id }}">
                             <div class="row">

@@ -13,7 +13,7 @@ class Permissions {
     public static function check($permission) {
 
         switch (session('type_of_user')) {
-            
+
             case 1:
                 return TRUE;
                 break;
@@ -28,11 +28,11 @@ class Permissions {
                     case 'usuarios':
                         return TRUE;
                         break;
-                        
+
                     case 'disciplinas':
                         return TRUE;
                         break;
-                    
+
                     case 'matriculas':
                         return TRUE;
                         break;
@@ -76,7 +76,7 @@ class Permissions {
 
                     case 'professor':
                         return TRUE;
-                        break;      
+                        break;
 
                     default:
                         header('Location: /teacher/plano');
@@ -84,7 +84,7 @@ class Permissions {
                 }
 
                 break;
-            
+
             default:
                 return redirect('/');
                 break;

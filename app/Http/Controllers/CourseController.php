@@ -16,7 +16,7 @@ class CourseController extends Controller
 
     public function index() {
 
-        if (Permissions::check(self::PERMISSION));
+        // if (Permissions::check(self::PERMISSION));
 
         $courses = Course::get();
 

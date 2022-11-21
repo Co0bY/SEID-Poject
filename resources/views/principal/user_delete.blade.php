@@ -14,7 +14,7 @@
                             <h1 class=" text-uppercase m-3">Formulário de Inativação</h1>
                         </div>
                         {{-- route('pesquisar') --}}
-                        <form action="{{ route('secretary.delete') }}" method="post">
+                        <form action="{{ route('principal.delete') }}" method="post">
                             @csrf
                             <input type="hidden" name="id" value="{{ $user->id }}">
                             <div class="row">

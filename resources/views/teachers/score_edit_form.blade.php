@@ -8,10 +8,10 @@
             @endcomponent
             <div class="col-9">
                 <div class=" card">
-
+                    <form action="{{ route('teacher.score-update') }}" method="POST">
+                        @csrf
                         <div class=" card-body">
-                            <form action="{{ route('teacher.score-update') }}" method="POST">
-                                @csrf
+
                             <div class=" col-12 text-center uppercase">
                                 <p> <span class="">Matricula: {{ $student->registration }}</span> Nome:
                                     {{ $student->name }}</p>
@@ -66,7 +66,7 @@
                                     </tbody>
                                 @endforeach
                             </table>
-                            </form>
+
                         </div>
                         <div class="card-footer d-flex">
                             <div class="col-3"> <button type="submit" class=" btn btn-success col-12">Atualizar
@@ -81,7 +81,7 @@
                                 </button>
                             </div>
                         </div>
-
+                    </form>
                 </div>
                 <div class="modal fade" id="modalFecharNotas" tabindex="-1" role="dialog"
                     aria-labelledby="modalFecharNotas" aria-hidden="true">

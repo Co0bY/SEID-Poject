@@ -7,7 +7,7 @@ use App\Models\Secretary;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
-use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -234,7 +234,7 @@ class PrincipalController extends Controller
         elseif($user->type_of_user == '4'){
             $perfil = Teacher::where('user_id', $user->id)->first();
         }
-        return view('secretary.user_delete', ['user' => $user, 'perfil' => $perfil]);
+        return view('principal.user_delete', ['user' => $user, 'perfil' => $perfil]);
     }
 
     public function deleteUser(Request $request){
@@ -281,7 +281,7 @@ class PrincipalController extends Controller
         elseif($user->type_of_user == '4'){
             $perfil = Teacher::where('user_id', $user->id)->first();
         }
-        return view('secretary.user_reactive', ['user' => $user, 'perfil' => $perfil]);
+        return view('principal.user_reactive', ['user' => $user, 'perfil' => $perfil]);
     }
 
     public function reActiveUser(Request $request){

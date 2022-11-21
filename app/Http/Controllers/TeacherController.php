@@ -118,6 +118,9 @@ class TeacherController extends Controller
         if (Permissions::check(self::PERMISSION));
 
         $classesregistrations = RegistrationsInClasses::where('id_class', $id)->where('active', 1)->get();
+        if(count($classesregistrations ) < 1){
+            return redirect()->route('teacher.attendance');
+        }
         $students =[];
         $class =Classes::where('id', $id)->first();
         $i = 0;
@@ -162,6 +165,9 @@ class TeacherController extends Controller
         if (Permissions::check(self::PERMISSION));
 
         $classesregistrations = RegistrationsInClasses::where('id_class', $id)->where('active', 1)->get();
+        if(count($classesregistrations ) < 1){
+            return redirect()->route('teacher.score');
+        }
         $students =[];
         $classid = $id;
         $i = 0;
@@ -278,9 +284,11 @@ class TeacherController extends Controller
 
         $class = Classes::where('id', $registrationInClass->id_class)->first();
         $registrationInCourse = StudentsInCourse::where('registration_id', $registrationInClass->id_registration)->first();
-        $discipline = Discipline::where('id', $class->id_discipline)->first();
+
+        $discipline = Discipline::where('id', $class->id_discipline)->first();;
         $disciplinecourse = CoursesDiscipline::where('course_id', $registrationInCourse->course_id)
         ->where('discipline_id', $discipline->id)->first();
+
         $attendanceTrue = Attendance::where('registration_in_class_id', $registrationInClass->id)->where('attendance', 1)->get();
         $attendanceTrue = count($attendanceTrue);
         $attendancefalse = Attendance::where('registration_in_class_id', $registrationInClass->id)->where('attendance', 0)->get();

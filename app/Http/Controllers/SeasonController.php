@@ -43,17 +43,18 @@ class SeasonController extends Controller
         $season->end_date = $request['end_date'];
         $season->active = true;
         $season->code = $request['code'];
+        $season->active = 1;
         $season->save();
 
         $seasons = Season::get();
 
-        return view('secretary.seasons.index', ['seasons' => $seasons]);
+        return redirect()->route('secretary.season-index');
     }
 
     public function show($id){
         $season = Season::where('id', $id)->first();
 
-        return redirect()->route('secretary.season-index');
+        return view('secretary.seasons.season_update', ['season' => $season]);
     }
 
     public function update(Request $request){
@@ -196,6 +197,18 @@ class SeasonController extends Controller
         foreach($registrations as $registration){
             $registration->active = 1;
             $registration->save();
+            $registrationsinclasses = RegistrationsInClasses::where('id_registration', $registration->id)->get();
+            if(count($registrationsinclasses) > 0){
+                foreach($registrationsinclasses as $registrationsinclasse){
+                    $registrationsinclasse->active = 1;
+                    $registrationsinclasse->save();
+                }
+            }
+            $registrationincourse = StudentsInCourse::where('registration_id', $registration->id)->first();
+            if(isset($registrationincourse)){
+                $registrationincourse->active = 1;
+                $registrationincourse->save();
+            }
         }
 
         $classes = Classes::where('id_season', $season->id)->get();
