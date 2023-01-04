@@ -49,7 +49,7 @@ class RegistrationController extends Controller
         $registration->student_id = $student->id;
         $registration->season_id = $season->id;
         $registration->registration = $matricula;
-        $registration->active = true;
+        $registration->active = 1;
         $registration->save();
 
         $course_id = Course::select('id')->where('code', $request->course_code)->first();

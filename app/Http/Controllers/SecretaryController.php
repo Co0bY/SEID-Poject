@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attendance;
 use App\Models\Principal;
 use App\Models\Registration;
 use App\Models\RegistrationsInClasses;
@@ -17,7 +18,16 @@ use Illuminate\Validation\Rule;
 class SecretaryController extends Controller
 {
     public function index(){
-        return view('secretary.home');
+        $presencas = Attendance::orderByDesc('id')->first();
+        $faltas = Attendance::where('attendance',0)->get();
+        $presentes = Attendance::where('attendance',1)->get();
+        $total = Attendance::get();
+        $presencas->faltas = count($faltas);
+        $presencas->presentes = count($presentes);
+        $presencas->total = count($total);
+
+
+        return view('secretary.home', ['presencas' => $presencas]);
     }
     public function users(Request $request){
         $users =  DB::table('user_filter')->where('active',1)->orderByDesc('id')->paginate(10);

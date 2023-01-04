@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col">
                 <label for="" class=" text-dark text-uppercase text-bold">Número da Aula</label>
-                <select name="lesson_id" id="lesson_id" class=" form-control">
+                <select name="lesson_id" id="lesson_id" class=" form-control" required>
                     @foreach ($lessons as $lesson)
                         <option value="{{$lesson->id}}"> {{$lesson->number_of_lesson}}</option>
                     @endforeach
@@ -19,15 +19,15 @@
             </div>
             <div class="col">
                 <label for="" class=" text-dark text-uppercase text-bold">Contéudo da Aula</label>
-                <input type="text" id="content" name="content" class=" form-control">
+                <input type="text" id="content" name="content" class=" form-control" required>
             </div>
             <div class="col">
                 <label for="" class=" text-dark text-uppercase text-bold">Observações</label>
-                <input type="text" id="notes" name="notes" class=" form-control">
+                <input type="text" id="notes" name="notes" class=" form-control" required>
             </div>
             <div class="col">
                 <label for="" class=" text-dark text-uppercase text-bold">Dia da Chamada</label>
-                <input type="date" id="date_of_attendance" name="date_of_attendance" class=" form-control">
+                <input type="date" id="date_of_attendance" name="date_of_attendance" required max="{{date('dd/mm/YYYY')}}" class=" form-control">
             </div>
         </div>
         @csrf

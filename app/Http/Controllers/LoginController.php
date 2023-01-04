@@ -14,7 +14,7 @@ class LoginController extends Controller
         $email = $request['email'];
         $password = $request['password'];
 
-        $user = User::where('email', $email)->where('password', $password)->first();
+        $user = User::where('email', $email)->where('password', $password)->where('active',1)->first();
         if(isset($user)){
             if($user->type_of_user == 1){
                 $request->session()->put('id', $user->id);
